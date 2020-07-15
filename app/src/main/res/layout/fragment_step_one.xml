@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollable">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative_layout"
+            android:background="@color/md_blue_grey_200">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/cardview_one"
+                android:elevation="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:id="@+id/relative_layout_one"
+                    android:background="@drawable/back_color">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:text="STEP 1"
+                        android:id="@+id/tv_step1"
+                        android:textColor="@color/md_grey_50"
+                        android:textSize="24dp"
+                        android:layout_centerHorizontal="true"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_info_case"
+                        android:layout_gravity="center"
+                        android:focusable="true"
+                        android:fontFamily="@font/roboto"
+                        android:text="Information of the case"
+                        android:textColor="@color/md_grey_50"
+                        android:textSize="18sp"
+                        android:layout_below="@+id/tv_step1"
+                        android:textStyle="bold"
+                        android:layout_marginTop="36dp"
+                        android:visibility="visible"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_info_case"
+                        android:layout_marginTop="12dp"
+                        android:id="@+id/relative_layout1">
+
+                        <Spinner
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            style="@style/AppTheme.Spinner"
+                            android:id="@+id/spinner_ministry"
+                            android:layout_alignParentRight="true" />
+
+                        <Spinner
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            style="@style/AppTheme.Spinner"
+                            android:layout_below="@id/spinner_ministry"
+                            android:id="@+id/spinner_department"
+                            android:layout_alignParentRight="true" />
+
+                        <EditText
+                            android:id="@+id/et_name_organization"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/spinner_department"
+                            android:padding="12dp"
+                            android:elevation="2dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/md_grey_50"
+                            android:hint="Name of the Organization"
+                            android:textColorHint="@color/md_grey_50"
+                            android:inputType="text"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/relative_layout1"
+                        android:layout_marginTop="42dp"
+                        android:id="@+id/relative_layout2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:fontFamily="@font/roboto"
+                            android:text="Location"
+                            android:textColor="@color/md_grey_50"
+                            android:textSize="18sp"
+                            android:id="@+id/tv_location"
+                            android:textStyle="bold"
+                            android:visibility="visible">
+                        </TextView>
+
+                        <EditText
+                            android:id="@+id/et_city"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_location"
+                            android:padding="12dp"
+                            android:elevation="2dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            android:textColor="@color/md_grey_50"
+                            android:textSize="16sp"
+                            android:hint="City"
+                            android:textColorHint="@color/md_grey_50"
+                            android:inputType="text"/>
+
+                        <EditText
+                            android:id="@+id/et_pincode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/et_city"
+                            android:padding="12dp"
+                            android:elevation="2dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/md_grey_50"
+                            android:hint="PIN Code"
+                            android:textColorHint="@color/md_grey_50"
+                            android:inputType="number"/>
+
+                        <TextView
+                            android:id="@+id/tv_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="12dp"
+                            android:hint="Address"
+                            android:textColor="@color/md_grey_50"
+                            android:textSize="16sp"
+                            android:elevation="2dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_below="@+id/et_pincode"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/relative_layout3"
+                        android:layout_marginTop="42dp"
+                        android:layout_below="@+id/relative_layout2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:id="@+id/tv_brief"
+                            android:fontFamily="@font/roboto"
+                            android:text="Brief description on the case"
+                            android:textColor="@color/md_grey_50"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:visibility="visible">
+                        </TextView>
+
+                        <EditText
+                            android:id="@+id/et_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_brief"
+                            android:layout_marginTop="24dp"
+                            android:elevation="1dp"
+                            android:hint="Description"
+                            android:textColorHint="@color/md_grey_50"
+                            android:textSize="16sp"
+                            android:textColor="@color/md_grey_50"
+                            android:padding="12dp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PROCEED"
+                android:id="@+id/btn_proceed"
+                android:layout_below="@+id/cardview_one"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/md_grey_50"
+                android:layout_centerHorizontal="true">
+            </Button>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

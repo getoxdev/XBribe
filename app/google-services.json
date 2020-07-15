@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "748285591315",
+    "firebase_url": "https://xbribe-d0a3d.firebaseio.com",
+    "project_id": "xbribe-d0a3d",
+    "storage_bucket": "xbribe-d0a3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748285591315:android:c19034083f4e848ee0a4e6",
+        "android_client_info": {
+          "package_name": "com.xbribe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748285591315-hoklhousacpk56lgp3ui5gmc06fk0qnq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xbribe",
+            "certificate_hash": "77e8745f2acca3b76f0875ce4f6034237974dc47"
+          }
+        },
+        {
+          "client_id": "748285591315-g18jf2ugmes0bfd699j28h3gc0o90jq8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnQ13RvfDfmcCWMHV__INkpqdHcv2-7N4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748285591315-g18jf2ugmes0bfd699j28h3gc0o90jq8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

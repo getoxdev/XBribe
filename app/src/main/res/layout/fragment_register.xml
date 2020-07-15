@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.auth.register.RegisterFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/activity_register_img"
+            android:layout_width="60dp"
+            android:src="@drawable/icon_main"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true" />
+
+
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="160sp"
+            android:id="@+id/tv_welcome_text"
+            android:focusable="true"
+            android:text="Welcome to XBribe"
+            android:textAlignment="center"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/colorAccent"
+            android:textSize="30dp"
+            android:textStyle="bold">
+        </TextView>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_email"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tv_welcome_text"
+                android:hint="Email"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/md_grey_50"
+                android:drawableRight="@drawable/ic_email_black_24dp"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:layout_marginTop="64dp"
+                android:inputType="text"
+                android:elevation="3dp"/>
+
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/et_email"
+                android:layout_marginTop="24dp"
+                android:background="@color/md_grey_50"
+                android:layout_marginHorizontal="20dp"
+                android:hint="Password"
+                android:drawableRight="@drawable/ic_visibility_off_24dp"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:inputType="textPassword"
+                android:elevation="3dp"/>
+
+
+            <EditText
+                android:id="@+id/et_confirmpassword"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/et_password"
+                android:hint="ConfirmPassword"
+                android:background="@color/md_grey_50"
+                android:drawableRight="@drawable/ic_visibility_off_24dp"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:layout_marginTop="24dp"
+                android:inputType="textPassword"
+                android:elevation="3dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_register"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="REGISTER"
+            android:fontFamily="@font/roboto"
+            android:layout_below="@id/et_confirmpassword"
+            android:textColor="@color/md_grey_50"
+            android:background="@color/colorAccent"
+            android:clickable="true"
+            android:elevation="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/btn_register"
+            android:text="Already have a account? Login"
+            android:layout_marginTop="32dp"
+            android:id="@+id/account_login"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/roboto"
+            android:layout_marginLeft="100dp"
+            android:textSize="16sp"
+            android:clickable="true"/>
+
+
+    </RelativeLayout>
+
+</FrameLayout>

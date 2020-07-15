@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_color"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_orgName"
+                android:text="Organization"
+                android:textSize="18sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/md_white_1000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_addr"
+                android:text="Address"
+                android:textSize="18sp"
+                android:layout_margin="8dp"
+                android:layout_below="@id/tv_orgName"
+                android:textColor="@color/md_white_1000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_city"
+                android:text="City"
+                android:textSize="18sp"
+                android:layout_margin="8dp"
+                android:layout_below="@id/tv_addr"
+                android:textColor="@color/md_white_1000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_pin"
+                android:text="PIN CODE"
+                android:textSize="18sp"
+                android:layout_margin="8dp"
+                android:layout_below="@id/tv_addr"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/md_white_1000"/>
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_padding_size_small"
+    android:elevation="12dp"
+    android:background="@drawable/bg_border_bottom"
+    android:layout_marginBottom="1dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/margin_padding_size_medium"
+        android:background="#444B6C"
+        android:paddingBottom="@dimen/margin_padding_size_medium">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_notificationitem_image"
+            android:layout_width="48dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/icon_main" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingLeft="20dp">
+            <TextView
+                android:id="@+id/tv_organisation_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_grey_200"
+                android:textSize="@dimen/text_size_medium"
+                android:text="ORGANISATION NAME"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/tv_organisation_ministry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_micro"
+                android:textColor="@color/md_grey_200"
+                android:text="ORGANISATION MINISTRY"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USER_ID"
+                android:layout_gravity="right"
+                android:id="@+id/tv_user_id"
+                android:textColor="@color/md_grey_500"
+                android:layout_marginRight="8dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CASE_ID"
+                android:textColor="@color/md_grey_400"
+                android:id="@+id/tv_case_id"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="8dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_organisation_department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_grey_400"
+                android:textSize="@dimen/text_size_small"
+                android:text="ORGANISATION DEPARTMENT" />
+            <TextView
+                android:id="@+id/tv_notification_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/md_grey_500"
+                android:textSize="@dimen/text_size_small"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sapien velit, aliquet eget commodo nec, auctor a sapien. Nam eu neque vulputate diam rhoncus faucibus. Curabitur quis varius libero. Lorem." />
+
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

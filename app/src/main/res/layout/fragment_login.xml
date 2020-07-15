@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollable"
+    tools:context=".ui.auth.login.LoginFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relative_layout">
+
+        <ImageView
+            android:src="@drawable/icon_main"
+            android:id="@+id/frag_login_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/tv_welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="160dp"
+            android:focusable="true"
+            android:text="Welcome to XBribe"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="30dp"
+            android:fontFamily="@font/roboto"
+            android:textStyle="bold"
+            android:visibility="visible">
+
+        </TextView>
+
+        <EditText
+                android:id="@+id/et_email"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tv_welcome_text"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/md_grey_50"
+                android:drawableRight="@drawable/ic_email_black_24dp"
+                android:hint="Email"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:layout_marginTop="72dp"
+                android:inputType="text"
+                android:elevation="3dp"/>
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/et_email"
+                android:background="@color/md_grey_50"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="24dp"
+                android:drawableRight="@drawable/ic_visibility_off_24dp"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:elevation="3dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:layout_below="@+id/et_password"
+            android:text="Login"
+            android:clickable="true"
+            android:fontFamily="@font/roboto"
+            android:background="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_grey_50"
+            android:elevation="10dp"/>
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:layout_below="@+id/btn_login"
+            android:text="Forgot Password"
+            android:textAlignment="center"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@+id/tv_forgot_password"
+            android:text="New user? Register here."
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/roboto"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:id="@+id/new_to_xcom"
+            android:textColor="@color/colorAccent"
+            android:clickable="true"
+            />
+
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

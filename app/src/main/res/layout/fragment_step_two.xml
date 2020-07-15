@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_color"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/upload_options">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_margin="8dp"
+                        android:layout_centerHorizontal="true"
+                        android:elevation="10dp"
+                        android:id="@+id/card_img"
+                        android:layout_toLeftOf="@id/card_aud">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/back_color">
+
+                            <ImageButton
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:id="@+id/imag_camera"
+                                android:tag="1"
+                                android:background="@color/md_white_1000"
+                                android:src="@drawable/ic_camera_alt_black_24dp"
+                                android:layout_centerInParent="true"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="CAMERA"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:layout_below="@+id/imag_camera"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/md_white_1000"/>
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_margin="8dp"
+                        android:elevation="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/card_aud">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/back_color">
+
+                            <ImageButton
+                                android:layout_width="60dp"
+                                android:id="@+id/imag_audio"
+                                android:tag="2"
+                                android:layout_height="60dp"
+                                android:background="@color/md_white_1000"
+                                android:src="@drawable/ic_audiotrack_black_24dp"
+                                android:layout_centerInParent="true"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="AUDIO"
+                                android:textStyle="bold"
+                                android:textSize="10sp"
+                                android:layout_below="@+id/imag_audio"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/md_white_1000"/>
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_margin="8dp"
+                        android:elevation="10dp"
+                        android:paddingRight="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/card_vid"
+                        android:layout_toRightOf="@id/card_aud">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/back_color">
+
+                            <ImageButton
+                                android:layout_width="60dp"
+                                android:id="@+id/imag_video"
+                                android:tag="3"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_videocam_black_24dp"
+                                android:background="@color/md_white_1000"
+                                android:layout_centerInParent="true"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="VIDEO"
+                                android:textStyle="bold"
+                                android:textSize="10sp"
+                                android:layout_below="@+id/imag_video"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/md_white_1000"/>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="UPLOAD"
+                android:layout_below="@+id/upload_options"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/md_grey_50"
+                android:elevation="5dp"
+                android:id="@+id/btn_upload"
+                android:background="@color/md_blue_grey_900"
+                >
+            </Button>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center_horizontal"
+                android:text="SUBMIT"
+                android:textColor="@color/md_grey_50"
+                android:layout_below="@+id/btn_upload"
+                android:layout_centerHorizontal="true"
+                android:elevation="5dp"
+                android:id="@+id/btn_submit"
+                android:background="@color/md_blue_grey_900">
+            </Button>
+
+        </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
