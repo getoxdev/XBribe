@@ -48,7 +48,7 @@ public class SpinnerAdapter2 extends ArrayAdapter<String> {
         if(currentDepartment!=null)
         {
             tvOrgName.setText(currentDepartment);
-            tvOrgName.setTextColor(Color.WHITE);
+            tvOrgName.setTextColor(Color.BLACK);
         }
 
         return convertView;

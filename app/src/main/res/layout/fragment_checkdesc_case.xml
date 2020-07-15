@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_vertical"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    app:cardCornerRadius="4dp"
+    app:cardUseCompatPadding="true"
+    android:outlineAmbientShadowColor="@color/md_pink_800"
+    android:elevation="4dp"
     android:padding="@dimen/margin_padding_size_small"
-    android:layout_marginBottom="@dimen/margin_padding_size_small"
-    >
+    android:layout_marginBottom="@dimen/margin_padding_size_small">
     <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/back_color"
+        android:padding="8dp"
         android:paddingTop="@dimen/margin_padding_size_medium"
         android:paddingBottom="@dimen/margin_padding_size_medium"
 
@@ -39,8 +44,8 @@
                 android:id="@+id/tv_organization_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/md_grey_200"
                 android:textSize="@dimen/text_size_medium"
+                android:fontFamily="@font/roboto"
                 android:text="Name of the organization"
                 android:textStyle="bold"
                 />
@@ -48,8 +53,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Case_Process"
-                android:textColor="@color/md_grey_200"
+                android:fontFamily="@font/roboto"
                 android:id="@+id/tv_case_process"
+                android:layout_marginTop="22dp"
                 android:layout_gravity="right"
                 android:layout_marginRight="14dp"
                 />
@@ -58,8 +64,8 @@
                 android:id="@+id/tv_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/md_grey_300"
+                android:layout_marginTop="22dp"
+                android:fontFamily="@font/roboto"
                 android:textSize="@dimen/text_size_small"
                 android:text="Location"
                 />
@@ -69,7 +75,7 @@
                 android:id="@+id/tv_organization_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/md_grey_300"
+                android:fontFamily="@font/roboto"
                 android:textSize="@dimen/text_size_medium"
                 android:text="Organization Category" />
 
@@ -78,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lora_bold_italic"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="28dp"
                 android:textColor="@color/md_grey_400"
                 android:textSize="@dimen/text_size_small"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sapien velit, aliquet eget commodo nec, auctor a sapien. Nam eu neque vulputate diam rhoncus faucibus. Curabitur quis varius libero. Lorem." />
@@ -90,7 +96,6 @@
             android:layout_below="@+id/linear_layout"
             android:paddingLeft="20dp"
             android:id="@+id/relative_layout"
-            android:textColor="@color/md_grey_400"
             android:layout_marginTop="18dp"
             android:layout_toRightOf="@+id/app_logo">
             <TextView
@@ -99,14 +104,13 @@
                 android:id="@+id/tv_image"
                 android:text="IMAGES"
                 android:textSize="@dimen/text_size_small"
-                android:textColor="@color/md_grey_400"
                 android:fontFamily="@font/lora_bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_image"
                 android:id="@+id/tv_images_no"
-                android:textColor="@color/md_grey_400"
+                android:fontFamily="@font/roboto"
                 android:layout_marginLeft="8dp"
                 android:text="No_images"
                 />
@@ -116,7 +120,6 @@
                 android:text="AUDIO"
                 android:id="@+id/tv_audios"
                 android:textSize="@dimen/text_size_small"
-                android:textColor="@color/md_grey_400"
                 android:fontFamily="@font/lora_bold"
                 android:layout_below="@+id/tv_image"/>
             <TextView
@@ -125,7 +128,7 @@
                 android:text="No_audios"
                 android:layout_toRightOf="@+id/tv_audios"
                 android:id="@+id/tv_audio_no"
-                android:textColor="@color/md_grey_400"
+                android:fontFamily="@font/roboto"
                 android:layout_below="@+id/tv_image"
                 android:layout_marginLeft="8dp"
                 />
@@ -134,7 +137,6 @@
                 android:layout_height="wrap_content"
                 android:text="VIDEOS"
                 android:textSize="@dimen/text_size_small"
-                android:textColor="@color/md_grey_400"
                 android:id="@+id/tv_videos"
                 android:fontFamily="@font/lora_bold"
                 android:layout_below="@+id/tv_audios"
@@ -144,8 +146,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_audios"
                 android:id="@+id/tv_video_no"
-                android:textColor="@color/md_grey_400"
                 android:layout_marginLeft="8dp"
+                android:fontFamily="@font/roboto"
                 android:layout_toRightOf="@+id/tv_videos"
                 android:text="No_videos"
                 />
@@ -158,7 +160,7 @@
             android:background="@color/md_blue_grey_900"
             android:layout_centerHorizontal="true"
             android:textColor="@color/md_grey_50"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="32dp"
             android:id="@+id/btn_back"
             android:padding="8dp"
             android:layout_below="@+id/relative_layout"

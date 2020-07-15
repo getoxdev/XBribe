@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioAttributes;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -20,11 +21,15 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.RemoteMessage;
 import com.xbribe.R;
+import com.xbribe.data.AppDataManager;
 import com.xbribe.ui.main.MainActivity;
+import com.xbribe.ui.main.drawers.notification.DatabaseHelperNotice;
 
 import java.util.Map;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
+    DatabaseHelperNotice databaseHelperNotice;
+    AppDataManager appDataManager;
     public FirebaseMessagingService() {
     }
 
@@ -51,13 +56,20 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         super.onMessageReceived(remoteMessage);
 
         //int type=getSharedPreferences("login_info",MODE_PRIVATE).getInt("usertype",-1);
-
+        databaseHelperNotice=new DatabaseHelperNotice(this);
+        databaseHelperNotice.getWritableDatabase();
         Map<String, String> data = remoteMessage.getData();
         String body = data.get("body");
         String title = data.get("title");
+        boolean ifinserted=databaseHelperNotice.insertData(appDataManager.getToken(),appDataManager.getEmail(),body,title);
+        if(ifinserted==true)
+        {
+            Toast.makeText(this,"Data inserted",Toast.LENGTH_SHORT).show();
+        }
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        /*if(type==2){
+        /*if(type==2)
+        {
             intent = new Intent(getApplicationContext(), ViewResponses.class);
         }
         else

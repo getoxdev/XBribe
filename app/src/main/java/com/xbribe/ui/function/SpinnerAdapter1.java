@@ -47,7 +47,7 @@ public class SpinnerAdapter1 extends ArrayAdapter<Organizations> {
         if(currentOrganization!=null)
         {
             tvOrgName.setText(currentOrganization.getMinistry());
-            tvOrgName.setTextColor(Color.WHITE);
+            tvOrgName.setTextColor(Color.BLACK);
         }
 
         return convertView;

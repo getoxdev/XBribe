@@ -40,8 +40,8 @@ public class AboutUsFragment extends Fragment
         models.add(new AboutUsModel(R.drawable.rishiraj,"Rishiraj Paul Choudhury","Android Developer"));
         models.add(new AboutUsModel(R.drawable.nandini,"Nandini Agarwal","Android Developer"));
         models.add(new AboutUsModel(R.drawable.utkarsh,"Utkarsh Tiwari","Web developer"));
-        models.add(new AboutUsModel(R.drawable.icon_main,"Pratik Sharma","Web developer"));
-        models.add(new AboutUsModel(R.drawable.icon_main,"Monalisa Nath","Graphic Designer"));
+        models.add(new AboutUsModel(R.drawable.pratik,"Pratik Sharma","Web developer"));
+        models.add(new AboutUsModel(R.drawable.monalisa,"Monalisa Nath","Graphic Designer"));
         models.add(new AboutUsModel(R.drawable.saranga,"Saranga Mahanta","Data Scientist"));
 
         initRecyclerView();

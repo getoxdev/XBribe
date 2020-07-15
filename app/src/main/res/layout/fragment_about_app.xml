@@ -20,7 +20,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/back_color"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -37,13 +36,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/md_white_1000"
                         android:text="ABOUT BPRD "
+                        android:fontFamily="@font/roboto"
                         android:layout_marginTop="8dp"
                         android:id="@+id/tv_BPRD"
+                        android:textColor="@color/md_blue_300"
                         android:layout_centerHorizontal="true"
                         android:textSize="20sp"
-                        android:textStyle="bold"
                         />
 
                     <TextView
@@ -54,7 +53,6 @@
                         android:layout_marginLeft="8dp"
                         android:layout_below="@+id/tv_BPRD"
                         android:layout_toRightOf="@id/img_BPRD"
-                        android:textColor="@color/md_white_1000"
                         android:id="@+id/tv_BPRDdetails"
                         android:text="@string/bprd"
                         />
@@ -75,7 +73,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/back_color"
                 android:id="@+id/relative_layout1">
 
                 <ImageView
@@ -100,9 +97,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="ABOUT XBRIBE"
+                        android:textColor="@color/md_blue_300"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/md_white_1000"
-                        android:textStyle="bold"
                         android:textSize="20sp"
                         android:id="@+id/tv_XBRIBE">
                     </TextView>
@@ -113,7 +109,6 @@
                         android:layout_below="@+id/tv_XBRIBE"
                         android:layout_alignParentStart="true"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/md_white_1000"
                         android:padding="8dp"
                         android:text="@string/app_work">
                     </TextView>
@@ -132,7 +127,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/back_color"
                 android:id="@+id/relative_layout4">
 
                 <TextView
@@ -141,9 +135,8 @@
                     android:text="TEAM MEMBERS"
                     android:layout_marginTop="8dp"
                     android:textSize="18sp"
-                    android:textColor="@color/md_white_1000"
+                    android:textColor="@color/md_blue_300"
                     android:id="@+id/tv_teammember"
-                    android:textStyle="bold"
                     android:layout_centerHorizontal="true"/>
 
                 <androidx.recyclerview.widget.RecyclerView
