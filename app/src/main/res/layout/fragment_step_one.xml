@@ -208,7 +208,7 @@
                                 android:layout_width="match_parent"
                                 android:hint="Description"
                                 android:drawablePadding="10dp"
-                                android:inputType="number" />
+                                android:inputType="text" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
