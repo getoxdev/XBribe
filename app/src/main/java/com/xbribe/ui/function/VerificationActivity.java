@@ -11,7 +11,7 @@ import com.xbribe.R;
 
 import butterknife.ButterKnife;
 
-public class CameraActivity extends AppCompatActivity {
+public class VerificationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -71,8 +73,6 @@ public class Step_two_Fragment  extends Fragment
 
     private AppDataManager appDataManager;
 
-    MyReceiver myReceiver;
-
     DatabaseHelper databaseHelper;
     SQLiteDatabase database;
 
@@ -91,6 +91,9 @@ public class Step_two_Fragment  extends Fragment
     @BindView(R.id.btn_submit)
     Button submit;
 
+    @BindView(R.id.secret_camera)
+    FloatingActionButton btnSecretCamera;
+
     SubmissionActivityViewModel submissionActivityViewModel;
 
     @Nullable
@@ -107,8 +110,6 @@ public class Step_two_Fragment  extends Fragment
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_USER_PRESENT);
-        myReceiver = new MyReceiver();
-        getContext().registerReceiver(myReceiver, filter);
 
         imgChoose.setOnClickListener(new View.OnClickListener()
         {
@@ -393,45 +394,44 @@ public class Step_two_Fragment  extends Fragment
     void submit()
     {
         submissionActivityViewModel.reportCaseDetails(appDataManager.getToken(),ministryId,department,name,city,appDataManager.getAddress(),pincode,appDataManager.getLatitude(),appDataManager.getLongitude(),description,imageURL,audioURL,videoURL);
-        imageURL.clear();
-        audioURL.clear();
-        videoURL.clear();
-        String imagescount=String.valueOf(imageCount);
-        String audiocount=String.valueOf(audioCount);
-        String videocount=String.valueOf(videoCount);
-        boolean ifinserted= databaseHelper.insertData(appDataManager.getToken(),appDataManager.getAddress(),description,appDataManager.getMinistry(),department,name,imagescount,audiocount,videocount,"CASE_PROCESS","CASE ID",appDataManager.getID());
-        if(ifinserted==true)
-        {
-            Toast.makeText(getActivity(),"Data inserted",Toast.LENGTH_SHORT).show();
 
-        }
+        submissionActivityViewModel.getCaseResponse().observe(this, data ->
+        {
+            if(data == null)
+            {
+                Toast.makeText(getActivity(), "Error! Please try again.", Toast.LENGTH_LONG).show();
+            }
+            else {
+                String imagescount=String.valueOf(imageCount);
+                String audiocount=String.valueOf(audioCount);
+                String videocount=String.valueOf(videoCount);
+
+                boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),appDataManager.getAddress(),description,appDataManager.getMinistry(),department,name,imagescount,audiocount,videocount,"CASE_PROCESS","CASE ID",appDataManager.getID());
+                if(ifInserted==true)
+                {
+                    Toast.makeText(getActivity(),"Data inserted",Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(getActivity(), "Reported Successfully", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+            }
+        });
 
     }
 
-   @Override
-    public  void onStart()
-   {
-       super.onStart();
-       submissionActivityViewModel.getCaseResponse().observe(this, data ->
-       {
-           if (data == null) {
-               Toast.makeText(getActivity(), "Error! Please try again.", Toast.LENGTH_LONG).show();
-           } else {
-               Toast.makeText(getActivity(), "Reported Successfully", Toast.LENGTH_LONG).show();
-               startActivity(new Intent(getActivity(), MainActivity.class));
-           }
-       });
-   }
+    @OnClick(R.id.secret_camera)
+    void openSecretCamera()
+    {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        getActivity().startActivity(cameraIntent);
+    }
+
     @Override
     public void onDestroy()
     {
-        if (myReceiver != null)
-        {
-            getContext().unregisterReceiver(myReceiver);
-            myReceiver = null;
-        }
+        imageURL.clear();
+        audioURL.clear();
+        videoURL.clear();
         super.onDestroy();
     }
-
-
 }

@@ -43,7 +43,7 @@ public interface ApiService
 
     @GET("getministries")
     Call<OrganizationResponse> getOrganizations();
-
+    
     @FormUrlEncoded
     @POST("report")
     Call<CaseData> reportCase(@Header("token") String token,

@@ -55,16 +55,19 @@ public class SubmissionActivityViewModel extends AndroidViewModel {
           public void onResponse(Call<CaseData> call, Response<CaseData> response)
           {
               if (response.code() < 300) {
+                  Log.e("CASE","Reported");
                   caseResponse.postValue(response.body());
-              } else
-                  {
-                   caseResponse.postValue(null);
+              }
+              else {
+                  Log.e("CASE","Not Reported");
+                  caseResponse.postValue(null);
               }
           }
 
           @Override
           public void onFailure(Call<CaseData> call, Throwable t) {
-               caseResponse.postValue(null);
+              Log.e("CASE",t.getMessage());
+              caseResponse.postValue(null);
           }
       });
   }

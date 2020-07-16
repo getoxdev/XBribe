@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.function.CameraActivity"></activity>
+
+        <activity android:name=".ui.function.VerificationActivity"></activity>
 
         <service
             android:name=".service.FirebaseMessagingService"
@@ -47,8 +48,6 @@
         <service
             android:name=".service.AddressService"
             android:exported="false" />
-
-        <receiver android:name=".ui.function.MyReceiver" />
 
         <activity
             android:name=".ui.function.SubmissionActivity"

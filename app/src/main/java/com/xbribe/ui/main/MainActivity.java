@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Boolean isGPSon=false;
     private AddressReceiver addressReceiver;
     private Boolean isShowSettings=false;
-
+    private LocationManager locationManager;
     private static final int PERMISSION_REQUEST_CODE = 200;
 
     @Override
@@ -115,12 +115,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         requestPermission();
 
-        final LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        /*if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
-            isShowSettings = false;
-            showSettingsAlert();
-        }
+            if(!isShowSettings) {
+                isShowSettings = false;
+                showSettingsAlert();
+            }
+        }*/
 
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
@@ -132,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 super.onLocationResult(locationResult);
                 Log.i(TAG, "Location result is available");
                 isGPSon=true;
+                isShowSettings = true;
             }
 
             @Override
@@ -140,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (locationAvailability.isLocationAvailable()) {
                     Log.i(TAG, "Location is available");
                     isGPSon=true;
+                    isShowSettings = true;
                 } else {
                     Log.i(TAG, "Location is unavailable");
                     isGPSon=false;
@@ -168,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onStart() {
+
         startGettingLocation();
         super.onStart();
     }
@@ -271,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     currentLocation = location;
                     if (currentLocation != null) {
                         isGPSon = true;
+                        isShowSettings = true;
                         getAddress(currentLocation);
                         appDataManager.saveLatitude(String.valueOf(currentLocation.getLatitude()));
                         appDataManager.saveLongitude(String.valueOf(currentLocation.getLongitude()));
@@ -335,6 +341,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             alertDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     isGPSon = true;
+                    isShowSettings=true;
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
                 }
