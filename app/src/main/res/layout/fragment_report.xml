@@ -116,7 +116,7 @@
         android:id="@+id/view_blue"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/md_blue_300"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"></View>

@@ -36,16 +36,16 @@
             android:gravity="center"
             android:paddingLeft="20dp">
             <TextView
-                android:id="@+id/tv_organisation_name"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/md_grey_200"
                 android:textSize="@dimen/text_size_medium"
-                android:text="ORGANISATION NAME"
+                android:text="TITLE"
                 android:textStyle="bold"
                 />
 
-            <TextView
+          <!--  <TextView
                 android:id="@+id/tv_organisation_ministry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,9 +79,9 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/md_grey_400"
                 android:textSize="@dimen/text_size_small"
-                android:text="ORGANISATION DEPARTMENT" />
+                android:text="ORGANISATION DEPARTMENT" />-->
             <TextView
-                android:id="@+id/tv_notification_msg"
+                android:id="@+id/tv_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

@@ -39,13 +39,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position)
     {
-        holder.organisation_name.setText(nlist.get(position).getOrganisation_name());
-        holder.organisation_ministry.setText(nlist.get(position).getOrganisation_ministry());
-        holder.organisation_department.setText(nlist.get(position).getOrganisationdepartmnt());
-        holder.case_id.setText(nlist.get(position).getCase_id());
-        holder.user_id.setText(nlist.get(position).getUser_id());
-        holder.notification.setText(nlist.get(position).getNotification_msg());
-
+        holder.title.setText(nlist.get(position).getTitle());
+        holder.body.setText(nlist.get(position).getMessage());
     }
 
     @Override
@@ -55,19 +50,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-        @BindView(R.id.tv_organisation_name)
-        TextView organisation_name;
-        @BindView(R.id.tv_organisation_ministry)
-        TextView organisation_ministry;
-        @BindView(R.id.tv_organisation_department)
-        TextView organisation_department;
-        @BindView(R.id.tv_case_id)
-        TextView case_id;
-        @BindView(R.id.tv_user_id)
-        TextView  user_id;
-        @BindView(R.id.tv_notification_msg)
-        TextView notification;
-
+        @BindView(R.id.tv_title)
+        TextView title;
+        @BindView(R.id.tv_body)
+        TextView body;
 
         public ViewHolder(@NonNull View itemView)
         {

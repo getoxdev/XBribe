@@ -1,5 +1,7 @@
 package com.xbribe.ui.main.drawers.notification;
 
+import android.app.AlertDialog;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,7 +43,7 @@ public class NotificationFragment extends Fragment
 
     List<NotificationModel> nlist;
 
-
+  Cursor cursor;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,26 +57,41 @@ public class NotificationFragment extends Fragment
     }
     private void initreycycleradapter()
     {
+        cursor=databaseHelperNotice.getAllDetails();
+        if(cursor.getCount()==0)
+        {
+            showMessage("Error","Nothing found");
 
+        }
+        else
+        {
             notificationAdapter = new NotificationAdapter(uploadlist(),getContext());
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(notificationAdapter);
+
         }
 
-    private List<NotificationModel> uploadlist()
+        }
+        private List<NotificationModel> uploadlist()
     {
         nlist=new ArrayList<>();
-        boolean ifinserted= databaseHelperNotice.insertData(appDataManager.getToken(),"nandi200@gmail.com","I am going to die","Alvalida  dosto");
-        if(ifinserted==true)
+        while (cursor.moveToNext())
         {
-            Toast.makeText(getActivity(),"Data inserted",Toast.LENGTH_SHORT).show();
-
+            if(cursor.getString(3).equals(appDataManager.getEmail()))
+            {
+                nlist.add(new NotificationModel(cursor.getString(5), cursor.getString(4)));
+            }
         }
-        nlist.add(new NotificationModel("organisation name","organisation ministry","organisation department","Case Id","User Id","Some notification msg about the case being reported "));
-        nlist.add(new NotificationModel("organisation name","organisation ministry","organisation department","Case Id","User Id","Some notification msg about the case being reported "));
-        nlist.add(new NotificationModel("organisation name","organisation ministry","organisation department","Case Id","User Id","Some notification msg about the case being reported "));
-        nlist.add(new NotificationModel("organisation name","organisation ministry","organisation department","Case Id","User Id","Some notification msg about the case being reported "));
-     return  nlist;
+        return  nlist;
+
+    }
+    private void showMessage(String title,String message)
+    {
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
 
     }
 }

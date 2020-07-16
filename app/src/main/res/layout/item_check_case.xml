@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="@dimen/cardview_default_elevation"
-    android:layout_marginRight="@dimen/margin_padding_size_small"
-    android:layout_marginLeft="@dimen/margin_padding_size_small"
+    android:layout_marginRight="12dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginTop="12dp"
     android:layout_marginBottom="@dimen/margin_padding_size_small"
     >
     <RelativeLayout
@@ -18,7 +19,7 @@
         <ImageView
             android:id="@+id/image_crime"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="140dp"
             android:layout_gravity="center"
             tools:src="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
@@ -28,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/md_grey_100"
             android:layout_marginStart="@dimen/margin_padding_size_large"
             android:layout_marginEnd="@dimen/margin_padding_size_large"

@@ -17,7 +17,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/back_color"
             android:padding="4dp">
 
             <ImageView
@@ -35,7 +34,6 @@
                 android:id="@+id/tv_member_name"
                 android:fontFamily="@font/roboto"
                 android:text="MEMBER NAME"
-                android:textColor="@color/md_white_1000"
                 android:layout_below="@+id/imag_members"
                 android:layout_marginTop="4dp"
                 android:layout_centerHorizontal="true"
@@ -51,7 +49,6 @@
                 android:layout_centerHorizontal="true"
                 android:text="MEMBER_WORK"
                 android:textSize="16sp"
-                android:textColor="@color/md_white_1000"
                 />
 
         </RelativeLayout>
