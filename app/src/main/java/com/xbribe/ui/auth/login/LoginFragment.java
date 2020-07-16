@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
 import com.xbribe.data.models.User;
@@ -53,10 +54,10 @@ public class LoginFragment extends Fragment
     MaterialButton login;
 
     @BindView(R.id.et_email)
-    EditText email;
+    TextInputEditText email;
 
     @BindView(R.id.et_password)
-    EditText password;
+    TextInputEditText password;
 
     @BindView(R.id.new_to_xcom)
     TextView register;

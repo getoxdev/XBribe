@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Boolean isGPSon=false;
     private AddressReceiver addressReceiver;
     private Boolean isShowSettings=false;
-    private LocationManager locationManager;
     private static final int PERMISSION_REQUEST_CODE = 200;
 
     @Override
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         requestPermission();
 
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         /*if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
             if(!isShowSettings) {

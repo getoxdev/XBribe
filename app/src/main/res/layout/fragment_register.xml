@@ -1,129 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.auth.register.RegisterFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/activity_register_img"
+        android:layout_width="60dp"
+        android:src="@drawable/icon_main"
+        android:layout_height="60dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:id="@+id/tv_welcome_text"
+        android:focusable="true"
+        android:text="Welcome to XBribe"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/md_blue_A200"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_register_img"
+        android:textStyle="bold"/>
 
-        <ImageView
-            android:id="@+id/activity_register_img"
-            android:layout_width="60dp"
-            android:src="@drawable/icon_main"
-            android:layout_height="60dp"
-            android:layout_marginTop="28dp"
-            android:layout_centerHorizontal="true" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/editTextStyle"
+        android:id="@+id/input_layout1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_text"
+        android:layout_marginTop="52dp">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/et_email"
+            android:padding="8dp"
+            android:hint="Email"
+            android:drawableRight="@drawable/ic_email_black_24dp"
+            android:drawablePadding="10dp"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="160sp"
-            android:id="@+id/tv_welcome_text"
-            android:focusable="true"
-            android:text="Welcome to XBribe"
-            android:textAlignment="center"
-            android:fontFamily="@font/roboto"
-            android:textColor="@color/md_blue_A200"
-            android:textSize="30dp"
-            android:textStyle="bold">
-        </TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/editTextStyle"
+        android:id="@+id/input_layout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout1"
+        android:layout_marginTop="8dp"
+        app:passwordToggleEnabled="true"
+        android:elevation="10dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/editTextStyle"
-            android:id="@+id/inout_layout1"
-            android:layout_below="@+id/tv_welcome_text"
-            android:layout_marginTop="80dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/et_password"
+            android:padding="8dp"
+            android:drawableRight="@drawable/ic_visibility_off_24dp"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:drawablePadding="8dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/et_email"
-                android:layout_centerHorizontal="true"
-                android:hint="Email"
-                android:drawableRight="@drawable/ic_email_black_24dp"
-                android:drawablePadding="10dp"
-                android:inputType="text"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/editTextStyle"
+        android:id="@+id/input_layout3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout2"
+        android:layout_marginTop="8dp"
+        app:passwordToggleEnabled="true"
+        android:elevation="10dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/editTextStyle"
-            android:id="@+id/input_layout2"
-            android:layout_below="@+id/inout_layout1"
-            android:layout_marginTop="10dp"
-            app:passwordToggleEnabled="true"
-            android:elevation="10dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/et_confirmpassword"
+            android:padding="8dp"
+            android:drawableRight="@drawable/ic_visibility_off_24dp"
+            android:inputType="textPassword"
+            android:hint="Confirm Password"
+            android:drawablePadding="8dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:id="@+id/et_password"
-                android:layout_gravity="center"
-                android:layout_centerHorizontal="true"
-                android:drawableRight="@drawable/ic_visibility_off_24dp"
-                android:inputType="textPassword"
-                android:hint="Password"
-                android:drawablePadding="10dp"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/editTextStyle"
-            android:id="@+id/input_layout3"
-            android:layout_below="@+id/input_layout2"
-            android:layout_marginTop="10dp"
-            app:passwordToggleEnabled="true"
-            android:elevation="10dp">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_register"
+        style="@style/ButtonStyle"
+        app:backgroundTint="@color/md_blue_A200"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="0dp"
+        android:layout_marginTop="36dp"
+        android:padding="8dp"
+        android:text="Register"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout3"
+        android:textColor="@color/md_grey_50"
+        android:clickable="true"
+        android:elevation="5dp"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:id="@+id/et_confirmpassword"
-                android:layout_gravity="center"
-                android:layout_centerHorizontal="true"
-                android:drawableRight="@drawable/ic_visibility_off_24dp"
-                android:inputType="textPassword"
-                android:hint="Confirm Password"
-                android:drawablePadding="10dp"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/account_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_register"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:fontFamily="@font/roboto"
+        android:padding="8dp"
+        android:text="Already have a account? Login"
+        android:textColor="@color/md_blue_A200"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_register"
+        app:layout_constraintVertical_bias="0.5"/>
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_register"
-            style="@style/ButtonStyle"
-            app:backgroundTint="@color/md_blue_A200"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="REGISTER"
-            android:fontFamily="@font/roboto"
-            android:layout_below="@id/input_layout3"
-            android:textColor="@color/md_grey_50"
-            android:background="@color/colorAccent"
-            android:clickable="true"
-            android:elevation="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_below="@id/btn_register"
-            android:text="Already have a account? Login"
-            android:layout_marginTop="32dp"
-            android:id="@+id/account_login"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/md_blue_A200"
-            android:fontFamily="@font/roboto"
-            android:layout_marginLeft="100dp"
-            android:textSize="16sp"
-            android:clickable="true"/>
-    </RelativeLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
