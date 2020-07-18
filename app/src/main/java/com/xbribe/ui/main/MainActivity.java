@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NotificationFragment notificationFragment;
     private NearbyFragment nearbyFragment;
 
-    private static final int UPDATE_INTERVAL = 3000;
+    private static final int UPDATE_INTERVAL = 5000;
     private FusedLocationProviderClient locationProviderClient;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AddressReceiver addressReceiver;
     private Boolean isShowSettings=false;
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private int ctr=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -115,13 +116,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         requestPermission();
 
         final LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        /*if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-        {
-            if(!isShowSettings) {
-                isShowSettings = false;
-                showSettingsAlert();
-            }
-        }*/
 
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
@@ -141,15 +135,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 super.onLocationAvailability(locationAvailability);
                 if (locationAvailability.isLocationAvailable()) {
                     Log.i(TAG, "Location is available");
+                    ctr++;
                     isGPSon=true;
                     isShowSettings = true;
                 } else {
                     Log.i(TAG, "Location is unavailable");
                     isGPSon=false;
-                    if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                    if(ctr==1)
                     {
-                        isShowSettings = false;
-                        showSettingsAlert();
+                        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                            showSettingsAlert();
+                        }
+                    }
+                    else {
+                        isShowSettings=false;
+                        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                        {
+                            showSettingsAlert();
+                        }
+                        ctr++;
                     }
                 }
             }
@@ -171,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onStart() {
-
         startGettingLocation();
         super.onStart();
     }

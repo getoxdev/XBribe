@@ -47,8 +47,6 @@ public class AuthenticationActivity extends AppCompatActivity
             loginFragment=new LoginFragment();
             fragmentManager = getSupportFragmentManager();
             initFrag(loginFragment);
-
-
         }
 
         private void initFrag(Fragment fragment) {

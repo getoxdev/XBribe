@@ -45,9 +45,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CheckcaseFragment extends  Fragment
 {
-
-
-
     ArrayList<CollecImages> collecImages=new ArrayList<>();
 
     ArrayList<String>  imagelist=new ArrayList();

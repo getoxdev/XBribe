@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
+import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.function.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -27,9 +28,7 @@ import butterknife.ButterKnife;
 
 public class NotificationFragment extends Fragment
 {
-
-
-    AppDataManager appDataManager;
+    private AppDataManager appDataManager;
 
     @BindView(R.id.recycler_notify)
     RecyclerView recyclerView;
@@ -43,7 +42,8 @@ public class NotificationFragment extends Fragment
 
     List<NotificationModel> nlist;
 
-  Cursor cursor;
+
+    Cursor cursor;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +51,8 @@ public class NotificationFragment extends Fragment
         ButterKnife.bind(this,parent);
         databaseHelperNotice=new DatabaseHelperNotice(getContext());
         databaseHelperNotice.getWritableDatabase();
+
+        appDataManager = ((MyApplication) getActivity().getApplicationContext()).getDataManager();
         initreycycleradapter();
         return parent;
 
@@ -61,29 +63,26 @@ public class NotificationFragment extends Fragment
         if(cursor.getCount()==0)
         {
             showMessage("Error","Nothing found");
-
         }
         else
         {
             notificationAdapter = new NotificationAdapter(uploadlist(),getContext());
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(notificationAdapter);
-
         }
 
-        }
+    }
         private List<NotificationModel> uploadlist()
-    {
-        nlist=new ArrayList<>();
-        while (cursor.moveToNext())
         {
-            if(cursor.getString(3).equals(appDataManager.getEmail()))
+            nlist=new ArrayList<>();
+            while (cursor.moveToNext())
             {
+                if(cursor.getString(3).equals(appDataManager.getEmail()))
+                {
                 nlist.add(new NotificationModel(cursor.getString(5), cursor.getString(4)));
+                }
             }
-        }
         return  nlist;
-
     }
     private void showMessage(String title,String message)
     {
@@ -92,7 +91,6 @@ public class NotificationFragment extends Fragment
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
-
     }
 }
 
