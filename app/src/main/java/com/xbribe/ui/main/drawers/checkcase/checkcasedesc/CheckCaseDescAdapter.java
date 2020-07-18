@@ -42,8 +42,6 @@ public class CheckCaseDescAdapter  extends RecyclerView.Adapter<CheckCaseDescAda
         TextView organisation_name;
         @BindView(R.id.tv_organization_category)
         TextView organisation_category;
-        @BindView(R.id.tv_case_process)
-        TextView caseprocess;
         @BindView(R.id.tv_case_description)
         TextView case_description;
         @BindView(R.id.tv_location)
@@ -59,7 +57,6 @@ public class CheckCaseDescAdapter  extends RecyclerView.Adapter<CheckCaseDescAda
         {
             super(itemView);
             ButterKnife.bind(this,itemView);
-
         }
     }
 }

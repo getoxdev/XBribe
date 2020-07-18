@@ -23,9 +23,7 @@ public class RetrofitProvider {
         if (instance == null) {
             synchronized (RetrofitProvider.class) {
                 if (instance == null) {
-
                     gson = new GsonBuilder().serializeNulls().create();
-
                     OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(chain -> {
 
                         Request original = chain.request();

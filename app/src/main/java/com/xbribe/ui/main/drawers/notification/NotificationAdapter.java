@@ -21,7 +21,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     List<NotificationModel> nlist;
     Context context;
 
-    public NotificationAdapter(List<NotificationModel> nlist, Context context)
+    public NotificationAdapter( Context context,List<NotificationModel> nlist)
     {
         this.nlist = nlist;
         this.context = context;

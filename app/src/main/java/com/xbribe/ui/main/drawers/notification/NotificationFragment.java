@@ -66,7 +66,7 @@ public class NotificationFragment extends Fragment
         }
         else
         {
-            notificationAdapter = new NotificationAdapter(uploadlist(),getContext());
+            notificationAdapter = new NotificationAdapter(getContext(),uploadlist());
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(notificationAdapter);
         }
@@ -77,9 +77,9 @@ public class NotificationFragment extends Fragment
             nlist=new ArrayList<>();
             while (cursor.moveToNext())
             {
-                if(cursor.getString(3).equals(appDataManager.getEmail()))
+                if(cursor.getString(1).equals(appDataManager.getEmail()))
                 {
-                nlist.add(new NotificationModel(cursor.getString(5), cursor.getString(4)));
+                nlist.add(new NotificationModel(cursor.getString(3), cursor.getString(2)));
                 }
             }
         return  nlist;
