@@ -112,7 +112,7 @@ public class Step_one_Fragment extends Fragment {
         submissionActivityViewModel.getOrganizationsDetails();
         appDataManager = ((MyApplication)getActivity().getApplication()).getDataManager();
 
-        tvAddress.setText(appDataManager.getAddress());
+        tvAddress.setText(appDataManager.getAddress().trim());
         return parent;
     }
 

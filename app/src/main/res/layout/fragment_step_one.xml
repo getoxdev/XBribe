@@ -2,6 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintTop_toBottomOf="parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
@@ -16,33 +20,34 @@
             android:layout_height="wrap_content"
             android:id="@+id/relative_layout"
             android:padding="2dp"
-            android:background="@color/md_pink_600">
+            android:background="@color/md_blue_700">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/cardview_one"
-                android:padding="2dp"
-                android:background="@color/md_pink_600"
+                app:cardElevation="4dp"
                 android:elevation="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
+                    android:background="@color/md_blue_50"
                     android:id="@+id/relative_layout_one">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:text="STEP 1"
+                        android:text="Fillup Necessary Details"
                         android:id="@+id/tv_step1"
                         android:textStyle="bold"
                         android:fontFamily="@font/roboto"
-                        android:textColor="@color/md_pink_800"
-                        android:textSize="24dp"
-                        android:layout_centerHorizontal="true"
-                        />
+                        android:textColor="@color/md_pink_700"
+                        android:textSize="20sp"
+                        android:layout_centerHorizontal="true" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -50,8 +55,8 @@
                         android:layout_gravity="center"
                         android:focusable="true"
                         android:fontFamily="@font/roboto"
-                        android:text="Information of the case"
-                        android:textColor="@color/md_pink_800"
+                        android:text="Information of the Case"
+                        android:textColor="@color/md_pink_700"
                         android:textSize="18sp"
                         android:layout_below="@+id/tv_step1"
                         android:textStyle="bold"
@@ -87,17 +92,22 @@
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/editTextStyle"
                             android:layout_marginTop="8dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
                             android:layout_below="@+id/spinner_department"
                             android:id="@+id/input_layout1"
                             android:elevation="10dp">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_name_organization"
-                            android:layout_height="match_parent"
-                            android:layout_width="match_parent"
-                            android:hint="Name of the Organization"
-                            android:drawablePadding="10dp"
-                            android:inputType="text" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_name_organization"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:textSize="16sp"
+                                android:hint="Name of the Organization"
+                                android:inputType="text" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,7 +119,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/relative_layout1"
-                        android:layout_marginTop="42dp"
+                        android:layout_marginTop="36dp"
                         android:id="@+id/relative_layout2">
 
                         <TextView
@@ -118,16 +128,23 @@
                             android:focusable="true"
                             android:fontFamily="@font/roboto"
                             android:text="Location"
-                            android:textColor="@color/md_pink_800"
+                            android:textColor="@color/md_pink_700"
                             android:textSize="18sp"
                             android:id="@+id/tv_location"
                             android:textStyle="bold"
                             android:visibility="visible">
+
                         </TextView>
+
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/editTextStyle"
                             android:layout_marginTop="12dp"
                             android:layout_below="@+id/tv_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:padding="2dp"
                             android:id="@+id/input_layout2"
                             android:elevation="10dp">
 
@@ -135,8 +152,8 @@
                                 android:id="@+id/et_city"
                                 android:layout_height="match_parent"
                                 android:layout_width="match_parent"
+                                android:textSize="16sp"
                                 android:hint="City"
-                                android:drawablePadding="10dp"
                                 android:inputType="text" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -144,7 +161,12 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/editTextStyle"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
                             android:layout_below="@+id/input_layout2"
                             android:id="@+id/input_layout3"
                             android:elevation="10dp">
@@ -153,8 +175,8 @@
                                 android:id="@+id/et_pincode"
                                 android:layout_height="match_parent"
                                 android:layout_width="match_parent"
+                                android:textSize="16sp"
                                 android:hint="PIN Code"
-                                android:drawablePadding="10dp"
                                 android:inputType="number" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -164,13 +186,15 @@
                             android:id="@+id/tv_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="12dp"
+                            android:padding="4dp"
                             android:fontFamily="@font/roboto"
                             android:hint="Address"
                             android:textColor="@color/md_black_1000"
                             android:textSize="16sp"
                             android:elevation="2dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
                             android:layout_below="@+id/input_layout3"/>
 
                     </RelativeLayout>
@@ -179,7 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/relative_layout3"
-                        android:layout_marginTop="42dp"
+                        android:layout_marginTop="36dp"
                         android:layout_below="@+id/relative_layout2">
 
                         <TextView
@@ -190,15 +214,20 @@
                             android:fontFamily="@font/roboto"
                             android:text="Brief description on the case"
                             android:textColor="@color/md_pink_800"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textStyle="bold"
                             android:visibility="visible">
                         </TextView>
+
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/editTextStyle"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="12dp"
                             android:layout_below="@+id/tv_brief"
-                            android:layout_marginLeft="60dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:padding="2dp"
                             android:id="@+id/input_layout4"
                             android:elevation="10dp">
 
@@ -206,27 +235,28 @@
                                 android:id="@+id/et_desc"
                                 android:layout_height="match_parent"
                                 android:layout_width="match_parent"
+                                android:textSize="16sp"
                                 android:hint="Description"
-                                android:drawablePadding="10dp"
-                                android:inputType="text" />
+                                android:inputType="textLongMessage|textMultiLine" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
 
                     </RelativeLayout>
+
                     <Button
                         android:text="PROCEED"
                         android:id="@+id/btn_proceed"
                         style="@style/ButtonStyle"
                         android:layout_below="@id/relative_layout3"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="24dp"
                         android:textColor="@color/md_grey_50"
                         android:layout_centerHorizontal="true">
                     </Button>
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
 
     </ScrollView>

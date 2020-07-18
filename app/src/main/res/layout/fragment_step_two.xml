@@ -11,7 +11,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/back_color"
+            android:background="@color/md_blue_50"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -24,28 +24,29 @@
                     android:layout_marginBottom="8dp"
                     android:id="@+id/upload_options">
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
                         android:orientation="vertical"
                         android:layout_margin="8dp"
-                        android:layout_centerHorizontal="true"
-                        android:elevation="10dp"
+                        android:layout_centerVertical="true"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="8dp"
                         android:id="@+id/card_img"
                         android:layout_toLeftOf="@id/card_aud">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/back_color">
+                            android:background="@color/md_pink_500">
 
                             <ImageButton
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:id="@+id/imag_camera"
                                 android:tag="1"
-                                android:background="@color/md_white_1000"
+                                android:background="@color/md_pink_500"
                                 android:src="@drawable/ic_camera_alt_black_24dp"
                                 android:layout_centerInParent="true"/>
 
@@ -61,29 +62,30 @@
                                 android:textColor="@color/md_white_1000"/>
 
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:orientation="vertical"
                         android:layout_margin="8dp"
-                        android:elevation="10dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="8dp"
+                        android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/card_aud">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/back_color">
+                            android:background="@color/md_pink_500">
 
                             <ImageButton
                                 android:layout_width="60dp"
                                 android:id="@+id/imag_audio"
                                 android:tag="2"
                                 android:layout_height="60dp"
-                                android:background="@color/md_white_1000"
+                                android:background="@color/md_pink_500"
                                 android:src="@drawable/ic_audiotrack_black_24dp"
                                 android:layout_centerInParent="true"/>
 
@@ -99,24 +101,23 @@
                                 android:textColor="@color/md_white_1000"/>
 
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:orientation="vertical"
                         android:layout_margin="8dp"
-                        android:elevation="10dp"
                         android:paddingRight="20dp"
-                        android:layout_centerHorizontal="true"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="8dp"
+                        android:layout_centerVertical="true"
                         android:id="@+id/card_vid"
                         android:layout_toRightOf="@id/card_aud">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/back_color">
+                            android:background="@color/md_pink_500">
 
                             <ImageButton
                                 android:layout_width="60dp"
@@ -124,7 +125,7 @@
                                 android:tag="3"
                                 android:layout_height="60dp"
                                 android:src="@drawable/ic_videocam_black_24dp"
-                                android:background="@color/md_white_1000"
+                                android:background="@color/md_pink_500"
                                 android:layout_centerInParent="true"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -137,7 +138,7 @@
                                 android:layout_marginTop="4dp"
                                 android:textColor="@color/md_white_1000"/>
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
                 </RelativeLayout>
 
             <Button
