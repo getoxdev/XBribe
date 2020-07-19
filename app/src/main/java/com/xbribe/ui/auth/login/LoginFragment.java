@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
@@ -50,6 +52,9 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class LoginFragment extends Fragment
 
 {
+    @BindView(R.id.scrollable)
+    ConstraintLayout constraintLayout;
+
     @BindView(R.id.btn_login)
     MaterialButton login;
 
@@ -97,11 +102,15 @@ public class LoginFragment extends Fragment
         viewModel.getLoginResponse().observe(this,data-> {
             if(data==null)
             {
-                Toast.makeText(getActivity(), "Wrong Credentials", Toast.LENGTH_LONG).show();
+                String msg="Wrong Credentials";
+                showSnackbar(msg);
+
             }
             else
             {
-                Toast.makeText(getActivity(), "Logged in successfully", Toast.LENGTH_SHORT).show();
+
+                String msg="Logged In Successfully";
+                showSnackbar(msg);
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
             }
@@ -123,7 +132,10 @@ public class LoginFragment extends Fragment
 
         if(etEmail.isEmpty() || etPassword.isEmpty())
         {
-            Toast.makeText(getActivity(), "Please enter all the details!", Toast.LENGTH_LONG).show();
+
+            String msg="Please enter all the details";
+            showSnackbar(msg);
+
         }
         else
         {
@@ -139,4 +151,18 @@ public class LoginFragment extends Fragment
         ft.commit();
 
     }
+    public void showSnackbar(String msg)
+    {
+        Snackbar snackbar= Snackbar.make(constraintLayout,msg,Snackbar.LENGTH_INDEFINITE)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Snackbar snackbar1=Snackbar.make(constraintLayout,"Undo Successful",Snackbar.LENGTH_SHORT);
+                        snackbar1.show();
+                    }
+                });
+        snackbar.show();
+    }
+
 }

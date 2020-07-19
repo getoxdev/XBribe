@@ -36,8 +36,6 @@ public class CheckCaseDescFragment extends Fragment
     TextView case_description;
     @BindView(R.id.tv_organization_category)//ministry
     TextView organization_category;
-    @BindView(R.id.tv_case_process)
-    TextView caseprocess;
     @BindView(R.id.tv_location)
     TextView location;
     @BindView(R.id.tv_images_no)
@@ -66,7 +64,6 @@ public class CheckCaseDescFragment extends Fragment
         databaseHelper.getWritableDatabase();
         position =getArguments().getInt("Position passed");
         displaydetails(position);
-        Toast.makeText(getContext(),"position"+position,Toast.LENGTH_SHORT).show();
         back.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -97,7 +94,6 @@ public class CheckCaseDescFragment extends Fragment
                 imageno.setText(cursor.getString(7));
                 audiono.setText(cursor.getString(8));
                 videono.setText(cursor.getString(9));
-                caseprocess.setText(cursor.getString(10));
 
             } while (cursor.moveToNext());
         }

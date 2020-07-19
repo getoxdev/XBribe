@@ -5,15 +5,15 @@ public class CheckcaseModel
     private String  crimeimage;
    private String name_organization;
     private String case_desc;
-    private String caseprocess;
+
     private String casedetail;
 
 
-    public CheckcaseModel(String crimeimage, String name_organization, String case_desc, String caseprocess, String casedetail) {
+    public CheckcaseModel(String crimeimage, String name_organization, String case_desc,  String casedetail)
+    {
         this.crimeimage = crimeimage;
         this.name_organization = name_organization;
         this.case_desc = case_desc;
-        this.caseprocess = caseprocess;
         this.casedetail = casedetail;
     }
 
@@ -39,14 +39,6 @@ public class CheckcaseModel
 
     public void setCase_desc(String case_desc) {
         this.case_desc = case_desc;
-    }
-
-    public String getCaseprocess() {
-        return caseprocess;
-    }
-
-    public void setCaseprocess(String caseprocess) {
-        this.caseprocess = caseprocess;
     }
 
     public String getCasedetail() {

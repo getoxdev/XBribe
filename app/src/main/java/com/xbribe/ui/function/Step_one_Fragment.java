@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.xbribe.Constants;
 import com.xbribe.R;
@@ -73,6 +75,10 @@ public class Step_one_Fragment extends Fragment {
     private AppDataManager appDataManager;
 
     public String name_oraganisation,city,pincode,description,department;
+
+    @BindView(R.id.relative_layout)
+    RelativeLayout relativeLayout;
+
 
     @BindView(R.id.btn_proceed)
     Button proceed;
@@ -166,7 +172,9 @@ public class Step_one_Fragment extends Fragment {
          description = etDescription.getText().toString();
          if(name_oraganisation.isEmpty()==true || city.isEmpty()==true ||  pincode.isEmpty()==true  ||  description.isEmpty()==true)
          {
-             Toast.makeText(getContext(),"Please fill in the details",Toast.LENGTH_SHORT).show();
+              String msg="Please fill in the details";
+              showSnackbar(msg);
+
          }
          else
          {
@@ -188,5 +196,18 @@ public class Step_one_Fragment extends Fragment {
          }
 
      }
+    public void showSnackbar(String msg)
+    {
+        Snackbar snackbar= Snackbar.make(relativeLayout,msg,Snackbar.LENGTH_INDEFINITE)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Snackbar snackbar1=Snackbar.make(relativeLayout,"Undo Successful",Snackbar.LENGTH_SHORT);
+                        snackbar1.show();
+                    }
+                });
+        snackbar.show();
+    }
 
 }

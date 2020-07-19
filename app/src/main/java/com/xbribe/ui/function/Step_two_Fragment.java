@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -76,6 +79,13 @@ public class Step_two_Fragment  extends Fragment
     private FragmentManager fragmentManager;
 
     DatabaseHelper databaseHelper;
+
+    @BindView(R.id.pb_progress)
+    ProgressBar pbProgress;
+
+    @BindView(R.id.relativelayout)
+    RelativeLayout relativeLayout;
+
 
     @BindView(R.id.imag_camera)
     ImageButton imgChoose;
@@ -132,10 +142,13 @@ public class Step_two_Fragment  extends Fragment
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                showProgress();
                 uploadImage();
                 uploadAudio();
                 uploadVideo();
+                hideProgress();
             }
         });
 
@@ -236,6 +249,7 @@ public class Step_two_Fragment  extends Fragment
     }
     private void uploadImage()
     {
+
         for(int i=0;i<imageList.size();i++)
         {
             Uri mImageUri = imageList.get(i);
@@ -245,8 +259,10 @@ public class Step_two_Fragment  extends Fragment
                 UploadTask imageTask = imageReference.putFile(mImageUri);
                 imageTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity(), "Upload successful", Toast.LENGTH_SHORT).show();
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                    {
+                        String msg="Upload Successfull";
+                        showSnackbar(msg);
 
                         Task<Uri> urlTask = imageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                             @Override
@@ -273,13 +289,15 @@ public class Step_two_Fragment  extends Fragment
                         .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Not uploaded!", Toast.LENGTH_SHORT).show();
+                        String msg="Not  Uploaded";
+                        showSnackbar(msg);
                     }
                 });
             }
             else
             {
-                Toast.makeText(getActivity(), "No file selected!", Toast.LENGTH_SHORT).show();
+                String msg="No File Selected";
+                showSnackbar(msg);
             }
         }
         imageList.clear();
@@ -287,6 +305,7 @@ public class Step_two_Fragment  extends Fragment
 
     private void uploadAudio()
     {
+
         for(int i=0;i<audioList.size();i++)
         {
             Uri mAudioUri = audioList.get(i);
@@ -297,7 +316,8 @@ public class Step_two_Fragment  extends Fragment
                 audioTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity(), "Upload successful", Toast.LENGTH_SHORT).show();
+                        String msg="Upload Successfull";
+                        showSnackbar(msg);
                         Task<Uri> urlTask = audioTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                             @Override
                             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -322,13 +342,15 @@ public class Step_two_Fragment  extends Fragment
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Not uploaded!", Toast.LENGTH_SHORT).show();
+                        String msg="Not Uploaded";
+                        showSnackbar(msg);
                     }
                 });
             }
             else
             {
-                Toast.makeText(getActivity(), "No file selected!", Toast.LENGTH_SHORT).show();
+                String msg="No File Selected";
+                showSnackbar(msg);
             }
         }
         audioList.clear();
@@ -346,7 +368,8 @@ public class Step_two_Fragment  extends Fragment
                 videoTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity(), "Upload successful", Toast.LENGTH_SHORT).show();
+                        String msg="Upload Successfully";
+                        showSnackbar(msg);
 
                         Task<Uri> urlTask = videoTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                             @Override
@@ -373,13 +396,15 @@ public class Step_two_Fragment  extends Fragment
 
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Not uploaded!", Toast.LENGTH_SHORT).show();
+                        String msg="Not uploaded";
+                        showSnackbar(msg);
                     }
                 });
             }
             else
             {
-                Toast.makeText(getActivity(), "No file selected!", Toast.LENGTH_SHORT).show();
+                String msg="No File Selected";
+                showSnackbar(msg);
             }
         }
         videoList.clear();
@@ -388,24 +413,30 @@ public class Step_two_Fragment  extends Fragment
     @OnClick(R.id.btn_submit)
     void submit()
     {
+
+        showProgress();
         submissionActivityViewModel.reportCaseDetails(appDataManager.getToken(),ministryId,department,name,city,appDataManager.getAddress(),pincode,appDataManager.getLatitude(),appDataManager.getLongitude(),description,imageURL,audioURL,videoURL);
 
         submissionActivityViewModel.getCaseResponse().observe(this, data ->
         {
             if(data == null)
             {
-                Toast.makeText(getActivity(), "Error! Please try again.", Toast.LENGTH_LONG).show();
+                String msg="Error,Please try again";
+                showSnackbar(msg);
             }
-            else {
+            else
+                {
                 String imagescount=String.valueOf(imageCount);
                 String audiocount=String.valueOf(audioCount);
                 String videocount=String.valueOf(videoCount);
-
                 boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),appDataManager.getAddress(),description,appDataManager.getMinistry(),department,name,imagescount,audiocount,videocount,"CASE_PROCESS","CASE ID",appDataManager.getID());
                 if(ifInserted==true)
                 {
                     Toast.makeText(getActivity(),"Data inserted",Toast.LENGTH_SHORT).show();
                 }
+                hideProgress();
+                String msg="Reported Successfully";
+                showSnackbar(msg);
                 Toast.makeText(getActivity(), "Reported Successfully", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getActivity(), MainActivity.class));
             }
@@ -430,5 +461,27 @@ public class Step_two_Fragment  extends Fragment
         audioURL.clear();
         videoURL.clear();
         super.onDestroy();
+    }
+
+    public void showSnackbar(String msg)
+    {
+        Snackbar snackbar= Snackbar.make(relativeLayout,msg,Snackbar.LENGTH_INDEFINITE)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Snackbar snackbar1=Snackbar.make(relativeLayout,"Undo Successful",Snackbar.LENGTH_SHORT);
+                        snackbar1.show();
+                    }
+                });
+        snackbar.show();
+    }
+
+    public void showProgress() {
+        pbProgress.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        pbProgress.setVisibility(View.GONE);
     }
 }

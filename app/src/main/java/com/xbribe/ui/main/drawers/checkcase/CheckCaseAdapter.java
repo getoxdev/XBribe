@@ -68,7 +68,6 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
         Glide.with(context).load(checklist.get(position).getCrimeimage()).into(holder.imageView);
         holder.organization_name.setText(checklist.get(position).getName_organization());
         holder.oranization_desc.setText(checklist.get(position).getCase_desc());
-        holder.caseprocess.setText(checklist.get(position).getCaseprocess());
         holder.casedetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -106,8 +105,6 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
         TextView organization_name;
         @BindView(R.id.tv_case_description)
         TextView oranization_desc;
-        @BindView(R.id.tv_case_process)
-        TextView caseprocess;
         @BindView(R.id.btn_case_detail)
         Button casedetail;
 

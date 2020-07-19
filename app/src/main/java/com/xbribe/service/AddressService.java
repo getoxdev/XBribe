@@ -19,7 +19,8 @@ import com.xbribe.Constants;
 import java.util.List;
 import java.util.Locale;
 
-public class AddressService extends IntentService {
+public class AddressService extends IntentService
+{
 
     private ResultReceiver resultReceiver;
     private Location deviceLocation;

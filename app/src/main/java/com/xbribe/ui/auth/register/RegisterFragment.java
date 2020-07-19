@@ -12,12 +12,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.xbribe.R;
 import com.xbribe.data.models.User;
 import com.xbribe.ui.auth.login.LoginFragment;
@@ -29,6 +31,9 @@ import butterknife.OnClick;
 
 public class RegisterFragment extends Fragment
 {
+    @BindView(R.id.constraint)
+    ConstraintLayout constraintLayout;
+
     @BindView(R.id.account_login)
     TextView login;
 
@@ -68,11 +73,14 @@ public class RegisterFragment extends Fragment
         viewModel.getRegisterResponse().observe(this, data->{
             if(data==null)
             {
-                Toast.makeText(getActivity(),"Error! Please try again.", Toast.LENGTH_LONG).show();
+                String msg="Error,Please try again";
+                showSnackbar(msg);
+
             }
             else
             {
-                Toast.makeText(getActivity(), "User registered successfully", Toast.LENGTH_SHORT).show();
+                String msg="User registered successfully";
+                showSnackbar(msg);
                 fragmentManager = getActivity().getSupportFragmentManager();
                 initFrag(loginFragment);
             }
@@ -115,7 +123,8 @@ public class RegisterFragment extends Fragment
 
         if(email.isEmpty() || password.isEmpty() || confirmpassword.isEmpty())
         {
-            Toast.makeText(getActivity(), "Please enter all the details!", Toast.LENGTH_LONG).show();
+            String msg="Please enter all the details!";
+            showSnackbar(msg);
         }
         else
         {
@@ -126,7 +135,8 @@ public class RegisterFragment extends Fragment
             }
             else
             {
-                Toast.makeText(getActivity(), "Passwords don't match!", Toast.LENGTH_LONG).show();
+                String msg="Passwords don't match!";
+                showSnackbar(msg);
             }
         }
     }
@@ -138,4 +148,18 @@ public class RegisterFragment extends Fragment
         ft.commit();
 
     }
+    public void showSnackbar(String msg)
+    {
+        Snackbar snackbar= Snackbar.make(constraintLayout,msg,Snackbar.LENGTH_INDEFINITE)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Snackbar snackbar1=Snackbar.make(constraintLayout,"Undo Successful",Snackbar.LENGTH_SHORT);
+                        snackbar1.show();
+                    }
+                });
+        snackbar.show();
+    }
+
 }

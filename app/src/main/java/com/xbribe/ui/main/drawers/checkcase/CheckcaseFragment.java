@@ -129,7 +129,7 @@ public class CheckcaseFragment extends  Fragment
             int i=0;
             while (cursor.moveToNext())
             {
-             caselist.add(new CheckcaseModel(imag.get(i), cursor.getString(5), cursor.getString(4), cursor.getString(10), "GET DETAILS"));
+             caselist.add(new CheckcaseModel(imag.get(i), cursor.getString(5), cursor.getString(4), "GET DETAILS"));
              i++;
             }
 
