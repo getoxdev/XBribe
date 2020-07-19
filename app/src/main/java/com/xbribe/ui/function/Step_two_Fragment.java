@@ -21,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 
@@ -69,12 +71,11 @@ public class Step_two_Fragment  extends Fragment
     private ArrayList<String> videoURL = new ArrayList<String>();
 
     private StorageReference mStorageRef;
-    private DatabaseReference mDatabaseRef;
-
     private AppDataManager appDataManager;
+    private SecretFragment secretFragment;
+    private FragmentManager fragmentManager;
 
     DatabaseHelper databaseHelper;
-    SQLiteDatabase database;
 
     @BindView(R.id.imag_camera)
     ImageButton imgChoose;
@@ -105,11 +106,6 @@ public class Step_two_Fragment  extends Fragment
         ButterKnife.bind(this,parent);
         submissionActivityViewModel=ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         appDataManager = ((MyApplication) getActivity().getApplication()).getDataManager();
-
-        //Code for calling the Receiver class
-        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
-        filter.addAction(Intent.ACTION_USER_PRESENT);
 
         imgChoose.setOnClickListener(new View.OnClickListener()
         {
@@ -152,7 +148,6 @@ public class Step_two_Fragment  extends Fragment
         Bundle bundle = this.getArguments();
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         databaseHelper=new DatabaseHelper(getActivity());
         databaseHelper.getWritableDatabase();
         ministryId=getArguments().getString("MINISTRYID");
@@ -421,9 +416,11 @@ public class Step_two_Fragment  extends Fragment
     @OnClick(R.id.secret_camera)
     void openSecretCamera()
     {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        getActivity().startActivity(cameraIntent);
+        secretFragment = new SecretFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_frame_two,secretFragment)
+                .addToBackStack("Step 2")
+                .commit();
     }
 
     @Override

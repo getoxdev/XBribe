@@ -82,4 +82,7 @@ dependencies {
 
     //animation
     implementation 'com.airbnb.android:lottie:3.4.1'
+
+    //secret_camera
+    implementation 'com.kevalpatel2106:hiddencamera:1.3.5'
 }

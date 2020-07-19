@@ -68,14 +68,11 @@ public class Step_one_Fragment extends Fragment {
     private SpinnerAdapter1 spinnerAdapter1;
     private SpinnerAdapter2 spinnerAdapter2;
 
-    private Step_two_Fragment step_two_fragment;
+    private Step_two_Fragment step2Fragment;
 
     private AppDataManager appDataManager;
 
-    private FragmentManager fragmentManager;
-
-    String name_oraganisation,city,pincode,description;
-    String department;
+    public String name_oraganisation,city,pincode,description,department;
 
     @BindView(R.id.btn_proceed)
     Button proceed;
@@ -101,7 +98,7 @@ public class Step_one_Fragment extends Fragment {
     @BindView(R.id.spinner_department)
     Spinner spinnerDepartment;
 
-    Organizations organizations;
+    private Organizations organizations;
 
     @Nullable
     @Override
@@ -174,7 +171,7 @@ public class Step_one_Fragment extends Fragment {
          else
          {
              Bundle bundle = new Bundle();
-             step_two_fragment = new Step_two_Fragment();
+             step2Fragment = new Step_two_Fragment();
 
              bundle.putString("MINISTRYID",appDataManager.getOrgID());
              bundle.putString("DEPARTMENT",appDataManager.getDepartment());
@@ -182,8 +179,11 @@ public class Step_one_Fragment extends Fragment {
              bundle.putString("CITY",city);
              bundle.putString("PINCODE",pincode);
              bundle.putString("DESCRIPTION",description);
-             step_two_fragment.setArguments(bundle);
-             getFragmentManager().beginTransaction().replace(R.id.main_frame_two,step_two_fragment).commit();
+             step2Fragment.setArguments(bundle);
+             getActivity().getSupportFragmentManager().beginTransaction()
+                     .replace(R.id.main_frame_two,step2Fragment)
+                     .addToBackStack("Step 1")
+                     .commit();
 
          }
 

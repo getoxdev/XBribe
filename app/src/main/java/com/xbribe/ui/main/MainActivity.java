@@ -61,6 +61,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_MEDIA_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
@@ -200,13 +201,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
         int result3 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+        int result4 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
+        int result5 = ContextCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO);
+
 
         return result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED
-                && result3 == PackageManager.PERMISSION_GRANTED;
+                && result3 == PackageManager.PERMISSION_GRANTED && result4 == PackageManager.PERMISSION_GRANTED
+                && result5 == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, CAMERA, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, CAMERA, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, RECORD_AUDIO}, PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -217,9 +222,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    boolean storageAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+                    boolean storageReadAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+                    boolean storageWriteAccepted = grantResults[3] == PackageManager.PERMISSION_GRANTED;
+                    boolean audioAccepted = grantResults[4] == PackageManager.PERMISSION_GRANTED;
 
-                    if (locationAccepted && cameraAccepted && storageAccepted) {
+                    if (locationAccepted && cameraAccepted && storageReadAccepted && storageWriteAccepted && audioAccepted) {
                         startGettingLocation();
                     }
                     else {

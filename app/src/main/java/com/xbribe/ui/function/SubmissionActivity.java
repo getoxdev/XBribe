@@ -70,7 +70,6 @@ public class SubmissionActivity  extends AppCompatActivity
     private Boolean isGPSon=false;
     private AddressReceiver addressReceiver;
     private Boolean isShowSettings=false;
-    private static final int PERMISSION_REQUEST_CODE = 200;
     private int ctr=1;
 
     private FragmentManager fragmentManager;
@@ -86,7 +85,6 @@ public class SubmissionActivity  extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentManager = getSupportFragmentManager();
         step_one_fragment=new Step_one_Fragment();
         initFrag(step_one_fragment);

@@ -61,8 +61,6 @@ public class CheckcaseFragment extends  Fragment
     @BindView(R.id.recycler_checkcase)
     RecyclerView recyclerView;
 
-    RecyclerView.LayoutManager layoutManager;
-
     CheckCaseAdapter checkCaseAdapter;
 
     List<CheckcaseModel> caselist;
