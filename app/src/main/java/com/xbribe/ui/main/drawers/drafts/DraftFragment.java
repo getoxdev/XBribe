@@ -13,13 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xbribe.R;
 
+import com.xbribe.ui.function.Step_two_Fragment;
 import com.xbribe.ui.function.SubmissionActivity;
 import com.xbribe.ui.main.drawers.checkcase.CheckcaseModel;
+import com.xbribe.ui.main.drawers.checkcase.checkcasedesc.CheckCaseDescFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,8 @@ public class DraftFragment extends Fragment
 {
     @BindView(R.id.recycler_checkdrafts)
     RecyclerView recyclerView;
+
+    FragmentManager fragmentManager;
 
 
 
@@ -65,22 +71,37 @@ public class DraftFragment extends Fragment
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
-           // int position = viewHolder.getAdapterPosition();
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
+            int position = viewHolder.getAdapterPosition();
            // Log.d("Position", "onClick: POsition ::: " + position);
-
-            goToNextActivity();
+            goToSteptwo(position);
         }
     };
 
-    private void goToNextActivity()
+    private void goToSteptwo(int position)
     {
-
-        Intent intent = new Intent(getActivity(), SubmissionActivity.class);
-       // intent.putExtra("Position", position);
-        startActivity(intent);
+        Step_two_Fragment step_two_fragment=new Step_two_Fragment();
+        Bundle bundle=new Bundle();
+        cursor = databaseSaveDraft.getrowdetails(position);
+        //Log.i(TAG, "Position"+position);
+        if (cursor.moveToFirst())
+        {
+            do {
+                bundle.putString("MINISTRYID", cursor.getString(1));
+                bundle.putString("DEPARTMENT", cursor.getString(5));
+                bundle.putString("ORGANISATION", cursor.getString(6));
+                bundle.putString("CITY", cursor.getString(4));
+                bundle.putString("PINCODE", cursor.getString(3));
+                bundle.putString("DESCRIPTION", cursor.getString(7));
+            }
+            while (cursor.moveToNext());
+        }
+        step_two_fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_frame,step_two_fragment)
+                .addToBackStack("Step 1")
+                .commit();
     }
-
 
     private void initrecycleradapter()
     {

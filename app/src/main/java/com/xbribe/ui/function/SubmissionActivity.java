@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
@@ -47,6 +48,7 @@ import com.xbribe.ui.main.ReportFragment;
 import com.xbribe.ui.main.drawers.ContactFragment;
 import com.xbribe.ui.main.drawers.aboutus.AboutUsFragment;
 import com.xbribe.ui.main.drawers.checkcase.CheckcaseFragment;
+import com.xbribe.ui.main.drawers.drafts.DatabaseSaveDraft;
 
 import java.util.ArrayList;
 
@@ -76,6 +78,13 @@ public class SubmissionActivity  extends AppCompatActivity
     private Step_one_Fragment step_one_fragment;
     private AppDataManager appDataManager;
 
+    DatabaseSaveDraft databaseSaveDraft;
+
+    Step_two_Fragment step_two_fragment;
+
+    Cursor cursor;
+    String key="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -85,29 +94,11 @@ public class SubmissionActivity  extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        databaseSaveDraft=new DatabaseSaveDraft(this);
+        databaseSaveDraft.getWritableDatabase();
         fragmentManager = getSupportFragmentManager();
         step_one_fragment=new Step_one_Fragment();
         initFrag(step_one_fragment);
-
-        /* Bundle bundle=this.getArguments();
-        if(!(bundle==null))
-        {
-            int x=getArguments().getInt("Position");
-            Cursor cursor=databaseSaveDraft.getrowdetails(x);
-            if (cursor.moveToFirst())
-            {
-                do
-                    {
-                    etpincode.setText(cursor.getString(3));
-                    etCity.setText(cursor.getString(4));
-                    etName.setText(cursor.getString(6));
-                    etDescription.setText(cursor.getString(7));
-
-                      }  while (cursor.moveToNext());
-            }
-        }
-         */
-        Intent intent=getIntent();
         appDataManager = ((MyApplication) getApplication()).getDataManager();
         final LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);

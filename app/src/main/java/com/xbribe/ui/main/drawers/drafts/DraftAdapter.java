@@ -77,8 +77,6 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
 
     }
 
-
-
     @Override
     public int getItemCount()
     {
@@ -110,8 +108,10 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
 
 
 
-        public Viewholder(@NonNull View itemView) {
+        public Viewholder(@NonNull View itemView)
+        {
             super(itemView);
+            itemView.setTag(this);
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(onItemClickListener);
         }
