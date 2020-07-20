@@ -138,6 +138,22 @@ public class RegisterFragment extends Fragment
                 String msg="Passwords don't match!";
                 showSnackbar(msg);
             }
+
+            viewModel.getRegisterResponse().observe(this, data->{
+                if(data==null)
+                {
+                    String msg="Error,Please try again";
+                    showSnackbar(msg);
+
+                }
+                else
+                {
+                    String msg="User registered successfully";
+                    showSnackbar(msg);
+                    fragmentManager = getActivity().getSupportFragmentManager();
+                    initFrag(loginFragment);
+                }
+            });
         }
     }
 
@@ -150,15 +166,7 @@ public class RegisterFragment extends Fragment
     }
     public void showSnackbar(String msg)
     {
-        Snackbar snackbar= Snackbar.make(constraintLayout,msg,Snackbar.LENGTH_INDEFINITE)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Snackbar snackbar1=Snackbar.make(constraintLayout,"Undo Successful",Snackbar.LENGTH_SHORT);
-                        snackbar1.show();
-                    }
-                });
+        Snackbar snackbar= Snackbar.make(constraintLayout,msg,Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 

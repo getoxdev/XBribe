@@ -131,6 +131,8 @@ public class Step_one_Fragment extends Fragment
         databaseSaveDraft.getWritableDatabase();
 
 
+
+
         submissionActivityViewModel = ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         submissionActivityViewModel.getOrganizationsDetails();
         appDataManager = ((MyApplication)getActivity().getApplication()).getDataManager();
@@ -183,7 +185,7 @@ public class Step_one_Fragment extends Fragment
     }
 
      @OnClick(R.id.btn_proceed)
-     public void senddetails()
+     public void sendDetails()
      {
          name_oraganisation = etName.getText().toString();
          city = etCity.getText().toString();
@@ -214,19 +216,11 @@ public class Step_one_Fragment extends Fragment
      }
     public void showSnackbar(String msg)
     {
-        Snackbar snackbar= Snackbar.make(relativeLayout,msg,Snackbar.LENGTH_INDEFINITE)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Snackbar snackbar1=Snackbar.make(relativeLayout,"Undo Successful",Snackbar.LENGTH_SHORT);
-                        snackbar1.show();
-                    }
-                });
+        Snackbar snackbar= Snackbar.make(relativeLayout,msg,Snackbar.LENGTH_LONG);
         snackbar.show();
     }
     @OnClick(R.id.btn_savedrf)
-    public void savedraft()
+    void saveDraft()
     {
         name_oraganisation = etName.getText().toString();
         city = etCity.getText().toString();
@@ -239,12 +233,8 @@ public class Step_one_Fragment extends Fragment
         }
         else
         {
-            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description);
-            if(ifInserted==true)
-            {
-                Toast.makeText(getActivity(),"Data inserted",Toast.LENGTH_SHORT).show();
-            }
-
+            String msg="Draft Saved";
+            showSnackbar(msg);
         }
     }
 

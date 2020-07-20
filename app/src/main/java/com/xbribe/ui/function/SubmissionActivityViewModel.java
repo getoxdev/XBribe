@@ -31,7 +31,8 @@ public class SubmissionActivityViewModel extends AndroidViewModel {
     private AppDataManager appDataManager;
     private MutableLiveData<OrganizationResponse> organizationResponse;
     private MutableLiveData<CaseData> caseResponse;
-
+    private MutableLiveData<ResponseBody> sendOtp;
+    private MutableLiveData<ResponseBody> verifyOtp;
 
     public SubmissionActivityViewModel(@NonNull Application application)
     {
@@ -39,14 +40,17 @@ public class SubmissionActivityViewModel extends AndroidViewModel {
         appDataManager = ((MyApplication)application).getDataManager();
         organizationResponse = new MutableLiveData<>();
         caseResponse = new MutableLiveData<>();
+        sendOtp = new MutableLiveData<>();
+        verifyOtp = new MutableLiveData<>();
     }
 
     public MutableLiveData<OrganizationResponse> getOrganizationsResponse() { return organizationResponse; }
-
+    public MutableLiveData<ResponseBody> getSendOtp() {return sendOtp;}
     public  MutableLiveData<CaseData> getCaseResponse()
     {
         return caseResponse;
     }
+    public MutableLiveData<ResponseBody> getVerifyOtp() {return verifyOtp;}
 
   public  void reportCaseDetails(String token,String ministryId, String department, String name, String place, String address, String pin, String latitude, String longitude, String description, ArrayList<String> picsArray, ArrayList<String> audiosArray, ArrayList<String> videosArray)
   {
@@ -72,7 +76,6 @@ public class SubmissionActivityViewModel extends AndroidViewModel {
       });
   }
 
-
     public void getOrganizationsDetails()
     {
         appDataManager.getOrganizations().enqueue(new Callback<OrganizationResponse>()
@@ -82,7 +85,6 @@ public class SubmissionActivityViewModel extends AndroidViewModel {
                 if(response.code()<300)
                 {
                     organizationResponse.postValue(response.body());
-
                 }
                 else
                 {
@@ -93,6 +95,51 @@ public class SubmissionActivityViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<OrganizationResponse> call, Throwable t) {
                 organizationResponse.postValue(null);
+            }
+        });
+    }
+
+    public void checkOTP(Integer otp)
+    {
+        appDataManager.verifyOtp(appDataManager.getEmail(),otp).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() < 300) {
+                    Log.e("OTP","Verified");
+                    verifyOtp.postValue(response.body());
+                }
+                else {
+                    Log.e("OTP","Not Verified");
+                    verifyOtp.postValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("OTP",t.getMessage());
+                verifyOtp.postValue(null);
+            }
+        });
+    }
+
+    public void setSendOtp()
+    {
+        appDataManager.sendOtp(appDataManager.getEmail()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code()<300)
+                {
+                    sendOtp.postValue(response.body());
+                }
+                else
+                {
+                    sendOtp.postValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendOtp.postValue(null);
             }
         });
     }

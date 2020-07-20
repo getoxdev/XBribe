@@ -141,6 +141,23 @@ public class LoginFragment extends Fragment
         {
             User user = new User(email.getText().toString(), password.getText().toString(), appDataManager.getFCMToken());
             viewModel.userLogin(user);
+
+            viewModel.getLoginResponse().observe(this,data-> {
+                if(data==null)
+                {
+                    String msg="Wrong Credentials";
+                    showSnackbar(msg);
+
+                }
+                else
+                {
+
+                    String msg="Logged In Successfully";
+                    showSnackbar(msg);
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
+                }
+            });
         }
     }
 
@@ -153,15 +170,7 @@ public class LoginFragment extends Fragment
     }
     public void showSnackbar(String msg)
     {
-        Snackbar snackbar= Snackbar.make(constraintLayout,msg,Snackbar.LENGTH_INDEFINITE)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Snackbar snackbar1=Snackbar.make(constraintLayout,"Undo Successful",Snackbar.LENGTH_SHORT);
-                        snackbar1.show();
-                    }
-                });
+        Snackbar snackbar= Snackbar.make(constraintLayout,msg,Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 

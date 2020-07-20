@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,29 +53,35 @@ public class SecretFragment extends Fragment {
     @BindView(R.id.btn_stop)
     MaterialButton stop;
 
+    @BindView(R.id.img_off)
+    ImageView imgOff;
+
+    @BindView(R.id.img_on)
+    ImageView imgOn;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_secret,container,false);
         ButterKnife.bind(this,parent);
 
-        String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
-
         stop.setEnabled(false);
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/xbribe"+timeStamp+".amr";
-        myAudioRecorder = new MediaRecorder();
-        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        myAudioRecorder.setOutputFile(outputFile);
-
         return parent;
     }
 
     @OnClick(R.id.btn_record)
     void startRecord()
     {
+        imgOn.setVisibility(View.VISIBLE);
+        imgOff.setVisibility(View.INVISIBLE);
         try {
+            String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
+            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/xbribe"+timeStamp+".amr";
+            myAudioRecorder = new MediaRecorder();
+            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+            myAudioRecorder.setOutputFile(outputFile);
             myAudioRecorder.prepare();
             myAudioRecorder.start();
         } catch (IllegalStateException ise) {
@@ -90,9 +97,17 @@ public class SecretFragment extends Fragment {
     @OnClick(R.id.btn_stop)
     void stopRecord()
     {
-        myAudioRecorder.stop();
-        myAudioRecorder.release();
-        myAudioRecorder = new MediaRecorder();
+        imgOn.setVisibility(View.INVISIBLE);
+        imgOff.setVisibility(View.VISIBLE);
+        try {
+            myAudioRecorder.stop();
+            myAudioRecorder.reset();
+            myAudioRecorder.release();
+        }
+        catch (Exception e)
+        {
+            Log.e("Error",e.getMessage());
+        }
         record.setEnabled(true);
         stop.setEnabled(false);
         Toast.makeText(getActivity(), "Audio Recorded successfully", Toast.LENGTH_LONG).show();

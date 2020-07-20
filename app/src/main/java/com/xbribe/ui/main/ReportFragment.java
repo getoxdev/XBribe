@@ -29,6 +29,7 @@ import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
 import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.function.SubmissionActivity;
+import com.xbribe.ui.main.drawers.checkcase.CheckcaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,8 +46,12 @@ public class ReportFragment extends Fragment {
     @BindView(R.id.report_bribe)
     Button btnReport;
 
+    @BindView(R.id.check_cases)
+    Button btnCheckCases;
+
     private ReportViewModel reportViewModel;
     private AppDataManager appDataManager;
+    private CheckcaseFragment checkcaseFragment;
 
     @Nullable
     @Override
@@ -85,6 +90,16 @@ public class ReportFragment extends Fragment {
     void reportBribery()
     {
         startActivity(new Intent(getActivity(), SubmissionActivity.class));
+    }
+
+    @OnClick(R.id.check_cases)
+    void checkCases()
+    {
+        checkcaseFragment = new CheckcaseFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_frame,checkcaseFragment)
+                .addToBackStack("Report")
+                .commit();
     }
 
     private void initSlider()

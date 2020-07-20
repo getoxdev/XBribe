@@ -12,6 +12,7 @@ import com.xbribe.retrofit.RetrofitProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class ApiHelper implements ApiService {
@@ -61,5 +62,15 @@ public class ApiHelper implements ApiService {
 
     public Call<List<NearbyCaseResponse>> getNearbyCases(String token, Double latitude, Double longitude, Integer radius) {
         return api.getNearbyCases(token, latitude, longitude, radius);
+    }
+
+    @Override
+    public Call<ResponseBody> sendOtp(String email) {
+        return api.sendOtp(email);
+    }
+
+    @Override
+    public Call<ResponseBody> verifyOtp(String email, Integer otp) {
+        return api.verifyOtp(email, otp);
     }
 }

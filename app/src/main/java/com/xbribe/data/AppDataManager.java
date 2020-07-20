@@ -65,6 +65,16 @@ public class AppDataManager implements AppDataManagerHelper {
     }
 
     @Override
+    public Call<ResponseBody> sendOtp(String email) {
+        return apiHelper.sendOtp(email);
+    }
+
+    @Override
+    public Call<ResponseBody> verifyOtp(String email, Integer otp) {
+        return apiHelper.verifyOtp(email, otp);
+    }
+
+    @Override
     public void saveToken(String token) {
         appPreferences.saveToken(token);
     }

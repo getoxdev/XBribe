@@ -66,4 +66,13 @@ public interface ApiService
                                                     @Field("latitude") Double latitude,
                                                     @Field("longitude") Double longitude,
                                                     @Field("radius") Integer radius);
+
+    @FormUrlEncoded
+    @POST("report/sendotp")
+    Call<ResponseBody> sendOtp(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("report/verifyotp")
+    Call<ResponseBody> verifyOtp(@Field("email") String email,
+                                 @Field("otp") Integer otp);
 }

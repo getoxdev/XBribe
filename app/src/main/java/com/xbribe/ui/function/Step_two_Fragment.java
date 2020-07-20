@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.google.android.gms.tasks.Continuation;
@@ -77,17 +80,18 @@ public class Step_two_Fragment  extends Fragment
     private StorageReference mStorageRef;
     private AppDataManager appDataManager;
     private SecretFragment secretFragment;
-    private FragmentManager fragmentManager;
+    private OTPVerifyFragment otpVerifyFragment;
 
-    DatabaseHelper databaseHelper;
-
+    private DatabaseHelper databaseHelper;
 
     @BindView(R.id.pb_progress)
     ProgressBar pbProgress;
 
-    @BindView(R.id.relativelayout)
-    RelativeLayout relativeLayout;
+    @BindView(R.id.constraint_layout)
+    ConstraintLayout constraintLayout;
 
+    @BindView(R.id.rview_selected)
+    RecyclerView recyclerView;
 
     @BindView(R.id.imag_camera)
     ImageButton imgChoose;
@@ -113,7 +117,6 @@ public class Step_two_Fragment  extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-
         View parent=inflater.inflate(R.layout.fragment_step_two,container,false);
         ButterKnife.bind(this,parent);
         submissionActivityViewModel=ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
@@ -142,18 +145,6 @@ public class Step_two_Fragment  extends Fragment
             }
         });
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                showProgress();
-                uploadImage();
-                uploadAudio();
-                uploadVideo();
-                hideProgress();
-            }
-        });
-
         return parent;
     }
 
@@ -170,7 +161,6 @@ public class Step_two_Fragment  extends Fragment
         city=getArguments().getString("CITY");
         pincode=getArguments().getString("PINCODE");
         description=getArguments().getString("DESCRIPTION");
-
     }
 
     private String getFileExtension(Uri uri)
@@ -262,7 +252,7 @@ public class Step_two_Fragment  extends Fragment
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                     {
-                        String msg="Upload Successfull";
+                        String msg="Uploaded Successfully";
                         showSnackbar(msg);
 
                         Task<Uri> urlTask = imageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -317,7 +307,7 @@ public class Step_two_Fragment  extends Fragment
                 audioTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String msg="Upload Successfull";
+                        String msg="Uploaded Successfully";
                         showSnackbar(msg);
                         Task<Uri> urlTask = audioTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                             @Override
@@ -369,7 +359,7 @@ public class Step_two_Fragment  extends Fragment
                 videoTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String msg="Upload Successfully";
+                        String msg="Uploaded Successfully";
                         showSnackbar(msg);
 
                         Task<Uri> urlTask = videoTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -411,38 +401,48 @@ public class Step_two_Fragment  extends Fragment
         videoList.clear();
     }
 
+    @OnClick(R.id.btn_upload)
+    void upload()
+    {
+        showProgress();
+        uploadImage();
+        uploadAudio();
+        uploadVideo();
+        hideProgress();
+    }
+
     @OnClick(R.id.btn_submit)
     void submit()
     {
+        Bundle bundle = new Bundle();
+        bundle.putString("MINISTRYID",appDataManager.getOrgID());
+        bundle.putString("DEPARTMENT",appDataManager.getDepartment());
+        bundle.putString("ORGANISATION",name);
+        bundle.putString("CITY",city);
+        bundle.putString("PINCODE",pincode);
+        bundle.putString("DESCRIPTION",description);
+        bundle.putStringArrayList("IMGARRAY",imageURL);
+        bundle.putStringArrayList("AUDARRAY",audioURL);
+        bundle.putStringArrayList("VIDARRAY",videoURL);
 
-        showProgress();
-        submissionActivityViewModel.reportCaseDetails(appDataManager.getToken(),ministryId,department,name,city,appDataManager.getAddress(),pincode,appDataManager.getLatitude(),appDataManager.getLongitude(),description,imageURL,audioURL,videoURL);
+        otpVerifyFragment = new OTPVerifyFragment();
+        otpVerifyFragment.setArguments(bundle);
 
-        submissionActivityViewModel.getCaseResponse().observe(this, data ->
-        {
-            if(data == null)
+        submissionActivityViewModel.setSendOtp();
+        submissionActivityViewModel.getSendOtp().observe(this, data->{
+            if(data!=null)
             {
-                String msg="Error,Please try again";
-                showSnackbar(msg);
+                Toast.makeText(getActivity(),"Please Verify Now!",Toast.LENGTH_LONG).show();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame_two,otpVerifyFragment)
+                        .commit();
             }
             else
-                {
-                String imagescount=String.valueOf(imageCount);
-                String audiocount=String.valueOf(audioCount);
-                String videocount=String.valueOf(videoCount);
-                boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),appDataManager.getAddress(),description,appDataManager.getMinistry(),department,name,imagescount,audiocount,videocount,"CASE_PROCESS","CASE ID",appDataManager.getID());
-                if(ifInserted==true)
-                {
-                    Toast.makeText(getActivity(),"Data inserted",Toast.LENGTH_SHORT).show();
-                }
-                hideProgress();
-                String msg="Reported Successfully";
+            {
+                String msg = "Please try later!";
                 showSnackbar(msg);
-                Toast.makeText(getActivity(), "Reported Successfully", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
-
     }
 
     @OnClick(R.id.secret_camera)
@@ -466,15 +466,7 @@ public class Step_two_Fragment  extends Fragment
 
     public void showSnackbar(String msg)
     {
-        Snackbar snackbar= Snackbar.make(relativeLayout,msg,Snackbar.LENGTH_INDEFINITE)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Snackbar snackbar1=Snackbar.make(relativeLayout,"Undo Successful",Snackbar.LENGTH_SHORT);
-                        snackbar1.show();
-                    }
-                });
+        Snackbar snackbar= Snackbar.make(constraintLayout,msg,Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 
