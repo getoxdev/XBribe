@@ -2,41 +2,29 @@ package com.xbribe.ui.main.drawers.checkcase;
 
 import android.app.AlertDialog;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
 import com.xbribe.data.models.CollecImages;
-import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.function.DatabaseHelper;
-import com.xbribe.ui.function.SubmissionActivityViewModel;
-import com.xbribe.ui.main.drawers.checkcase.checkcasedesc.CheckCaseDescFragment;
 
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -129,13 +117,13 @@ public class CheckcaseFragment extends  Fragment
             int i=0;
             while (cursor.moveToNext())
             {
-             caselist.add(new CheckcaseModel(imag.get(i), cursor.getString(5), cursor.getString(4), "GET DETAILS"));
+             caselist.add(new CheckcaseModel(imag.get(i),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(3),cursor.getString(2),cursor.getString(7),cursor.getString(8),cursor.getString(9)));
              i++;
             }
-
             return caselist;
 
     }
+
     private void showMessage(String title,String message)
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());

@@ -2,27 +2,50 @@ package com.xbribe.ui.main.drawers.checkcase;
 
 public class CheckcaseModel
 {
-    private String  crimeimage;
-   private String name_organization;
+
+    private String crimeimage;
+    private String ministry;
+    private String department;
+    private String name_organization;
     private String case_desc;
+    private String location;
+    private String imagesno;
+    private String audiono;
+    private String videono;
 
-    private String casedetail;
-
-
-    public CheckcaseModel(String crimeimage, String name_organization, String case_desc,  String casedetail)
-    {
+    public CheckcaseModel(String crimeimage, String ministry, String department, String name_organization, String case_desc, String location, String imagesno, String audiono, String videono) {
         this.crimeimage = crimeimage;
+        this.ministry = ministry;
+        this.department = department;
         this.name_organization = name_organization;
         this.case_desc = case_desc;
-        this.casedetail = casedetail;
+        this.location = location;
+        this.imagesno = imagesno;
+        this.audiono = audiono;
+        this.videono = videono;
     }
-
     public String getCrimeimage() {
         return crimeimage;
     }
 
     public void setCrimeimage(String crimeimage) {
         this.crimeimage = crimeimage;
+    }
+
+    public String getMinistry() {
+        return ministry;
+    }
+
+    public void setMinistry(String ministry) {
+        this.ministry = ministry;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public String getName_organization() {
@@ -41,11 +64,35 @@ public class CheckcaseModel
         this.case_desc = case_desc;
     }
 
-    public String getCasedetail() {
-        return casedetail;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCasedetail(String casedetail) {
-        this.casedetail = casedetail;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getImagesno() {
+        return imagesno;
+    }
+
+    public void setImagesno(String imagesno) {
+        this.imagesno = imagesno;
+    }
+
+    public String getAudiono() {
+        return audiono;
+    }
+
+    public void setAudiono(String audiono) {
+        this.audiono = audiono;
+    }
+
+    public String getVideono() {
+        return videono;
+    }
+
+    public void setVideono(String videono) {
+        this.videono = videono;
     }
 }

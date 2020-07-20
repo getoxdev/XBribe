@@ -9,7 +9,7 @@
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/slider_home_events"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="160dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

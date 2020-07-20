@@ -13,9 +13,12 @@ import com.bumptech.glide.Glide;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.xbribe.R;
 
+import java.util.ArrayList;
+
 public class SliderAdapter extends  SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
 
 private Context context;
+
 
 public SliderAdapter(Context context) {
         this.context = context;
@@ -32,21 +35,15 @@ public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
 
         switch (position) {
             case 0:
-                Glide.with(viewHolder.itemView)
-                        .load("https://www.deccanherald.com/sites/dh/files/styles/article_detail/public/article_images/2018/07/17/inflation-pti1531817413.jpg?itok=x6TRI-rP")
-                        .into(viewHolder.imageViewBackground);
+                Glide.with(context).load(R.drawable.flat_art).into(viewHolder.imageViewBackground);
                 break;
 
             case 1:
-                Glide.with(viewHolder.itemView)
-                        .load("https://www.engageinlearning.com/wp-content/uploads/What-is-Anti-Bribery-and-Corruption.jpg")
-                        .into(viewHolder.imageViewBackground);
+                Glide.with(context).load(R.drawable.flow_chart).into(viewHolder.imageViewBackground);
                 break;
 
             default:
-                Glide.with(viewHolder.itemView)
-                        .load("https://postcard.news/wp-content/uploads/2016/08/supreme-court1-1170x610.jpg")
-                        .into(viewHolder.imageViewBackground);
+                Glide.with(context).load(R.drawable.flowchart2).into(viewHolder.imageViewBackground);
                 break;
 
         }

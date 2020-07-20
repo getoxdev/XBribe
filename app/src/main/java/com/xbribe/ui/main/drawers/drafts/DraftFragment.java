@@ -23,7 +23,7 @@ import com.xbribe.R;
 import com.xbribe.ui.function.Step_two_Fragment;
 import com.xbribe.ui.function.SubmissionActivity;
 import com.xbribe.ui.main.drawers.checkcase.CheckcaseModel;
-import com.xbribe.ui.main.drawers.checkcase.checkcasedesc.CheckCaseDescFragment;
+
 
 import java.util.ArrayList;
 import java.util.List;

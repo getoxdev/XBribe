@@ -1,7 +1,6 @@
 package com.xbribe.ui.main.drawers.checkcase;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,14 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.xbribe.R;
 import com.xbribe.data.models.CollecImages;
-import com.xbribe.ui.function.DatabaseHelper;
-import com.xbribe.ui.main.drawers.checkcase.checkcasedesc.CheckCaseDescFragment;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.ViewHolder>
 {
@@ -38,12 +32,9 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
     @BindView(R.id.tv_no_cases)
     TextView no_cases;
 
-    private  CheckCaseDescFragment checkCaseDesc;
-
-    @BindView(R.id.btn_case_detail)
-    Button casedetail;
 
     FragmentManager fragmentManager;
+
     Context context;
     List<CheckcaseModel>  checklist;
 
@@ -56,7 +47,7 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_case,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_checkdesc_case,parent,false);
         return new ViewHolder(view);
     }
 
@@ -66,27 +57,15 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
     {
 
         Glide.with(context).load(checklist.get(position).getCrimeimage()).into(holder.imageView);
+        holder.ministry.setText(checklist.get(position).getMinistry());
+        holder.department.setText(checklist.get(position).getDepartment());
         holder.organization_name.setText(checklist.get(position).getName_organization());
         holder.oranization_desc.setText(checklist.get(position).getCase_desc());
-        holder.casedetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                setCheckCaseDesc(position);
-            }
-        });
-    }
-    public void setCheckCaseDesc(int position)
-    {
+        holder.location.setText(checklist.get(position).getLocation());
+        holder.imageno.setText(checklist.get(position).getImagesno());
+        holder.audiono.setText(checklist.get(position).getAudiono());
+        holder.videono.setText(checklist.get(position).getVideono());
 
-        checkCaseDesc=new CheckCaseDescFragment();
-        Bundle bundle=new Bundle();
-        bundle.putInt("Position passed",position);
-        checkCaseDesc.setArguments(bundle);
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.main_frame,checkCaseDesc);
-        ft.commit();
     }
 
     @Override
@@ -99,14 +78,26 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
+
+        @BindView(R.id.tv_ministry_name)
+        TextView ministry;
+        @BindView(R.id.tv_department)
+        TextView department;
+        @BindView(R.id.tv_organisation_name)
+        TextView organization_name;
+        @BindView(R.id.tv_location)
+        TextView location;
         @BindView(R.id.image_crime)
         ImageView imageView;
-        @BindView(R.id.tv_organization_name)
-        TextView organization_name;
         @BindView(R.id.tv_case_description)
         TextView oranization_desc;
-        @BindView(R.id.btn_case_detail)
-        Button casedetail;
+        @BindView(R.id.tv_images_no)
+        TextView imageno;
+        @BindView(R.id.tv_audio_no)
+        TextView audiono;
+        @BindView(R.id.tv_video_no)
+        TextView videono;
+
 
         public ViewHolder(@NonNull View itemView)
         {

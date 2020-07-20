@@ -130,9 +130,6 @@ public class Step_one_Fragment extends Fragment
         databaseSaveDraft=new DatabaseSaveDraft(getActivity());
         databaseSaveDraft.getWritableDatabase();
 
-
-
-
         submissionActivityViewModel = ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         submissionActivityViewModel.getOrganizationsDetails();
         appDataManager = ((MyApplication)getActivity().getApplication()).getDataManager();
@@ -233,8 +230,12 @@ public class Step_one_Fragment extends Fragment
         }
         else
         {
-            String msg="Draft Saved";
-            showSnackbar(msg);
+            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description);
+            if(ifInserted==true)
+            {
+               String msg="Saved Draft";
+               showSnackbar(msg);
+            }
         }
     }
 
