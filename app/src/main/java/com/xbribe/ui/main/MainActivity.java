@@ -49,6 +49,7 @@ import com.xbribe.ui.auth.AuthenticationActivity;
 import com.xbribe.ui.main.drawers.ContactFragment;
 import com.xbribe.ui.main.drawers.aboutus.AboutUsFragment;
 import com.xbribe.ui.main.drawers.checkcase.CheckcaseFragment;
+import com.xbribe.ui.main.drawers.drafts.DraftFragment;
 import com.xbribe.ui.main.drawers.nearby.NearbyFragment;
 import com.xbribe.ui.main.drawers.notification.NotificationFragment;
 
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ReportFragment reportFragment;
     private ContactFragment contactFragment;
     private CheckcaseFragment checkcaseFragment;
+    private DraftFragment draftFragment;
+
     private NotificationFragment notificationFragment;
     private NearbyFragment nearbyFragment;
 
@@ -169,6 +172,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         contactFragment=new ContactFragment();
         notificationFragment=new NotificationFragment();
         nearbyFragment = new NearbyFragment();
+        draftFragment=new DraftFragment();
+
+
         initFrag(reportFragment);
 
         navView.setNavigationItemSelectedListener(this);
@@ -398,6 +404,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             initFrag(aboutUsFragment);
         }
+        else
+            if(id== R.id.nav_draft)
+            {
+                initFrag(draftFragment);
+            }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.storage.FirebaseStorage;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.xbribe.Constants;
 import com.xbribe.R;
@@ -48,6 +51,7 @@ import com.xbribe.data.AppDataManager;
 import com.xbribe.data.models.Organizations;
 import com.xbribe.service.AddressService;
 import com.xbribe.ui.MyApplication;
+import com.xbribe.ui.main.drawers.drafts.DatabaseSaveDraft;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +67,9 @@ import okhttp3.RequestBody;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class Step_one_Fragment extends Fragment {
+public class Step_one_Fragment extends Fragment
+{
+
     private SubmissionActivityViewModel submissionActivityViewModel;
     private ArrayList<Organizations> organizationsData;
     private ArrayList<String> departmentData;
@@ -74,10 +80,16 @@ public class Step_one_Fragment extends Fragment {
 
     private AppDataManager appDataManager;
 
+    Cursor cursor;
+
     public String name_oraganisation,city,pincode,description,department;
 
     @BindView(R.id.relative_layout)
     RelativeLayout relativeLayout;
+
+
+    @BindView(R.id.btn_savedrf)
+    Button savedraft;
 
 
     @BindView(R.id.btn_proceed)
@@ -106,15 +118,22 @@ public class Step_one_Fragment extends Fragment {
 
     private Organizations organizations;
 
+    DatabaseSaveDraft databaseSaveDraft;
+    FragmentManager fragmentManager;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_step_one, container, false);
         ButterKnife.bind(this, parent);
+        databaseSaveDraft=new DatabaseSaveDraft(getActivity());
+        databaseSaveDraft.getWritableDatabase();
+
+
         submissionActivityViewModel = ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         submissionActivityViewModel.getOrganizationsDetails();
         appDataManager = ((MyApplication)getActivity().getApplication()).getDataManager();
-
         tvAddress.setText(appDataManager.getAddress().trim());
         return parent;
     }
@@ -138,8 +157,8 @@ public class Step_one_Fragment extends Fragment {
                          departmentData = new ArrayList<>(Arrays.asList(organizations.getDepartments()));
                          spinnerAdapter2 = new SpinnerAdapter2(getActivity(),departmentData);
                          spinnerDepartment.setAdapter(spinnerAdapter2);
-                    }
 
+                    }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
 
@@ -170,17 +189,16 @@ public class Step_one_Fragment extends Fragment {
          city = etCity.getText().toString();
          pincode = etpincode.getText().toString();
          description = etDescription.getText().toString();
+
          if(name_oraganisation.isEmpty()==true || city.isEmpty()==true ||  pincode.isEmpty()==true  ||  description.isEmpty()==true)
          {
               String msg="Please fill in the details";
               showSnackbar(msg);
-
          }
          else
          {
              Bundle bundle = new Bundle();
-             step2Fragment = new Step_two_Fragment();
-
+             Step_two_Fragment step2Fragment=new Step_two_Fragment();
              bundle.putString("MINISTRYID",appDataManager.getOrgID());
              bundle.putString("DEPARTMENT",appDataManager.getDepartment());
              bundle.putString("ORGANISATION",name_oraganisation);
@@ -192,9 +210,7 @@ public class Step_one_Fragment extends Fragment {
                      .replace(R.id.main_frame_two,step2Fragment)
                      .addToBackStack("Step 1")
                      .commit();
-
          }
-
      }
     public void showSnackbar(String msg)
     {
@@ -208,6 +224,28 @@ public class Step_one_Fragment extends Fragment {
                     }
                 });
         snackbar.show();
+    }
+    @OnClick(R.id.btn_savedrf)
+    public void savedraft()
+    {
+        name_oraganisation = etName.getText().toString();
+        city = etCity.getText().toString();
+        pincode = etpincode.getText().toString();
+        description = etDescription.getText().toString();
+        if(name_oraganisation.isEmpty()==true || city.isEmpty()==true ||  pincode.isEmpty()==true  ||  description.isEmpty()==true)
+        {
+            String msg="Please fill in the details";
+            showSnackbar(msg);
+        }
+        else
+        {
+            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description);
+            if(ifInserted==true)
+            {
+                Toast.makeText(getActivity(),"Data inserted",Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
 }

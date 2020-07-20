@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -79,6 +80,7 @@ public class Step_two_Fragment  extends Fragment
     private FragmentManager fragmentManager;
 
     DatabaseHelper databaseHelper;
+
 
     @BindView(R.id.pb_progress)
     ProgressBar pbProgress;
@@ -159,7 +161,6 @@ public class Step_two_Fragment  extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
-
         mStorageRef = FirebaseStorage.getInstance().getReference();
         databaseHelper=new DatabaseHelper(getActivity());
         databaseHelper.getWritableDatabase();

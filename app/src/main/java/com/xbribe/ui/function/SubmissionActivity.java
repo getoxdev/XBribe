@@ -89,10 +89,27 @@ public class SubmissionActivity  extends AppCompatActivity
         step_one_fragment=new Step_one_Fragment();
         initFrag(step_one_fragment);
 
+        /* Bundle bundle=this.getArguments();
+        if(!(bundle==null))
+        {
+            int x=getArguments().getInt("Position");
+            Cursor cursor=databaseSaveDraft.getrowdetails(x);
+            if (cursor.moveToFirst())
+            {
+                do
+                    {
+                    etpincode.setText(cursor.getString(3));
+                    etCity.setText(cursor.getString(4));
+                    etName.setText(cursor.getString(6));
+                    etDescription.setText(cursor.getString(7));
+
+                      }  while (cursor.moveToNext());
+            }
+        }
+         */
+        Intent intent=getIntent();
         appDataManager = ((MyApplication) getApplication()).getDataManager();
-
         final LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);

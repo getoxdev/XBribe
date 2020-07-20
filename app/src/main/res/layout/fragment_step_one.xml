@@ -250,9 +250,20 @@
                         style="@style/ButtonStyle"
                         android:layout_below="@id/relative_layout3"
                         android:layout_marginTop="24dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12dp"
                         android:textColor="@color/md_grey_50"
                         android:layout_centerHorizontal="true">
                     </Button>
+                    <Button
+                        android:text="SAVE AS DRAFT"
+                        android:id="@+id/btn_savedrf"
+                        style="@style/ButtonStyle"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/relative_layout3"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="12dp"
+                        />
 
                 </RelativeLayout>
 
