@@ -9,7 +9,6 @@
     app:layout_constraintEnd_toEndOf="parent"
     android:background="@color/md_blue_50"
     android:id="@+id/otp_constraint_layout"
-    android:layout_marginTop="?attr/actionBarSize"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -74,10 +73,9 @@
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="0dp"
         android:layout_marginTop="32dp"
         android:padding="8dp"
-        android:text="SUBMIT"
+        android:text="Submit"
         android:textSize="16sp"
         android:textAllCaps="false"
         android:fontFamily="@font/roboto"

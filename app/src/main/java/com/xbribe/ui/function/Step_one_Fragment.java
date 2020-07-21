@@ -75,22 +75,20 @@ public class Step_one_Fragment extends Fragment
     private ArrayList<String> departmentData;
     private SpinnerAdapter1 spinnerAdapter1;
     private SpinnerAdapter2 spinnerAdapter2;
-
     private Step_two_Fragment step2Fragment;
-
     private AppDataManager appDataManager;
 
-    Cursor cursor;
-
     public String name_oraganisation,city,pincode,description,department;
+
+    private Organizations organizations;
+
+    DatabaseSaveDraft databaseSaveDraft;
 
     @BindView(R.id.relative_layout)
     RelativeLayout relativeLayout;
 
-
     @BindView(R.id.btn_savedrf)
     Button savedraft;
-
 
     @BindView(R.id.btn_proceed)
     Button proceed;
@@ -116,11 +114,6 @@ public class Step_one_Fragment extends Fragment
     @BindView(R.id.spinner_department)
     Spinner spinnerDepartment;
 
-    private Organizations organizations;
-
-    DatabaseSaveDraft databaseSaveDraft;
-    FragmentManager fragmentManager;
-
 
     @Nullable
     @Override
@@ -129,6 +122,17 @@ public class Step_one_Fragment extends Fragment
         ButterKnife.bind(this, parent);
         databaseSaveDraft=new DatabaseSaveDraft(getActivity());
         databaseSaveDraft.getWritableDatabase();
+
+        step2Fragment = new Step_two_Fragment();
+
+        Bundle bundleDraft = getActivity().getIntent().getExtras();
+        if(bundleDraft!=null)
+        {
+            step2Fragment.setArguments(bundleDraft);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame_two,step2Fragment)
+                        .commit();
+        }
 
         submissionActivityViewModel = ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         submissionActivityViewModel.getOrganizationsDetails();
@@ -197,7 +201,6 @@ public class Step_one_Fragment extends Fragment
          else
          {
              Bundle bundle = new Bundle();
-             Step_two_Fragment step2Fragment=new Step_two_Fragment();
              bundle.putString("MINISTRYID",appDataManager.getOrgID());
              bundle.putString("DEPARTMENT",appDataManager.getDepartment());
              bundle.putString("ORGANISATION",name_oraganisation);

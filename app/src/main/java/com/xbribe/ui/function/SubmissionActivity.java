@@ -76,14 +76,11 @@ public class SubmissionActivity  extends AppCompatActivity
 
     private FragmentManager fragmentManager;
     private Step_one_Fragment step_one_fragment;
+    private Step_two_Fragment stepTwoFragment;
     private AppDataManager appDataManager;
 
     DatabaseSaveDraft databaseSaveDraft;
 
-    Step_two_Fragment step_two_fragment;
-
-    Cursor cursor;
-    String key="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -94,12 +91,17 @@ public class SubmissionActivity  extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         databaseSaveDraft=new DatabaseSaveDraft(this);
         databaseSaveDraft.getWritableDatabase();
+
         fragmentManager = getSupportFragmentManager();
         step_one_fragment=new Step_one_Fragment();
+        stepTwoFragment = new Step_two_Fragment();
+
         initFrag(step_one_fragment);
         appDataManager = ((MyApplication) getApplication()).getDataManager();
+
         final LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();

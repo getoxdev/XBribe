@@ -68,7 +68,6 @@ public class DraftFragment extends Fragment
 
     private void goToSteptwo(int position)
     {
-        Step_two_Fragment step_two_fragment=new Step_two_Fragment();
         Bundle bundle=new Bundle();
         cursor = databaseSaveDraft.getrowdetails(position);
         if (cursor.moveToFirst())
@@ -83,11 +82,11 @@ public class DraftFragment extends Fragment
             }
             while (cursor.moveToNext());
         }
-        step_two_fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_frame,step_two_fragment)
-                .addToBackStack("Drafts")
-                .commit();
+
+        Intent intent = new Intent(getActivity(),SubmissionActivity.class);
+        intent.putExtras(bundle);
+        intent.putExtra("Fragment","Step 2");
+        getActivity().startActivity(intent);
     }
 
     private void initrecycleradapter()
