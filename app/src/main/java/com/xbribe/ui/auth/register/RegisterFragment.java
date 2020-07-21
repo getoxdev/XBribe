@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,9 @@ public class RegisterFragment extends Fragment
 
     @BindView(R.id.et_confirmpassword)
     EditText etConfirmPassword;
+
+    @BindView(R.id.pb_register)
+    ProgressBar pbRegister;
 
     private FragmentManager fragmentManager;
     private LoginFragment loginFragment;
@@ -130,30 +134,31 @@ public class RegisterFragment extends Fragment
         {
             if(password.equals(confirmpassword))
             {
+                showProgress();
                 User user= new User(email,password);
                 viewModel.userSignup(user);
+                viewModel.getRegisterResponse().observe(this, data->{
+                    if(data==null)
+                    {
+                        hideProgress();
+                        String msg="Error,Please try again";
+                        showSnackbar(msg);
+                    }
+                    else
+                    {
+                        hideProgress();
+                        String msg="User registered successfully";
+                        showSnackbar(msg);
+                        fragmentManager = getActivity().getSupportFragmentManager();
+                        initFrag(loginFragment);
+                    }
+                });
             }
             else
             {
                 String msg="Passwords don't match!";
                 showSnackbar(msg);
             }
-
-            viewModel.getRegisterResponse().observe(this, data->{
-                if(data==null)
-                {
-                    String msg="Error,Please try again";
-                    showSnackbar(msg);
-
-                }
-                else
-                {
-                    String msg="User registered successfully";
-                    showSnackbar(msg);
-                    fragmentManager = getActivity().getSupportFragmentManager();
-                    initFrag(loginFragment);
-                }
-            });
         }
     }
 
@@ -170,4 +175,11 @@ public class RegisterFragment extends Fragment
         snackbar.show();
     }
 
+    public void showProgress() {
+        pbRegister.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        pbRegister.setVisibility(View.GONE);
+    }
 }

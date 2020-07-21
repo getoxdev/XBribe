@@ -36,25 +36,13 @@ public class DraftFragment extends Fragment
     @BindView(R.id.recycler_checkdrafts)
     RecyclerView recyclerView;
 
-    FragmentManager fragmentManager;
-
-
-
-    @BindView(R.id.tv_no_cases)
-    TextView nocases;
-
+    @BindView(R.id.tv_no_drafts)
+    TextView noDrafts;
 
     Cursor  cursor;
-
     List<DraftModel> draftModelList;
-
-
     DraftAdapter draftAdapter;
-
-   DatabaseSaveDraft databaseSaveDraft;
-
-
-    RecyclerView.LayoutManager layoutManager;
+    DatabaseSaveDraft databaseSaveDraft;
 
     @Nullable
     @Override
@@ -83,7 +71,6 @@ public class DraftFragment extends Fragment
         Step_two_Fragment step_two_fragment=new Step_two_Fragment();
         Bundle bundle=new Bundle();
         cursor = databaseSaveDraft.getrowdetails(position);
-        //Log.i(TAG, "Position"+position);
         if (cursor.moveToFirst())
         {
             do {
@@ -99,7 +86,7 @@ public class DraftFragment extends Fragment
         step_two_fragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_frame,step_two_fragment)
-                .addToBackStack("Step 1")
+                .addToBackStack("Drafts")
                 .commit();
     }
 
@@ -108,16 +95,13 @@ public class DraftFragment extends Fragment
         cursor=databaseSaveDraft.getAllDetails();
         if(cursor.getCount()==0)
         {
-            nocases.setVisibility(View.VISIBLE);
-            showMessage("Error","Nothing found");
-
+            noDrafts.setVisibility(View.VISIBLE);
         }
 
         draftAdapter =new DraftAdapter(uploadlist(),getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(draftAdapter);
         draftAdapter.setOnItemClickListener(onClickListener);
-
     }
     private  List<DraftModel> uploadlist()
     {
@@ -129,16 +113,6 @@ public class DraftFragment extends Fragment
             i++;
         }
         return draftModelList;
-    }
-
-    private void showMessage(String title,String message)
-    {
-        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-
     }
 }
 

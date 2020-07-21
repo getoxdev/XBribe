@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,12 +68,14 @@ public class LoginFragment extends Fragment
     @BindView(R.id.new_to_xcom)
     TextView register;
 
+    @BindView(R.id.pb_login)
+    ProgressBar pbLogin;
+
     private FragmentManager fragmentManager;
     private RegisterFragment registerFragment;
     private AuthenticationActivityViewModel viewModel;
     private AppDataManager appDataManager;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -135,38 +138,40 @@ public class LoginFragment extends Fragment
 
             String msg="Please enter all the details";
             showSnackbar(msg);
-
         }
         else
         {
-            User user = new User(email.getText().toString(), password.getText().toString(), appDataManager.getFCMToken());
-            viewModel.userLogin(user);
+            if(appDataManager.getFCMToken().isEmpty())
+            {
+                String msg = "Please Wait!";
+                showSnackbar(msg);
+            }
+            else {
+                showProgress();
+                User user = new User(email.getText().toString(), password.getText().toString(), appDataManager.getFCMToken());
+                viewModel.userLogin(user);
 
-            viewModel.getLoginResponse().observe(this,data-> {
-                if(data==null)
-                {
-                    String msg="Wrong Credentials";
-                    showSnackbar(msg);
-
-                }
-                else
-                {
-
-                    String msg="Logged In Successfully";
-                    showSnackbar(msg);
-                    startActivity(new Intent(getActivity(), MainActivity.class));
-                    getActivity().finish();
-                }
-            });
+                viewModel.getLoginResponse().observe(this, data -> {
+                    if (data == null) {
+                        hideProgress();
+                        String msg = "Wrong Credentials";
+                        showSnackbar(msg);
+                    } else {
+                        hideProgress();
+                        String msg = "Logged In Successfully";
+                        showSnackbar(msg);
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        getActivity().finish();
+                    }
+                });
+            }
         }
     }
 
     private void initFrag(Fragment fragment) {
-
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.frame_main, fragment);
         ft.commit();
-
     }
     public void showSnackbar(String msg)
     {
@@ -174,4 +179,11 @@ public class LoginFragment extends Fragment
         snackbar.show();
     }
 
+    public void showProgress() {
+        pbLogin.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        pbLogin.setVisibility(View.GONE);
+    }
 }

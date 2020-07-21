@@ -1,6 +1,7 @@
 package com.xbribe.ui.main;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -83,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ContactFragment contactFragment;
     private CheckcaseFragment checkcaseFragment;
     private DraftFragment draftFragment;
-
     private NotificationFragment notificationFragment;
     private NearbyFragment nearbyFragment;
 
@@ -173,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         notificationFragment=new NotificationFragment();
         nearbyFragment = new NearbyFragment();
         draftFragment=new DraftFragment();
-
 
         initFrag(reportFragment);
 
