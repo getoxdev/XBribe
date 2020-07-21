@@ -29,6 +29,7 @@ public class DatabaseHelper  extends SQLiteOpenHelper
     public static final String COL_11="CASEPROCESS";
     public static final String COL_12="CASEID";
     public static final String COL_13="USERID";
+    public  static final String COL_14="EMAIL";
 
    public DatabaseHelper(Context context)
    {
@@ -38,7 +39,7 @@ public class DatabaseHelper  extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL("create table "+TABLE_NAME+"(ID INTEGER PRIMARY KEY AUTOINCREMENT,TOKEN TEXT,ADDRESS TEXT,DESCRIPTION TEXT,MINISTRY TEXT,DEPARTMENT TEXT,ORGANISATIONNAME TEXT ,IMAGECOUNT INTEGER,AUDIOCOUNT INTEGER,VIDEOCOUNT INTEGER,CASEPROCESS TEXT,CASEID TEXT,USERID TEXT)");
+        db.execSQL("create table "+TABLE_NAME+"(ID INTEGER PRIMARY KEY AUTOINCREMENT,TOKEN TEXT,ADDRESS TEXT,DESCRIPTION TEXT,MINISTRY TEXT,DEPARTMENT TEXT,ORGANISATIONNAME TEXT ,IMAGECOUNT INTEGER,AUDIOCOUNT INTEGER,VIDEOCOUNT INTEGER,CASEPROCESS TEXT,CASEID TEXT,USERID TEXT,EMAIL TEXT)");
 
     }
 
@@ -47,7 +48,7 @@ public class DatabaseHelper  extends SQLiteOpenHelper
      db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
      onCreate(db);
     }
-    public boolean insertData(String token,String address,String description,String ministry,String department,String organisationname,String  imagecount,String  audiocount,String videocount,String caseprocess,String caseid,String userid)
+    public boolean insertData(String token,String address,String description,String ministry,String department,String organisationname,String  imagecount,String  audiocount,String videocount,String caseprocess,String caseid,String userid,String email)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -64,6 +65,7 @@ public class DatabaseHelper  extends SQLiteOpenHelper
         contentValues.put(COL_11,caseprocess);
         contentValues.put(COL_12,caseid);
         contentValues.put(COL_13,userid);
+        contentValues.put(COL_14,email);
         long success=db.insert(TABLE_NAME,null,contentValues);
         if(success==-1)
         {

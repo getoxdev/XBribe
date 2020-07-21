@@ -111,7 +111,7 @@ public class OTPVerifyFragment extends Fragment{
                         String imagecount=String.valueOf(imageCount);
                         String audiocount=String.valueOf(audioCount);
                         String videocount=String.valueOf(videoCount);
-                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),appDataManager.getAddress(),description,appDataManager.getMinistry(),department,name,imagecount,audiocount,videocount,"CASE PROCESS",res.getCaseId(),appDataManager.getID());
+                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),appDataManager.getAddress(),description,appDataManager.getMinistry(),department,name,imagecount,audiocount,videocount,"CASE PROCESS",res.getCaseId(),appDataManager.getID(),appDataManager.getEmail());
                         if(ifInserted==true)
                         {
                             Log.d("Table","Data inserted");

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
 import com.xbribe.data.models.CollecImages;
+import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.function.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class CheckcaseFragment extends  Fragment
 
     ArrayList<String>  imagelist=new ArrayList();
 
-    AppDataManager appDataManager;
+    private  AppDataManager appDataManager;
 
     Cursor cursor;
 
@@ -53,13 +54,17 @@ public class CheckcaseFragment extends  Fragment
 
     List<CheckcaseModel> caselist;
 
+    boolean flag= false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_check_case, container, false);
         ButterKnife.bind(this, parent);
+        nocases.setVisibility(View.INVISIBLE);
         databaseHelper=new DatabaseHelper(getActivity());
         databaseHelper.getWritableDatabase();
+        appDataManager = ((MyApplication) getActivity().getApplicationContext()).getDataManager();
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl("https://5ee7467352bb0500161fd73a.mockapi.io/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -97,28 +102,33 @@ public class CheckcaseFragment extends  Fragment
     public void initreycycleradapter(ArrayList<String> imagelist)
     {
         cursor=databaseHelper.getAllDetails();
+
         if(cursor.getCount()==0)
         {
             nocases.setVisibility(View.VISIBLE);
-            showMessage("Error","Nothing found");
-
+           // showMessage("Error","Nothing found");
         }
-        else {
+        else
+        {
             checkCaseAdapter = new CheckCaseAdapter(getContext(), uploadlist(imagelist));
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(checkCaseAdapter);
         }
     }
 
-
     public List<CheckcaseModel> uploadlist(ArrayList<String> imag)
     {
-        caselist = new ArrayList<>();
+            caselist = new ArrayList<>();
             int i=0;
             while (cursor.moveToNext())
             {
-             caselist.add(new CheckcaseModel(imag.get(i),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(3),cursor.getString(2),cursor.getString(7),cursor.getString(8),cursor.getString(9)));
-             i++;
+             if(cursor.getString(13).equals(appDataManager.getEmail()))
+             {
+                 caselist.add(new CheckcaseModel(imag.get(i),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(3),cursor.getString(2),cursor.getString(7),cursor.getString(8),cursor.getString(9)));
+                 i++;
+                 nocases.setVisibility(View.INVISIBLE);
+
+             }
             }
             return caselist;
 

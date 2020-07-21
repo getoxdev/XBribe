@@ -18,6 +18,7 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
     public static  final String COL_6="DEPARTMENT";
     public static final String  COL_7="ORGANISATIONNAME";
     public static final String  COL_8="DESCRIPTION";
+    public static final String COL_9="EMAIL";
 
 
 
@@ -29,7 +30,7 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL("create table "+TABLE_NAME+"(ID INTEGER PRIMARY KEY AUTOINCREMENT,MINISTRY TEXT,ADDRESS TEXT,PINCODE TEXT,CITY TEXT,DEPARTMENT TEXT,ORGANISATIONNAME TEXT ,DESCRIPTION INTEGER)");
+        db.execSQL("create table "+TABLE_NAME+"(ID INTEGER PRIMARY KEY AUTOINCREMENT,MINISTRY TEXT,ADDRESS TEXT,PINCODE TEXT,CITY TEXT,DEPARTMENT TEXT,ORGANISATIONNAME TEXT ,DESCRIPTION TEXT,EMAIL TEXT)");
 
     }
 
@@ -38,7 +39,7 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
     }
-    public boolean insertData(String ministry,String address,String pincode,String city,String department,String organisationname,String  description)
+    public boolean insertData(String ministry,String address,String pincode,String city,String department,String organisationname,String  description,String email)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -50,6 +51,7 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
         contentValues.put(COL_6,department);
         contentValues.put(COL_7,organisationname);
         contentValues.put(COL_8,description);
+        contentValues.put(COL_9,email);
 
         long success=db.insert(TABLE_NAME,null,contentValues);
         if(success==-1)

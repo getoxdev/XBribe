@@ -427,7 +427,6 @@ public class Step_two_Fragment  extends Fragment
 
         otpVerifyFragment = new OTPVerifyFragment();
         otpVerifyFragment.setArguments(bundle);
-
         submissionActivityViewModel.setSendOtp();
         submissionActivityViewModel.getSendOtp().observe(this, data->{
             if(data!=null)

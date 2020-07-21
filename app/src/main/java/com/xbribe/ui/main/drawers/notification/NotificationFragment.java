@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,11 @@ public class NotificationFragment extends Fragment
     DatabaseHelperNotice databaseHelperNotice;
     SQLiteDatabase sqLiteDatabase;
 
+    boolean flag=false;
+
+
+    @BindView(R.id.tv_no_notification)
+    TextView notification;
 
     NotificationAdapter notificationAdapter;
 
@@ -51,7 +57,6 @@ public class NotificationFragment extends Fragment
         ButterKnife.bind(this,parent);
         databaseHelperNotice=new DatabaseHelperNotice(getContext());
         databaseHelperNotice.getWritableDatabase();
-
         appDataManager = ((MyApplication) getActivity().getApplicationContext()).getDataManager();
         initreycycleradapter();
         return parent;
@@ -62,7 +67,9 @@ public class NotificationFragment extends Fragment
         cursor=databaseHelperNotice.getAllDetails();
         if(cursor.getCount()==0)
         {
-            showMessage("Error","Nothing found");
+            notification.setVisibility(View.VISIBLE);
+            // showMessage("Error","Nothing found");
+
         }
         else
         {
@@ -70,6 +77,7 @@ public class NotificationFragment extends Fragment
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(notificationAdapter);
         }
+
 
     }
         private List<NotificationModel> uploadlist()
@@ -80,8 +88,10 @@ public class NotificationFragment extends Fragment
                 if(cursor.getString(1).equals(appDataManager.getEmail()))
                 {
                 nlist.add(new NotificationModel(cursor.getString(3), cursor.getString(2)));
+                notification.setVisibility(View.INVISIBLE);
                 }
             }
+
         return  nlist;
     }
     private void showMessage(String title,String message)

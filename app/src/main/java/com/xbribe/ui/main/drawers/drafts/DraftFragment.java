@@ -3,6 +3,7 @@ package com.xbribe.ui.main.drawers.drafts;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.CaptivePortal;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xbribe.R;
 
+import com.xbribe.data.AppDataManager;
+import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.function.Step_two_Fragment;
 import com.xbribe.ui.function.SubmissionActivity;
 import com.xbribe.ui.main.drawers.checkcase.CheckcaseModel;
@@ -38,11 +41,15 @@ public class DraftFragment extends Fragment
 
     @BindView(R.id.tv_no_drafts)
     TextView noDrafts;
+    AppDataManager appDataManager;
+
 
     Cursor  cursor;
     List<DraftModel> draftModelList;
     DraftAdapter draftAdapter;
     DatabaseSaveDraft databaseSaveDraft;
+
+    boolean flag=false;
 
     @Nullable
     @Override
@@ -52,6 +59,7 @@ public class DraftFragment extends Fragment
         ButterKnife.bind(this,parent);
         databaseSaveDraft=new DatabaseSaveDraft(getActivity());
         databaseSaveDraft.getWritableDatabase();
+        appDataManager = ((MyApplication) getActivity().getApplicationContext()).getDataManager();
         initrecycleradapter();
         return parent;
 
@@ -79,6 +87,7 @@ public class DraftFragment extends Fragment
                 bundle.putString("CITY", cursor.getString(4));
                 bundle.putString("PINCODE", cursor.getString(3));
                 bundle.putString("DESCRIPTION", cursor.getString(7));
+
             }
             while (cursor.moveToNext());
         }
@@ -92,15 +101,19 @@ public class DraftFragment extends Fragment
     private void initrecycleradapter()
     {
         cursor=databaseSaveDraft.getAllDetails();
+
         if(cursor.getCount()==0)
         {
             noDrafts.setVisibility(View.VISIBLE);
+            // showMessage("Error","Nothing found");
         }
-
-        draftAdapter =new DraftAdapter(uploadlist(),getActivity());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(draftAdapter);
-        draftAdapter.setOnItemClickListener(onClickListener);
+        else
+        {
+            draftAdapter =new DraftAdapter(uploadlist(),getActivity());
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setAdapter(draftAdapter);
+            draftAdapter.setOnItemClickListener(onClickListener);
+        }
     }
     private  List<DraftModel> uploadlist()
     {
@@ -108,8 +121,13 @@ public class DraftFragment extends Fragment
         int i=0;
         while (cursor.moveToNext())
         {
-            draftModelList.add(new DraftModel(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7)));
-            i++;
+            if(cursor.getString(8).equals(appDataManager.getEmail()))
+            {
+                draftModelList.add(new DraftModel(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7)));
+                i++;
+                noDrafts.setVisibility(View.INVISIBLE);
+            }
+
         }
         return draftModelList;
     }

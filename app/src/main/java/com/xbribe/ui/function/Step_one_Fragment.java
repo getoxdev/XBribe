@@ -233,7 +233,7 @@ public class Step_one_Fragment extends Fragment
         }
         else
         {
-            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description);
+            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description,appDataManager.getEmail());
             if(ifInserted==true)
             {
                String msg="Saved Draft";
