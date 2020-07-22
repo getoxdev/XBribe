@@ -77,7 +77,7 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
         holder.department.setText(draftModelList.get(position).getDeparment());
         holder.organisationname.setText(draftModelList.get(position).getOrganisation_name());
         holder.casedescription.setText(draftModelList.get(position).getDescription());
-        holder.deletedraft.setOnClickListener(new View.OnClickListener() {
+        /*holder.deletedraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -87,7 +87,7 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
                    Toast.makeText(context,"DELETED",Toast.LENGTH_LONG).show();
                 }
             }
-        });
+        });*/
 
     }
 
@@ -120,12 +120,6 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
 
         @BindView(R.id.tv_case_description)
         TextView casedescription;
-
-        @BindView(R.id.delete_draft)
-        Button deletedraft;
-
-
-
 
         public Viewholder(@NonNull View itemView)
         {

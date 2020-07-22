@@ -51,6 +51,7 @@ import com.xbribe.data.AppDataManager;
 import com.xbribe.data.models.Organizations;
 import com.xbribe.service.AddressService;
 import com.xbribe.ui.MyApplication;
+import com.xbribe.ui.main.ReportFragment;
 import com.xbribe.ui.main.drawers.drafts.DatabaseSaveDraft;
 
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class Step_one_Fragment extends Fragment
     private SpinnerAdapter1 spinnerAdapter1;
     private SpinnerAdapter2 spinnerAdapter2;
     private Step_two_Fragment step2Fragment;
+    private ReportFragment reportFragment;
     private AppDataManager appDataManager;
 
     public String name_oraganisation,city,pincode,description,department;
@@ -124,6 +126,7 @@ public class Step_one_Fragment extends Fragment
         databaseSaveDraft.getWritableDatabase();
 
         step2Fragment = new Step_two_Fragment();
+        reportFragment = new ReportFragment();
         Bundle bundleDraft = getActivity().getIntent().getExtras();
         if(bundleDraft!=null)
         {
@@ -234,8 +237,16 @@ public class Step_one_Fragment extends Fragment
             boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description,appDataManager.getEmail());
             if(ifInserted==true)
             {
-               String msg="Saved Draft";
+               String msg="Draft Saved";
                showSnackbar(msg);
+               getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame_two,reportFragment)
+                        .commit();
+            }
+            else
+            {
+                String msg="Not saved. Please try again!";
+                showSnackbar(msg);
             }
         }
     }

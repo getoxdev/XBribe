@@ -9,7 +9,7 @@ import android.util.Log;
 
 import java.io.IOException;
 
-public class CameraManager extends Camera {
+/*public class CameraManager extends Camera {
 
     public static CameraManager getInstance(Context context) {
         if(mManager == null) mManager = new CameraManager(context);
@@ -184,4 +184,4 @@ public class CameraManager extends Camera {
         return false;
     }
 
-}
+}*/

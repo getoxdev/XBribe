@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,13 +45,10 @@ public class DraftFragment extends Fragment
     TextView noDrafts;
     AppDataManager appDataManager;
 
-
     Cursor  cursor;
     List<DraftModel> draftModelList;
     DraftAdapter draftAdapter;
     DatabaseSaveDraft databaseSaveDraft;
-
-    boolean flag=false;
 
     @Nullable
     @Override
@@ -64,6 +62,7 @@ public class DraftFragment extends Fragment
         initrecycleradapter();
         return parent;
     }
+
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -107,7 +106,6 @@ public class DraftFragment extends Fragment
         if(cursor.getCount()==0)
         {
             noDrafts.setVisibility(View.VISIBLE);
-            // showMessage("Error","Nothing found");
         }
         else
         {
@@ -115,6 +113,21 @@ public class DraftFragment extends Fragment
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(draftAdapter);
             draftAdapter.setOnItemClickListener(onClickListener);
+
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+                @Override
+                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                    return false;
+                }
+
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    databaseSaveDraft.deleteData(draftModelList.get(viewHolder.getAdapterPosition()).getId());
+                    Toast.makeText(getActivity(), "Draft Deleted.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            itemTouchHelper.attachToRecyclerView(recyclerView);
         }
     }
     private  List<DraftModel> uploadlist()

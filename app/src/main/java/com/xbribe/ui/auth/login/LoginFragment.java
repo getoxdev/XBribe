@@ -94,27 +94,12 @@ public class LoginFragment extends Fragment
             getActivity().finish();
         }
 
-        viewModel.getUserToken();
         return parent;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        if(appDataManager.getToken()!="")
-        {
-            startActivity(new Intent(getActivity(),MainActivity.class));
-            getActivity().finish();
-        }
-
-        viewModel.getTokenResponse().observe(this,data->{
-            if(data)
-            {
-                startActivity(new Intent(getActivity(),MainActivity.class));
-                getActivity().finish();
-            }
-        });
 
         viewModel.getLoginResponse().observe(this,data-> {
             if(data==null)
