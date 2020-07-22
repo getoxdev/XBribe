@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.xbribe.R;
 import com.xbribe.ui.function.Step_one_Fragment;
 import com.xbribe.ui.function.Step_two_Fragment;
@@ -34,10 +37,9 @@ import butterknife.OnClick;
 public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
 {
 
-    FragmentManager fragmentManager;
-
     private View.OnClickListener onItemClickListener;
 
+    DatabaseSaveDraft databaseSaveDraft;
 
    List<DraftModel> draftModelList;
 
@@ -54,6 +56,8 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
     public DraftAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_draft,parent,false);
+        databaseSaveDraft=new DatabaseSaveDraft(context);
+        databaseSaveDraft.getWritableDatabase();
         return new Viewholder(view);
 
 
@@ -73,8 +77,20 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
         holder.department.setText(draftModelList.get(position).getDeparment());
         holder.organisationname.setText(draftModelList.get(position).getOrganisation_name());
         holder.casedescription.setText(draftModelList.get(position).getDescription());
+        holder.deletedraft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Integer deleteRows=databaseSaveDraft.deleteData(draftModelList.get(position).getId());
+                if(deleteRows>0)
+                {
+                   Toast.makeText(context,"DELETED",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
+
 
     @Override
     public int getItemCount()
@@ -105,6 +121,10 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
         @BindView(R.id.tv_case_description)
         TextView casedescription;
 
+        @BindView(R.id.delete_draft)
+        Button deletedraft;
+
+
 
 
         public Viewholder(@NonNull View itemView)
@@ -115,4 +135,5 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
             itemView.setOnClickListener(onItemClickListener);
         }
     }
+
 }

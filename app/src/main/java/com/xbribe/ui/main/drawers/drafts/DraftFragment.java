@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,14 +63,12 @@ public class DraftFragment extends Fragment
         appDataManager = ((MyApplication) getActivity().getApplicationContext()).getDataManager();
         initrecycleradapter();
         return parent;
-
     }
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
             int position = viewHolder.getAdapterPosition();
-           // Log.d("Position", "onClick: POsition ::: " + position);
             goToSteptwo(position);
         }
     };
@@ -81,16 +80,19 @@ public class DraftFragment extends Fragment
         if (cursor.moveToFirst())
         {
             do {
+                // pos=cursor.getString(0);
                 bundle.putString("MINISTRYID", cursor.getString(1));
                 bundle.putString("DEPARTMENT", cursor.getString(5));
                 bundle.putString("ORGANISATION", cursor.getString(6));
                 bundle.putString("CITY", cursor.getString(4));
                 bundle.putString("PINCODE", cursor.getString(3));
                 bundle.putString("DESCRIPTION", cursor.getString(7));
-
-            }
+              }
             while (cursor.moveToNext());
         }
+
+        String pos=Integer.toString(position+1);
+        Toast.makeText(getActivity(),"ID"+pos,Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(getActivity(),SubmissionActivity.class);
         intent.putExtras(bundle);
@@ -118,13 +120,12 @@ public class DraftFragment extends Fragment
     private  List<DraftModel> uploadlist()
     {
         draftModelList=new ArrayList<>();
-        int i=0;
+
         while (cursor.moveToNext())
         {
             if(cursor.getString(8).equals(appDataManager.getEmail()))
             {
-                draftModelList.add(new DraftModel(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7)));
-                i++;
+                draftModelList.add(new DraftModel(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),"delete_draft",cursor.getString(0)));
                 noDrafts.setVisibility(View.INVISIBLE);
             }
 

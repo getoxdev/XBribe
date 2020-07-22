@@ -71,11 +71,15 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
     public Cursor getrowdetails(int position)
     {
         SQLiteDatabase database=this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_NAME +" WHERE ID = ?",new String[]{String.valueOf(position+1)}, null);
+        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_NAME +" WHERE ID = ?",new String[]{String.valueOf(position+1)}, null);//Position has been increased to correspond the id
         return cursor;
 
     }
-
+    public Integer deleteData(String id)
+    {
+        SQLiteDatabase db =this.getWritableDatabase();
+        return db.delete(TABLE_NAME,"ID = ?",new String[] {id});
+    }
 
 
 }
