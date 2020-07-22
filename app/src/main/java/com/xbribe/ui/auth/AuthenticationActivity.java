@@ -54,6 +54,5 @@ public class AuthenticationActivity extends AppCompatActivity
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.frame_main, fragment);
             ft.commit();
-
         }
-        }
+}

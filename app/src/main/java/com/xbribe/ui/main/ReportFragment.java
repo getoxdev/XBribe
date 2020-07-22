@@ -30,6 +30,7 @@ import com.xbribe.data.AppDataManager;
 import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.function.SubmissionActivity;
 import com.xbribe.ui.main.drawers.checkcase.CheckcaseFragment;
+import com.xbribe.ui.main.drawers.notification.NotificationFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +53,7 @@ public class ReportFragment extends Fragment {
     private ReportViewModel reportViewModel;
     private AppDataManager appDataManager;
     private CheckcaseFragment checkcaseFragment;
+    private NotificationFragment notificationFragment;
 
     @Nullable
     @Override
@@ -61,6 +63,16 @@ public class ReportFragment extends Fragment {
 
         reportViewModel = ViewModelProviders.of(getActivity()).get(ReportViewModel.class);
         appDataManager = ((MyApplication) getActivity().getApplicationContext()).getDataManager();
+
+        String fragment = getActivity().getIntent().getStringExtra("Fragment");
+        if(fragment=="Notification")
+        {
+            notificationFragment = new NotificationFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_frame,notificationFragment)
+                    .addToBackStack("Report")
+                    .commit();
+        }
 
         if(appDataManager.getEmail()=="")
         {

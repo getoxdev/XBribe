@@ -86,8 +86,15 @@ public class LoginFragment extends Fragment
 
         appDataManager = ((MyApplication) getActivity().getApplicationContext()).getDataManager();
 
-        viewModel.getUserToken();
         registerFragment=new RegisterFragment();
+
+        if(appDataManager.getToken()!="")
+        {
+            startActivity(new Intent(getActivity(),MainActivity.class));
+            getActivity().finish();
+        }
+
+        viewModel.getUserToken();
         return parent;
     }
 
@@ -95,10 +102,17 @@ public class LoginFragment extends Fragment
     public void onStart() {
         super.onStart();
 
+        if(appDataManager.getToken()!="")
+        {
+            startActivity(new Intent(getActivity(),MainActivity.class));
+            getActivity().finish();
+        }
+
         viewModel.getTokenResponse().observe(this,data->{
             if(data)
             {
                 startActivity(new Intent(getActivity(),MainActivity.class));
+                getActivity().finish();
             }
         });
 
