@@ -180,7 +180,7 @@ public class Step_one_Fragment extends Fragment
                     }
                 });
             } else {
-                Toast.makeText(getActivity(), "Please reopen the screen.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Please check your internet connection!", Toast.LENGTH_LONG).show();
             }
         });
     }

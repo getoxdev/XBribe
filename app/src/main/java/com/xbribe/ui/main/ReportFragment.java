@@ -99,9 +99,14 @@ public class ReportFragment extends Fragment {
     }
 
     @OnClick(R.id.report_bribe)
-    void reportBribery()
-    {
-        startActivity(new Intent(getActivity(), SubmissionActivity.class));
+    void reportBribery() {
+        if (appDataManager.getAddress() == "")
+        {
+            Toast.makeText(getActivity(),"Please wait while the address is being fetched",Toast.LENGTH_LONG).show();
+        }
+        else {
+            startActivity(new Intent(getActivity(), SubmissionActivity.class));
+        }
     }
 
     @OnClick(R.id.check_cases)

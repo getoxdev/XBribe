@@ -43,6 +43,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.xbribe.R;
@@ -240,7 +241,6 @@ public class Step_two_Fragment  extends Fragment
     }
     private void uploadImage()
     {
-
         for(int i=0;i<imageList.size();i++)
         {
             Uri mImageUri = imageList.get(i);
@@ -252,9 +252,6 @@ public class Step_two_Fragment  extends Fragment
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                     {
-                        String msg="Uploaded Successfully";
-                        showSnackbar(msg);
-
                         Task<Uri> urlTask = imageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                             @Override
                             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -269,6 +266,9 @@ public class Step_two_Fragment  extends Fragment
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
                                 if (task.isSuccessful()) {
+                                    hideProgress();
+                                    String msg="Uploaded Image Successfully";
+                                    showSnackbar(msg);
                                     Uri downloadUri = task.getResult();
                                     String imgURL = downloadUri.toString();
                                     imageURL.add(imgURL);
@@ -276,12 +276,17 @@ public class Step_two_Fragment  extends Fragment
                             }
                         });
                     }
-                })
-                        .addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        hideProgress();
                         String msg="Not  Uploaded";
                         showSnackbar(msg);
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                        showProgress();
                     }
                 });
             }
@@ -307,8 +312,6 @@ public class Step_two_Fragment  extends Fragment
                 audioTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String msg="Uploaded Successfully";
-                        showSnackbar(msg);
                         Task<Uri> urlTask = audioTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                             @Override
                             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -322,7 +325,11 @@ public class Step_two_Fragment  extends Fragment
                         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
+                                hideProgress();
                                 if (task.isSuccessful()) {
+                                    hideProgress();
+                                    String msg="Uploaded Successfully";
+                                    showSnackbar(msg);
                                     Uri downloadUri = task.getResult();
                                     String audURL = downloadUri.toString();
                                     audioURL.add(audURL);
@@ -335,6 +342,11 @@ public class Step_two_Fragment  extends Fragment
                     public void onFailure(@NonNull Exception e) {
                         String msg="Not Uploaded";
                         showSnackbar(msg);
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                        showProgress();
                     }
                 });
             }
@@ -404,11 +416,9 @@ public class Step_two_Fragment  extends Fragment
     @OnClick(R.id.btn_upload)
     void upload()
     {
-        showProgress();
         uploadImage();
         uploadAudio();
         uploadVideo();
-        hideProgress();
     }
 
     @OnClick(R.id.btn_submit)

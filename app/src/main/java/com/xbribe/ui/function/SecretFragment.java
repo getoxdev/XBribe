@@ -6,6 +6,7 @@ import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -112,4 +113,5 @@ public class SecretFragment extends Fragment {
         stop.setEnabled(false);
         Toast.makeText(getActivity(), "Audio Recorded successfully", Toast.LENGTH_LONG).show();
     }
+
 }
