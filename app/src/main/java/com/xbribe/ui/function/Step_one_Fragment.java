@@ -124,7 +124,6 @@ public class Step_one_Fragment extends Fragment
         databaseSaveDraft.getWritableDatabase();
 
         step2Fragment = new Step_two_Fragment();
-
         Bundle bundleDraft = getActivity().getIntent().getExtras();
         if(bundleDraft!=null)
         {
@@ -133,7 +132,6 @@ public class Step_one_Fragment extends Fragment
                         .replace(R.id.main_frame_two,step2Fragment)
                         .commit();
         }
-
         submissionActivityViewModel = ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         submissionActivityViewModel.getOrganizationsDetails();
         appDataManager = ((MyApplication)getActivity().getApplication()).getDataManager();

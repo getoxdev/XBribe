@@ -9,9 +9,10 @@ public class DraftModel
     String deparment;
     String organisation_name;
     String description;
+    String delete;
+    String id;
 
-
-    public DraftModel(String ministry, String address, String pincode, String city, String deparment, String organisation_name, String description) {
+    public DraftModel(String ministry, String address, String pincode, String city, String deparment, String organisation_name, String description, String delete, String id) {
         this.ministry = ministry;
         this.address = address;
         this.pincode = pincode;
@@ -19,6 +20,8 @@ public class DraftModel
         this.deparment = deparment;
         this.organisation_name = organisation_name;
         this.description = description;
+        this.delete = delete;
+        this.id = id;
     }
 
     public String getMinistry() {
@@ -75,5 +78,21 @@ public class DraftModel
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDelete() {
+        return delete;
+    }
+
+    public void setDelete(String delete) {
+        this.delete = delete;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -121,6 +121,22 @@
                 android:id="@+id/relative_layout"
                 android:layout_marginTop="18dp"
                 android:layout_toRightOf="@+id/app_logo">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DELETE"
+                    android:id="@+id/delete_draft"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="18dp"
+                    />
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_show"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/delete_draft"
+                    android:layout_marginTop="10dp"
+                    />-->
 
             </RelativeLayout>
 
