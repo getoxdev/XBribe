@@ -89,17 +89,13 @@ public class DraftFragment extends Fragment
                 bundle.putString("CITY", cursor.getString(4));
                 bundle.putString("PINCODE", cursor.getString(3));
                 bundle.putString("DESCRIPTION", cursor.getString(7));
-              }
+                bundle.putString("ADDRESS",cursor.getString(2));
+                bundle.putString("LATITUDE",cursor.getString(9));
+                bundle.putString("LONGITUDE",cursor.getString(10));
+             }
             while (cursor.moveToNext());
         }
-<<<<<<< HEAD
 
-        Toast.makeText(getActivity(),bundle.getString("DEPARTMENT")+" "
-                +bundle.getString("ORGANISATION")+" "+bundle.getString("CITY")+" "+
-                bundle.getString("PINCODE")+" "+bundle.getString("DESCRIPTION"),Toast.LENGTH_LONG).show();
-
-=======
->>>>>>> 78f3b06e26029985bd0f82fe9cbc2744665c9dd3
         Intent intent = new Intent(getActivity(),SubmissionActivity.class);
         intent.putExtras(bundle);
         intent.putExtra("Fragment","Step 2");

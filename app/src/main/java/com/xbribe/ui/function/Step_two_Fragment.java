@@ -70,7 +70,7 @@ public class Step_two_Fragment  extends Fragment
     private static final int PICK_AUDIO_REQUEST = 2;
     private static final int PICK_VIDEO_REQUEST = 3;
 
-    private  String name,city,pincode,ministryId,department,description;
+    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude;
 
     private ArrayList<Uri> imageList = new ArrayList<Uri>();
     private ArrayList<Uri> audioList = new ArrayList<Uri>();
@@ -164,6 +164,9 @@ public class Step_two_Fragment  extends Fragment
         city=getArguments().getString("CITY");
         pincode=getArguments().getString("PINCODE");
         description=getArguments().getString("DESCRIPTION");
+        address=getArguments().getString("ADDRESS");
+        latitude=getArguments().getString("LATITUDE");
+        longitude=getArguments().getString("LONGITUDE");
     }
 
     private String getFileExtension(Uri uri)
@@ -450,6 +453,9 @@ public class Step_two_Fragment  extends Fragment
         bundle.putString("CITY",city);
         bundle.putString("PINCODE",pincode);
         bundle.putString("DESCRIPTION",description);
+        bundle.putString("ADDRESS",address);
+        bundle.putString("LATITUDE",latitude);
+        bundle.putString("LONGITUDE",longitude);
         bundle.putStringArrayList("IMGARRAY",imageURL);
         bundle.putStringArrayList("AUDARRAY",audioURL);
         bundle.putStringArrayList("VIDARRAY",videoURL);

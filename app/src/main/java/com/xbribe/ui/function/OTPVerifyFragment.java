@@ -80,9 +80,16 @@ public class OTPVerifyFragment extends Fragment{
         city=getArguments().getString("CITY");
         pincode=getArguments().getString("PINCODE");
         description=getArguments().getString("DESCRIPTION");
+        address=getArguments().getString("ADDRESS");
+        latitude=getArguments().getString("LATITUDE");
+        longitude=getArguments().getString("LONGITUDE");
         imageURL=getArguments().getStringArrayList("IMGARRAY");
         audioURL=getArguments().getStringArrayList("AUDARRAY");
         videoURL=getArguments().getStringArrayList("VIDARRAY");
+
+        imageCount=Integer.valueOf(imageURL.size());
+        audioCount=Integer.valueOf(audioURL.size());
+        videoCount=Integer.valueOf(videoURL.size());
     }
 
     @OnClick(R.id.btn_submit)
@@ -97,7 +104,7 @@ public class OTPVerifyFragment extends Fragment{
             }
             else
             {
-                submissionActivityViewModel.reportCaseDetails(appDataManager.getToken(),ministryId,department,name,city,appDataManager.getAddress(),pincode,appDataManager.getLatitude(),appDataManager.getLongitude(),description,imageURL,audioURL,videoURL);
+                submissionActivityViewModel.reportCaseDetails(appDataManager.getToken(),ministryId,department,name,city,address,pincode,latitude,longitude,description,imageURL,audioURL,videoURL);
                 submissionActivityViewModel.getCaseResponse().observe(this, res ->
                 {
                     if(res == null)
@@ -107,10 +114,7 @@ public class OTPVerifyFragment extends Fragment{
                     }
                     else
                     {
-                        Integer imagecount=Integer.valueOf(imageCount);
-                        Integer audiocount=Integer.valueOf(audioCount);
-                        Integer videocount=Integer.valueOf(videoCount);
-                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),appDataManager.getAddress(),description,appDataManager.getMinistry(),department,name,imagecount,audiocount,videocount,"CASE PROCESS",res.getCaseId(),appDataManager.getID(),appDataManager.getEmail());
+                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,ministryId,department,name,imageCount,audioCount,videoCount,res.getStatus(),res.getCaseId(),appDataManager.getID(),appDataManager.getEmail());
                         if(ifInserted==true)
                         {
                             Log.e("Cases Reported Table","Data inserted");

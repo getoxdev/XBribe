@@ -138,6 +138,9 @@ public class Step_one_Fragment extends Fragment
             bundle.putString("CITY",bundleDraft.getString("CITY"));
             bundle.putString("PINCODE",bundleDraft.getString("PINCODE"));
             bundle.putString("DESCRIPTION",bundleDraft.getString("DESCRIPTION"));
+            bundle.putString("ADDRESS",bundleDraft.getString("ADDRESS"));
+            bundle.putString("LATITUDE",bundleDraft.getString("LONGITUDE"));
+            bundle.putString("LONGITUDE",bundleDraft.getString("LONGITUDE"));
             step2Fragment.setArguments(bundle);
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_frame_two,step2Fragment)
@@ -165,7 +168,8 @@ public class Step_one_Fragment extends Fragment
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                          organizations = (Organizations)parent.getSelectedItem();
                          appDataManager.saveMinistry(organizations.getMinistry());
-                         appDataManager.saveOrgID(organizations.getID());
+                         ministryId=organizations.getID();
+                         appDataManager.saveOrgID(ministryId);
                          departmentData = new ArrayList<>(Arrays.asList(organizations.getDepartments()));
                          spinnerAdapter2 = new SpinnerAdapter2(getActivity(),departmentData);
                          spinnerDepartment.setAdapter(spinnerAdapter2);
@@ -180,7 +184,15 @@ public class Step_one_Fragment extends Fragment
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         department = (String)parent.getSelectedItem();
-                        appDataManager.saveDepartment(department);
+                        if(department!=null)
+                        {
+                            appDataManager.saveDepartment(department);
+                        }
+                        else
+                        {
+                            department="No Department present of the Ministry";
+                            appDataManager.saveDepartment("No Department of the Ministry");
+                        }
                     }
 
                     @Override
@@ -210,12 +222,15 @@ public class Step_one_Fragment extends Fragment
          else
          {
              Bundle bundle = new Bundle();
-             bundle.putString("MINISTRYID",appDataManager.getOrgID());
-             bundle.putString("DEPARTMENT",appDataManager.getDepartment());
+             bundle.putString("MINISTRYID",ministryId);
+             bundle.putString("DEPARTMENT",department);
              bundle.putString("ORGANISATION",name_oraganisation);
              bundle.putString("CITY",city);
              bundle.putString("PINCODE",pincode);
              bundle.putString("DESCRIPTION",description);
+             bundle.putString("ADDRESS",appDataManager.getAddress());
+             bundle.putString("LATITUDE",appDataManager.getLatitude());
+             bundle.putString("LONGITUDE",appDataManager.getLongitude());
              step2Fragment.setArguments(bundle);
              getActivity().getSupportFragmentManager().beginTransaction()
                      .replace(R.id.main_frame_two,step2Fragment)
@@ -242,7 +257,7 @@ public class Step_one_Fragment extends Fragment
         }
         else
         {
-            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude());
+            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude());
             if(ifInserted==true)
             {
                String msg="Draft Saved";
