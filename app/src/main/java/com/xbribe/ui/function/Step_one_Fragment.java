@@ -51,6 +51,7 @@ import com.xbribe.data.AppDataManager;
 import com.xbribe.data.models.Organizations;
 import com.xbribe.service.AddressService;
 import com.xbribe.ui.MyApplication;
+import com.xbribe.ui.main.MainActivity;
 import com.xbribe.ui.main.ReportFragment;
 import com.xbribe.ui.main.drawers.drafts.DatabaseSaveDraft;
 
@@ -80,7 +81,7 @@ public class Step_one_Fragment extends Fragment
     private ReportFragment reportFragment;
     private AppDataManager appDataManager;
 
-    public String name_oraganisation,city,pincode,description,department;
+    public String name_oraganisation,city,pincode,description,department,ministryId;
 
     private Organizations organizations;
 
@@ -130,10 +131,17 @@ public class Step_one_Fragment extends Fragment
         Bundle bundleDraft = getActivity().getIntent().getExtras();
         if(bundleDraft!=null)
         {
-            step2Fragment.setArguments(bundleDraft);
+            Bundle bundle = new Bundle();
+            bundle.putString("MINISTRYID",bundleDraft.getString("MINISTRYID"));
+            bundle.putString("DEPARTMENT",bundleDraft.getString("DEPARTMENT"));
+            bundle.putString("ORGANISATION",bundleDraft.getString("ORGANISATION"));
+            bundle.putString("CITY",bundleDraft.getString("CITY"));
+            bundle.putString("PINCODE",bundleDraft.getString("PINCODE"));
+            bundle.putString("DESCRIPTION",bundleDraft.getString("DESCRIPTION"));
+            step2Fragment.setArguments(bundle);
             getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_frame_two,step2Fragment)
-                        .commit();
+                    .replace(R.id.main_frame_two,step2Fragment)
+                    .commit();
         }
         submissionActivityViewModel = ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         submissionActivityViewModel.getOrganizationsDetails();
@@ -239,9 +247,7 @@ public class Step_one_Fragment extends Fragment
             {
                String msg="Draft Saved";
                showSnackbar(msg);
-               getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_frame_two,reportFragment)
-                        .commit();
+               startActivity(new Intent(getActivity(), MainActivity.class));
             }
             else
             {

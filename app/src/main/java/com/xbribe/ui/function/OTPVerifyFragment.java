@@ -47,7 +47,7 @@ public class OTPVerifyFragment extends Fragment{
     ConstraintLayout otponstraintLayout;
 
     private int imageCount,audioCount,videoCount;
-    private  String name,city,pincode,ministryId,department,description;
+    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude;
     private DatabaseHelper databaseHelper;
     private ArrayList<String> imageURL = new ArrayList<String>();
     private ArrayList<String> audioURL = new ArrayList<String>();
@@ -64,7 +64,6 @@ public class OTPVerifyFragment extends Fragment{
         ButterKnife.bind(this,parent);
         submissionActivityViewModel = ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         appDataManager = ((MyApplication) getActivity().getApplication()).getDataManager();
-
 
         return parent;
     }
@@ -84,6 +83,12 @@ public class OTPVerifyFragment extends Fragment{
         imageURL=getArguments().getStringArrayList("IMGARRAY");
         audioURL=getArguments().getStringArrayList("AUDARRAY");
         videoURL=getArguments().getStringArrayList("VIDARRAY");
+
+        Toast.makeText(getActivity(),ministryId+" "+department+" "+name+" "+city+" "+pincode+" "+description,Toast.LENGTH_LONG).show();
+
+        imageCount = imageURL.size();
+        audioCount = audioURL.size();
+        videoCount = videoURL.size();
     }
 
     @OnClick(R.id.btn_submit)
@@ -108,13 +113,13 @@ public class OTPVerifyFragment extends Fragment{
                     }
                     else
                     {
-                        String imagecount=String.valueOf(imageCount);
-                        String audiocount=String.valueOf(audioCount);
-                        String videocount=String.valueOf(videoCount);
+                        Integer imagecount=Integer.valueOf(imageCount);
+                        Integer audiocount=Integer.valueOf(audioCount);
+                        Integer videocount=Integer.valueOf(videoCount);
                         boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),appDataManager.getAddress(),description,appDataManager.getMinistry(),department,name,imagecount,audiocount,videocount,"CASE PROCESS",res.getCaseId(),appDataManager.getID(),appDataManager.getEmail());
                         if(ifInserted==true)
                         {
-                            Log.d("Table","Data inserted");
+                            Log.e("Cases Reported Table","Data inserted");
                         }
 
                         String msg = "Reported Successfully";

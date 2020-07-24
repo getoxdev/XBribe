@@ -79,7 +79,6 @@ public class DraftFragment extends Fragment
         if (cursor.moveToFirst())
         {
             do {
-                // pos=cursor.getString(0);
                 bundle.putString("MINISTRYID", cursor.getString(1));
                 bundle.putString("DEPARTMENT", cursor.getString(5));
                 bundle.putString("ORGANISATION", cursor.getString(6));
@@ -90,8 +89,9 @@ public class DraftFragment extends Fragment
             while (cursor.moveToNext());
         }
 
-        String pos=Integer.toString(position+1);
-        Toast.makeText(getActivity(),"ID"+pos,Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(),bundle.getString("DEPARTMENT")+" "
+                +bundle.getString("ORGANISATION")+" "+bundle.getString("CITY")+" "+
+                bundle.getString("PINCODE")+" "+bundle.getString("DESCRIPTION"),Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(getActivity(),SubmissionActivity.class);
         intent.putExtras(bundle);

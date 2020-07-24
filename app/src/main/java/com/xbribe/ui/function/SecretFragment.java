@@ -48,6 +48,8 @@ public class SecretFragment extends Fragment {
     private MediaRecorder myAudioRecorder;
     private String outputFile;
 
+    private SecretCamera secretCameraFragment;
+
     @BindView(R.id.btn_record)
     MaterialButton record;
 
@@ -66,6 +68,7 @@ public class SecretFragment extends Fragment {
         View parent = inflater.inflate(R.layout.fragment_secret,container,false);
         ButterKnife.bind(this,parent);
 
+        secretCameraFragment = new SecretCamera();
         stop.setEnabled(false);
         return parent;
     }
@@ -77,7 +80,7 @@ public class SecretFragment extends Fragment {
         imgOff.setVisibility(View.INVISIBLE);
         try {
             String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
-            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/xbribe"+timeStamp+".amr";
+            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audxbribe"+timeStamp+".amr";
             myAudioRecorder = new MediaRecorder();
             myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -114,4 +117,12 @@ public class SecretFragment extends Fragment {
         Toast.makeText(getActivity(), "Audio Recorded successfully", Toast.LENGTH_LONG).show();
     }
 
+    @OnClick(R.id.btn_open_scamera)
+    void openSecretCamera()
+    {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_frame_two,secretCameraFragment)
+                    .addToBackStack("Secret Fragment")
+                    .commit();
+    }
 }

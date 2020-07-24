@@ -46,6 +46,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.jaiselrahman.filepicker.activity.FilePickerActivity;
+import com.jaiselrahman.filepicker.config.Configurations;
+import com.jaiselrahman.filepicker.model.MediaFile;
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
 import com.xbribe.data.models.CaseData;
@@ -67,7 +70,6 @@ public class Step_two_Fragment  extends Fragment
     private static final int PICK_AUDIO_REQUEST = 2;
     private static final int PICK_VIDEO_REQUEST = 3;
 
-    private int imageCount,audioCount,videoCount;
     private  String name,city,pincode,ministryId,department,description;
 
     private ArrayList<Uri> imageList = new ArrayList<Uri>();
@@ -173,29 +175,46 @@ public class Step_two_Fragment  extends Fragment
 
     private void openImageChoose()
     {
-        Intent intent1 = new Intent();
-        intent1.setType("image/*");
-        intent1.setAction(Intent.ACTION_GET_CONTENT);
-        intent1.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-        startActivityForResult(intent1,PICK_IMAGE_REQUEST);
+        Intent intent1 = new Intent(getActivity(), FilePickerActivity.class);
+        intent1.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
+                .setCheckPermission(true)
+                .setShowImages(true)
+                .setShowVideos(false)
+                .setShowAudios(false)
+                .setMaxSelection(10)
+                .setSkipZeroSizeFiles(true)
+                .enableImageCapture(true)
+                .build());
+        startActivityForResult(intent1, PICK_IMAGE_REQUEST);
     }
 
     private void openAudioChoose()
     {
-        Intent intent2 = new Intent();
-        intent2.setType("audio/*");
-        intent2.setAction(Intent.ACTION_GET_CONTENT);
-        intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-        startActivityForResult(intent2,PICK_AUDIO_REQUEST);
+        Intent intent2 = new Intent(getActivity(), FilePickerActivity.class);
+        intent2.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
+                .setCheckPermission(true)
+                .setShowImages(false)
+                .setShowVideos(false)
+                .setShowAudios(true)
+                .setMaxSelection(10)
+                .setSkipZeroSizeFiles(true)
+                .build());
+        startActivityForResult(intent2, PICK_AUDIO_REQUEST);
     }
 
     private void openVideoChoose()
     {
-        Intent intent3 = new Intent();
-        intent3.setType("video/*");
-        intent3.setAction(Intent.ACTION_GET_CONTENT);
-        intent3.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-        startActivityForResult(intent3,PICK_VIDEO_REQUEST);
+        Intent intent3 = new Intent(getActivity(), FilePickerActivity.class);
+        intent3.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
+                .setCheckPermission(true)
+                .setShowImages(false)
+                .setShowVideos(true)
+                .setShowAudios(false)
+                .setMaxSelection(10)
+                .setSkipZeroSizeFiles(true)
+                .enableVideoCapture(true)
+                .build());
+        startActivityForResult(intent3, PICK_VIDEO_REQUEST);
     }
 
 
@@ -203,37 +222,37 @@ public class Step_two_Fragment  extends Fragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK && data!=null && data.getClipData()!=null)
+        if(requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK)
         {
-             imageCount = data.getClipData().getItemCount();
+            ArrayList<MediaFile> imgList = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
             int i=0;
-            while(i<imageCount)
+            while(i<imgList.size())
             {
-                Uri image = data.getClipData().getItemAt(i).getUri();
+                Uri image = imgList.get(i).getUri();
                 imageList.add(image);
                 i++;
             }
         }
 
-        if(requestCode==PICK_AUDIO_REQUEST && resultCode==RESULT_OK && data!=null && data.getClipData()!=null)
+        if(requestCode==PICK_AUDIO_REQUEST && resultCode==RESULT_OK)
         {
-             audioCount = data.getClipData().getItemCount();
+            ArrayList<MediaFile> audList = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
             int j=0;
-            while(j<audioCount)
+            while(j<audList.size())
             {
-                Uri audio = data.getClipData().getItemAt(j).getUri();
+                Uri audio = audList.get(j).getUri();
                 audioList.add(audio);
                 j++;
             }
         }
 
-        if(requestCode==PICK_VIDEO_REQUEST && resultCode==RESULT_OK && data!=null && data.getClipData()!=null)
+        if(requestCode==PICK_VIDEO_REQUEST && resultCode==RESULT_OK)
         {
-             videoCount = data.getClipData().getItemCount();
+            ArrayList<MediaFile> vidList = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
             int k=0;
-            while(k<videoCount)
+            while(k<vidList.size())
             {
-                Uri video = data.getClipData().getItemAt(k).getUri();
+                Uri video = vidList.get(k).getUri();
                 videoList.add(video);
                 k++;
             }
@@ -425,8 +444,8 @@ public class Step_two_Fragment  extends Fragment
     void submit()
     {
         Bundle bundle = new Bundle();
-        bundle.putString("MINISTRYID",appDataManager.getOrgID());
-        bundle.putString("DEPARTMENT",appDataManager.getDepartment());
+        bundle.putString("MINISTRYID",ministryId);
+        bundle.putString("DEPARTMENT",department);
         bundle.putString("ORGANISATION",name);
         bundle.putString("CITY",city);
         bundle.putString("PINCODE",pincode);
@@ -441,7 +460,7 @@ public class Step_two_Fragment  extends Fragment
         submissionActivityViewModel.getSendOtp().observe(this, data->{
             if(data!=null)
             {
-                Toast.makeText(getActivity(),"Please Verify Now!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Please check your email.",Toast.LENGTH_LONG).show();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_frame_two,otpVerifyFragment)
                         .commit();

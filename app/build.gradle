@@ -87,4 +87,7 @@ dependencies {
 
     //secret_camera
     implementation 'com.kevalpatel2106:hiddencamera:1.3.5'
+
+    //file_picker
+    implementation 'com.github.jaiselrahman:FilePicker:1.3.2'
 }

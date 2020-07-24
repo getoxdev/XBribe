@@ -48,7 +48,7 @@ public class DatabaseHelper  extends SQLiteOpenHelper
      db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
      onCreate(db);
     }
-    public boolean insertData(String token,String address,String description,String ministry,String department,String organisationname,String  imagecount,String  audiocount,String videocount,String caseprocess,String caseid,String userid,String email)
+    public boolean insertData(String token,String address,String description,String ministry,String department,String organisationname,Integer imagecount,Integer  audiocount,Integer videocount,String caseprocess,String caseid,String userid,String email)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();

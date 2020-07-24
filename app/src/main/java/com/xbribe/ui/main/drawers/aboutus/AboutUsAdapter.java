@@ -36,7 +36,6 @@ public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ImageVie
     {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_aboutusfragment,parent,false);
         return new ImageViewHolder(view);
-
     }
 
     @Override
