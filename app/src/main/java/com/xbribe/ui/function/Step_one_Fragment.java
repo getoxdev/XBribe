@@ -242,7 +242,7 @@ public class Step_one_Fragment extends Fragment
         }
         else
         {
-            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description,appDataManager.getEmail());
+            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,appDataManager.getDepartment(),name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude());
             if(ifInserted==true)
             {
                String msg="Draft Saved";

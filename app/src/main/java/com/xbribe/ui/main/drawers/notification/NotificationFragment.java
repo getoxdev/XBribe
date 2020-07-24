@@ -36,8 +36,6 @@ public class NotificationFragment extends Fragment
     DatabaseHelperNotice databaseHelperNotice;
     SQLiteDatabase sqLiteDatabase;
 
-    boolean flag=false;
-
 
     @BindView(R.id.tv_no_notification)
     TextView notification;
@@ -47,7 +45,7 @@ public class NotificationFragment extends Fragment
     RecyclerView.LayoutManager layoutManager;
 
     List<NotificationModel> nlist;
-
+    int flag=0;
 
     Cursor cursor;
     @Nullable
@@ -89,7 +87,12 @@ public class NotificationFragment extends Fragment
                 {
                 nlist.add(new NotificationModel(cursor.getString(3), cursor.getString(2)));
                 notification.setVisibility(View.INVISIBLE);
+                flag=1;
                 }
+            }
+            if(flag!=1)
+            {
+                notification.setVisibility(View.VISIBLE);
             }
 
         return  nlist;

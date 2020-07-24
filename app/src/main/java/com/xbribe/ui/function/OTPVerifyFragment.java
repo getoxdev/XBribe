@@ -83,12 +83,6 @@ public class OTPVerifyFragment extends Fragment{
         imageURL=getArguments().getStringArrayList("IMGARRAY");
         audioURL=getArguments().getStringArrayList("AUDARRAY");
         videoURL=getArguments().getStringArrayList("VIDARRAY");
-
-        Toast.makeText(getActivity(),ministryId+" "+department+" "+name+" "+city+" "+pincode+" "+description,Toast.LENGTH_LONG).show();
-
-        imageCount = imageURL.size();
-        audioCount = audioURL.size();
-        videoCount = videoURL.size();
     }
 
     @OnClick(R.id.btn_submit)

@@ -43,7 +43,7 @@ public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
                 break;
 
             default:
-                Glide.with(context).load(R.drawable.flowchart2).into(viewHolder.imageViewBackground);
+                Glide.with(context).load(R.drawable.flowchart).into(viewHolder.imageViewBackground);
                 break;
 
         }
