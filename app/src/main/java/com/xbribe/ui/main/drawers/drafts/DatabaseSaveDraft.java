@@ -19,6 +19,8 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
     public static final String  COL_7="ORGANISATIONNAME";
     public static final String  COL_8="DESCRIPTION";
     public static final String COL_9="EMAIL";
+    public static final  String COL_10="LATITUDE";
+    public static final String COL_11="LONGITUDE";
 
 
 
@@ -30,7 +32,7 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL("create table "+TABLE_NAME+"(ID INTEGER PRIMARY KEY AUTOINCREMENT,MINISTRY TEXT,ADDRESS TEXT,PINCODE TEXT,CITY TEXT,DEPARTMENT TEXT,ORGANISATIONNAME TEXT ,DESCRIPTION TEXT,EMAIL TEXT)");
+        db.execSQL("create table "+TABLE_NAME+"(ID INTEGER PRIMARY KEY AUTOINCREMENT,MINISTRY TEXT,ADDRESS TEXT,PINCODE TEXT,CITY TEXT,DEPARTMENT TEXT,ORGANISATIONNAME TEXT ,DESCRIPTION TEXT,EMAIL TEXT,LATITUDE TEXT,LONGITUDE TEXT)");
 
     }
 
@@ -39,7 +41,7 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
     }
-    public boolean insertData(String ministry,String address,String pincode,String city,String department,String organisationname,String  description,String email)
+    public boolean insertData(String ministry,String address,String pincode,String city,String department,String organisationname,String  description,String email,String latitude,String longitude)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -52,6 +54,8 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
         contentValues.put(COL_7,organisationname);
         contentValues.put(COL_8,description);
         contentValues.put(COL_9,email);
+        contentValues.put(COL_10,latitude);
+        contentValues.put(COL_11,longitude);
 
         long success=db.insert(TABLE_NAME,null,contentValues);
         if(success==-1)
@@ -60,7 +64,6 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
 
         }
         else return  true;
-
     }
     public Cursor getAllDetails()
     {
@@ -71,7 +74,7 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
     public Cursor getrowdetails(int position)
     {
         SQLiteDatabase database=this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_NAME +" WHERE ID = ?",new String[]{String.valueOf(position+1)}, null);//Position has been increased to correspond the id
+        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_NAME +" WHERE ID = ?",new String[]{String.valueOf(position)}, null);//Position has been increased to correspond the id
         return cursor;
 
     }

@@ -49,6 +49,8 @@ public class DraftFragment extends Fragment
     List<DraftModel> draftModelList;
     DraftAdapter draftAdapter;
     DatabaseSaveDraft databaseSaveDraft;
+    int flag=0;
+
 
     @Nullable
     @Override
@@ -63,12 +65,14 @@ public class DraftFragment extends Fragment
         return parent;
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
+    private View.OnClickListener onClickListener = new View.OnClickListener()
+    {
         @Override
         public void onClick(View view) {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
             int position = viewHolder.getAdapterPosition();
-            goToSteptwo(position);
+            int id=Integer.parseInt(draftModelList.get(position).getId());
+            goToSteptwo(id);
         }
     };
 
@@ -89,10 +93,6 @@ public class DraftFragment extends Fragment
               }
             while (cursor.moveToNext());
         }
-
-        String pos=Integer.toString(position+1);
-        Toast.makeText(getActivity(),"ID"+pos,Toast.LENGTH_LONG).show();
-
         Intent intent = new Intent(getActivity(),SubmissionActivity.class);
         intent.putExtras(bundle);
         intent.putExtra("Fragment","Step 2");
@@ -121,8 +121,10 @@ public class DraftFragment extends Fragment
                 }
 
                 @Override
-                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                    databaseSaveDraft.deleteData(draftModelList.get(viewHolder.getAdapterPosition()).getId());
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction)
+                {
+                    String s =draftModelList.get(viewHolder.getAdapterPosition()).getId();
+                    databaseSaveDraft.deleteData(s);
                     Toast.makeText(getActivity(), "Draft Deleted.", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -140,8 +142,13 @@ public class DraftFragment extends Fragment
             {
                 draftModelList.add(new DraftModel(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),"delete_draft",cursor.getString(0)));
                 noDrafts.setVisibility(View.INVISIBLE);
+                flag=1;
             }
 
+        }
+        if(flag!=1)
+        {
+            noDrafts.setVisibility(View.VISIBLE);
         }
         return draftModelList;
     }

@@ -434,7 +434,6 @@ public class Step_two_Fragment  extends Fragment
         bundle.putStringArrayList("IMGARRAY",imageURL);
         bundle.putStringArrayList("AUDARRAY",audioURL);
         bundle.putStringArrayList("VIDARRAY",videoURL);
-
         otpVerifyFragment = new OTPVerifyFragment();
         otpVerifyFragment.setArguments(bundle);
         submissionActivityViewModel.setSendOtp();

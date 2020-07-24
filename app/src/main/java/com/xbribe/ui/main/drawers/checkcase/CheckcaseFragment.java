@@ -42,6 +42,8 @@ public class CheckcaseFragment extends  Fragment
 
     Cursor cursor;
 
+    int flag=0;
+
     DatabaseHelper databaseHelper;
 
     @BindView(R.id.tv_no_cases)
@@ -54,7 +56,6 @@ public class CheckcaseFragment extends  Fragment
 
     List<CheckcaseModel> caselist;
 
-    boolean flag= false;
 
     @Nullable
     @Override
@@ -127,8 +128,12 @@ public class CheckcaseFragment extends  Fragment
                  caselist.add(new CheckcaseModel(imag.get(i),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(3),cursor.getString(2),cursor.getString(7),cursor.getString(8),cursor.getString(9)));
                  i++;
                  nocases.setVisibility(View.INVISIBLE);
-
+                 flag=1;
              }
+            }
+            if(flag!=1)
+            {
+                nocases.setVisibility(View.VISIBLE);
             }
             return caselist;
 

@@ -90,8 +90,6 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
         });*/
 
     }
-
-
     @Override
     public int getItemCount()
     {

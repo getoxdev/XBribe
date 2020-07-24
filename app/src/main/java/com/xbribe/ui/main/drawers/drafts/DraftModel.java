@@ -1,7 +1,6 @@
 package com.xbribe.ui.main.drawers.drafts;
 
-public class DraftModel
-{
+public class DraftModel {
     String ministry;
     String address;
     String pincode;
