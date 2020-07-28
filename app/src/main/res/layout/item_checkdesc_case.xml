@@ -78,7 +78,6 @@
                     android:text="Location"
                     />
 
-
                 <TextView
                     android:id="@+id/tv_department"
                     android:layout_width="match_parent"
@@ -94,6 +93,14 @@
                     android:fontFamily="@font/roboto"
                     android:textSize="@dimen/text_size_medium"
                     android:text="Organisation name" />
+
+                <TextView
+                    android:id="@+id/tv_official_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/roboto"
+                    android:text="Official Name (If Reported)"/>
 
                 <TextView
                     android:id="@+id/tv_case_description"

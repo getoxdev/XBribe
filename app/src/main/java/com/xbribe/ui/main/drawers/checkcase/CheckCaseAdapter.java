@@ -26,15 +26,8 @@ import butterknife.ButterKnife;
 
 public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.ViewHolder>
 {
-
-
-    CollecImages collecImages;
     @BindView(R.id.tv_no_cases)
     TextView no_cases;
-
-
-    FragmentManager fragmentManager;
-
     Context context;
     List<CheckcaseModel>  checklist;
 
@@ -55,7 +48,6 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
-
         Glide.with(context).load(checklist.get(position).getCrimeimage()).into(holder.imageView);
         holder.ministry.setText(checklist.get(position).getMinistry());
         holder.department.setText(checklist.get(position).getDepartment());
@@ -65,7 +57,7 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
         holder.imageno.setText(checklist.get(position).getImagesno());
         holder.audiono.setText(checklist.get(position).getAudiono());
         holder.videono.setText(checklist.get(position).getVideono());
-
+        holder.officialName.setText(checklist.get(position).getOfficialName());
     }
 
     @Override
@@ -85,6 +77,8 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
         TextView department;
         @BindView(R.id.tv_organisation_name)
         TextView organization_name;
+        @BindView(R.id.tv_official_name)
+        TextView officialName;
         @BindView(R.id.tv_location)
         TextView location;
         @BindView(R.id.image_crime)
@@ -97,7 +91,6 @@ public class CheckCaseAdapter extends RecyclerView.Adapter<CheckCaseAdapter.View
         TextView audiono;
         @BindView(R.id.tv_video_no)
         TextView videono;
-
 
         public ViewHolder(@NonNull View itemView)
         {

@@ -44,6 +44,9 @@ public class CaseData {
     @SerializedName("department")
     private String department;
 
+    @SerializedName("officialName")
+    private String officialName;
+
     @SerializedName("date")
     private String date;
 
@@ -63,7 +66,7 @@ public class CaseData {
     private Integer __v;
 
 
-    public CaseData(ArrayList<String>  picsArray,ArrayList<String> audiosArray,ArrayList<String> videosArray, String name, String place, LocationDetails location, String description, String orgId, String department)
+    public CaseData(ArrayList<String>  picsArray,ArrayList<String> audiosArray,ArrayList<String> videosArray, String name, String place, LocationDetails location, String description, String orgId, String department, String officialName)
     {
          this.picsArray=picsArray;
          this.audiosArray = audiosArray;
@@ -74,6 +77,7 @@ public class CaseData {
          this.description = description;
          this.orgId=orgId;
          this.department=department;
+         this.officialName=officialName;
     }
 
     public ArrayList<String> getAudiosArray() {
@@ -227,6 +231,13 @@ public class CaseData {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
 
+    public String getOfficialName() {
+        return officialName;
+    }
+
+    public void setOfficialName(String officialName) {
+        this.officialName = officialName;
     }
 }

@@ -30,99 +30,119 @@
                 android:elevation="10dp">
 
                 <RelativeLayout
+                    android:id="@+id/relative_layout_one"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
                     android:background="@color/md_blue_50"
-                    android:id="@+id/relative_layout_one">
+                    android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/tv_step1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:text="Fillup Necessary Details"
-                        android:id="@+id/tv_step1"
-                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
                         android:fontFamily="@font/roboto"
+                        android:text="Fillup Necessary Details"
                         android:textColor="@color/md_pink_700"
                         android:textSize="20sp"
-                        android:layout_centerHorizontal="true" />
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_info_case"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tv_info_case"
+                        android:layout_below="@+id/tv_step1"
                         android:layout_gravity="center"
+                        android:layout_marginTop="36dp"
                         android:focusable="true"
                         android:fontFamily="@font/roboto"
                         android:text="Information of the Case"
                         android:textColor="@color/md_pink_700"
                         android:textSize="18sp"
-                        android:layout_below="@+id/tv_step1"
                         android:textStyle="bold"
-                        android:layout_marginTop="36dp"
-                        android:visibility="visible"/>
+                        android:visibility="visible" />
 
                     <RelativeLayout
+                        android:id="@+id/relative_layout1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_info_case"
-                        android:layout_marginTop="12dp"
-                        android:id="@+id/relative_layout1">
+                        android:layout_marginTop="12dp">
 
                         <Spinner
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="12dp"
-                            style="@style/AppTheme.Spinner"
                             android:id="@+id/spinner_ministry"
-                            android:layout_alignParentRight="true"/>
-
-                        <Spinner
+                            style="@style/AppTheme.Spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="12dp"
-                            style="@style/AppTheme.Spinner"
-                            android:layout_below="@id/spinner_ministry"
+                            android:layout_marginTop="12dp" />
+
+                        <Spinner
                             android:id="@+id/spinner_department"
-                            android:layout_alignParentRight="true" />
+                            style="@style/AppTheme.Spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/spinner_ministry"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_layout1"
                             style="@style/editTextStyle"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="2dp"
                             android:layout_below="@+id/spinner_department"
-                            android:id="@+id/input_layout1"
-                            android:elevation="10dp">
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="4dp"
+                            android:elevation="10dp"
+                            android:padding="2dp">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_name_organization"
-                                android:layout_height="match_parent"
                                 android:layout_width="match_parent"
-                                android:textSize="16sp"
+                                android:layout_height="match_parent"
                                 android:hint="Name of the Organization"
-                                android:inputType="text" />
+                                android:inputType="textMultiLine"
+                                android:textSize="16sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_layout5"
+                            style="@style/editTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/input_layout1"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="4dp"
+                            android:elevation="10dp"
+                            android:padding="2dp">
 
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_official_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Name of the Official (If known)"
+                                android:inputType="textMultiLine"
+                                android:textSize="16sp" />
 
+                        </com.google.android.material.textfield.TextInputLayout>
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/relative_layout2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/relative_layout1"
-                        android:layout_marginTop="36dp"
-                        android:id="@+id/relative_layout2">
+                        android:layout_marginTop="36dp">
 
                         <TextView
+                            android:id="@+id/tv_location"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:focusable="true"
@@ -130,54 +150,53 @@
                             android:text="Location"
                             android:textColor="@color/md_pink_700"
                             android:textSize="18sp"
-                            android:id="@+id/tv_location"
                             android:textStyle="bold"
                             android:visibility="visible">
 
                         </TextView>
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_layout2"
                             style="@style/editTextStyle"
-                            android:layout_marginTop="12dp"
-                            android:layout_below="@+id/tv_location"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_location"
                             android:layout_marginLeft="4dp"
+                            android:layout_marginTop="12dp"
                             android:layout_marginRight="4dp"
-                            android:padding="2dp"
-                            android:id="@+id/input_layout2"
-                            android:elevation="10dp">
+                            android:elevation="10dp"
+                            android:padding="2dp">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_city"
-                                android:layout_height="match_parent"
                                 android:layout_width="match_parent"
-                                android:textSize="16sp"
+                                android:layout_height="match_parent"
                                 android:hint="City"
-                                android:inputType="text" />
+                                android:inputType="text"
+                                android:textSize="16sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_layout3"
                             style="@style/editTextStyle"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="2dp"
                             android:layout_below="@+id/input_layout2"
-                            android:id="@+id/input_layout3"
-                            android:elevation="10dp">
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="4dp"
+                            android:elevation="10dp"
+                            android:padding="2dp">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_pincode"
-                                android:layout_height="match_parent"
                                 android:layout_width="match_parent"
-                                android:textSize="16sp"
+                                android:layout_height="match_parent"
                                 android:hint="PIN Code"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:textSize="16sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -186,58 +205,57 @@
                             android:id="@+id/tv_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="4dp"
+                            android:layout_below="@+id/input_layout3"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="4dp"
+                            android:elevation="2dp"
                             android:fontFamily="@font/roboto"
                             android:hint="Address loading..."
+                            android:padding="4dp"
                             android:textColor="@color/md_black_1000"
-                            android:textSize="16sp"
-                            android:elevation="2dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:layout_below="@+id/input_layout3"/>
+                            android:textSize="16sp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/relative_layout3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/relative_layout3"
-                        android:layout_marginTop="36dp"
-                        android:layout_below="@+id/relative_layout2">
+                        android:layout_below="@+id/relative_layout2"
+                        android:layout_marginTop="36dp">
 
                         <TextView
+                            android:id="@+id/tv_brief"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:focusable="true"
-                            android:id="@+id/tv_brief"
                             android:fontFamily="@font/roboto"
                             android:text="Brief description on the case"
                             android:textColor="@color/md_pink_800"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:visibility="visible">
-                        </TextView>
+                            android:visibility="visible"></TextView>
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_layout4"
                             style="@style/editTextStyle"
-                            android:layout_marginTop="12dp"
-                            android:layout_below="@+id/tv_brief"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_brief"
                             android:layout_marginLeft="4dp"
+                            android:layout_marginTop="12dp"
                             android:layout_marginRight="4dp"
-                            android:padding="2dp"
-                            android:id="@+id/input_layout4"
-                            android:elevation="10dp">
+                            android:elevation="10dp"
+                            android:padding="2dp">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_desc"
-                                android:layout_height="match_parent"
                                 android:layout_width="match_parent"
-                                android:textSize="16sp"
+                                android:layout_height="match_parent"
                                 android:hint="Description"
-                                android:inputType="textLongMessage|textMultiLine" />
+                                android:inputType="textLongMessage|textMultiLine"
+                                android:textSize="16sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -245,21 +263,21 @@
                     </RelativeLayout>
 
                     <com.google.android.material.button.MaterialButton
-                        android:text="PROCEED"
                         android:id="@+id/btn_proceed"
                         style="@style/ButtonStyle"
                         android:layout_below="@id/relative_layout3"
                         android:layout_marginTop="24dp"
-                        android:textColor="@color/md_grey_50"/>
+                        android:text="PROCEED"
+                        android:textColor="@color/md_grey_50" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:text="SAVE AS DRAFT"
                         android:id="@+id/btn_savedrf"
                         style="@style/ButtonStyle"
-                        android:minWidth="0dp"
-                        android:layout_alignParentRight="true"
                         android:layout_below="@+id/relative_layout3"
-                        android:layout_marginTop="24dp" />
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="24dp"
+                        android:minWidth="0dp"
+                        android:text="SAVE AS DRAFT" />
 
                 </RelativeLayout>
 

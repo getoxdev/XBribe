@@ -47,7 +47,7 @@ public class OTPVerifyFragment extends Fragment{
     ConstraintLayout otponstraintLayout;
 
     private int imageCount,audioCount,videoCount;
-    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude;
+    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude,officialName;
     private DatabaseHelper databaseHelper;
     private ArrayList<String> imageURL = new ArrayList<String>();
     private ArrayList<String> audioURL = new ArrayList<String>();
@@ -77,6 +77,7 @@ public class OTPVerifyFragment extends Fragment{
         ministryId=getArguments().getString("MINISTRYID");
         department=getArguments().getString("DEPARTMENT");
         name=getArguments().getString("ORGANISATION");
+        officialName=getArguments().getString("OFFICIAL");
         city=getArguments().getString("CITY");
         pincode=getArguments().getString("PINCODE");
         description=getArguments().getString("DESCRIPTION");
@@ -104,7 +105,7 @@ public class OTPVerifyFragment extends Fragment{
             }
             else
             {
-                submissionActivityViewModel.reportCaseDetails(appDataManager.getToken(),ministryId,department,name,city,address,pincode,latitude,longitude,description,imageURL,audioURL,videoURL);
+                submissionActivityViewModel.reportCaseDetails(appDataManager.getToken(),ministryId,department,officialName,name,city,address,pincode,latitude,longitude,description,imageURL,audioURL,videoURL);
                 submissionActivityViewModel.getCaseResponse().observe(this, res ->
                 {
                     if(res == null)
@@ -114,7 +115,7 @@ public class OTPVerifyFragment extends Fragment{
                     }
                     else
                     {
-                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,ministryId,department,name,imageCount,audioCount,videoCount,res.getStatus(),res.getCaseId(),appDataManager.getID(),appDataManager.getEmail());
+                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,ministryId,department,name,imageCount,audioCount,videoCount,res.getStatus(),res.getCaseId(),appDataManager.getID(),appDataManager.getEmail(),officialName);
                         if(ifInserted==true)
                         {
                             Log.e("Cases Reported Table","Data inserted");

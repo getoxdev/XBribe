@@ -22,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.card.MaterialCardView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -45,10 +46,10 @@ public class ReportFragment extends Fragment {
     TextView tvEmail;
 
     @BindView(R.id.report_bribe)
-    Button btnReport;
+    MaterialCardView btnReport;
 
     @BindView(R.id.check_cases)
-    Button btnCheckCases;
+    MaterialCardView btnCheckCases;
 
     private ReportViewModel reportViewModel;
     private AppDataManager appDataManager;

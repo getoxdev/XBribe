@@ -43,6 +43,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.FirebaseStorage;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.xbribe.Constants;
@@ -81,7 +82,7 @@ public class Step_one_Fragment extends Fragment
     private ReportFragment reportFragment;
     private AppDataManager appDataManager;
 
-    public String name_oraganisation,city,pincode,description,department,ministryId;
+    public String name_oraganisation,city,pincode,description,department,ministryId,official;
 
     private Organizations organizations;
 
@@ -106,10 +107,13 @@ public class Step_one_Fragment extends Fragment
     EditText etCity;
 
     @BindView(R.id.et_pincode)
-    EditText etpincode;
+    EditText etPincode;
 
     @BindView(R.id.et_desc)
     EditText etDescription;
+
+    @BindView(R.id.et_official_name)
+    TextInputEditText etOfficialName;
 
     @BindView(R.id.spinner_ministry)
     Spinner spinnerMinistry;
@@ -135,6 +139,7 @@ public class Step_one_Fragment extends Fragment
             bundle.putString("MINISTRYID",bundleDraft.getString("MINISTRYID"));
             bundle.putString("DEPARTMENT",bundleDraft.getString("DEPARTMENT"));
             bundle.putString("ORGANISATION",bundleDraft.getString("ORGANISATION"));
+            bundle.putString("OFFICIAL",bundleDraft.getString("OFFICIAL"));
             bundle.putString("CITY",bundleDraft.getString("CITY"));
             bundle.putString("PINCODE",bundleDraft.getString("PINCODE"));
             bundle.putString("DESCRIPTION",bundleDraft.getString("DESCRIPTION"));
@@ -150,6 +155,11 @@ public class Step_one_Fragment extends Fragment
         submissionActivityViewModel.getOrganizationsDetails();
         appDataManager = ((MyApplication)getActivity().getApplication()).getDataManager();
         tvAddress.setText(appDataManager.getAddress().trim());
+
+        etCity.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_baseline_star_24,0);
+        etName.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_baseline_star_24,0);
+        etPincode.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_baseline_star_24,0);
+        etDescription.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_baseline_star_24,0);
         return parent;
     }
 
@@ -173,7 +183,6 @@ public class Step_one_Fragment extends Fragment
                          departmentData = new ArrayList<>(Arrays.asList(organizations.getDepartments()));
                          spinnerAdapter2 = new SpinnerAdapter2(getActivity(),departmentData);
                          spinnerDepartment.setAdapter(spinnerAdapter2);
-
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -211,10 +220,12 @@ public class Step_one_Fragment extends Fragment
      {
          name_oraganisation = etName.getText().toString();
          city = etCity.getText().toString();
-         pincode = etpincode.getText().toString();
+         pincode = etPincode.getText().toString();
          description = etDescription.getText().toString();
+         official = etOfficialName.getText().toString();
 
-         if(name_oraganisation.isEmpty()==true || city.isEmpty()==true ||  pincode.isEmpty()==true  ||  description.isEmpty()==true)
+         if(name_oraganisation.isEmpty()==true || city.isEmpty()==true ||
+                 pincode.isEmpty()==true  ||  description.isEmpty()==true)
          {
               String msg="Please fill in the details";
               showSnackbar(msg);
@@ -225,6 +236,10 @@ public class Step_one_Fragment extends Fragment
              bundle.putString("MINISTRYID",ministryId);
              bundle.putString("DEPARTMENT",department);
              bundle.putString("ORGANISATION",name_oraganisation);
+             if(official.isEmpty())
+                 bundle.putString("OFFICIAL","Not Reported");
+             else
+                 bundle.putString("OFFICIAL",official);
              bundle.putString("CITY",city);
              bundle.putString("PINCODE",pincode);
              bundle.putString("DESCRIPTION",description);
@@ -248,26 +263,46 @@ public class Step_one_Fragment extends Fragment
     {
         name_oraganisation = etName.getText().toString();
         city = etCity.getText().toString();
-        pincode = etpincode.getText().toString();
+        pincode = etPincode.getText().toString();
         description = etDescription.getText().toString();
-        if(name_oraganisation.isEmpty()==true || city.isEmpty()==true ||  pincode.isEmpty()==true  ||  description.isEmpty()==true)
+        official=etOfficialName.getText().toString();
+        if(name_oraganisation.isEmpty()==true || city.isEmpty()==true ||
+                pincode.isEmpty()==true  ||  description.isEmpty()==true)
         {
             String msg="Please fill in the details";
             showSnackbar(msg);
         }
         else
         {
-            boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude());
-            if(ifInserted==true)
+            if(official.isEmpty())
             {
-               String msg="Draft Saved";
-               showSnackbar(msg);
-               startActivity(new Intent(getActivity(), MainActivity.class));
+                boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),"Not Reported",appDataManager.getOrgID());
+                if(ifInserted==true)
+                {
+                    String msg="Draft Saved";
+                    showSnackbar(msg);
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                }
+                else
+                {
+                    String msg="Not saved. Please try again!";
+                    showSnackbar(msg);
+                }
             }
             else
             {
-                String msg="Not saved. Please try again!";
-                showSnackbar(msg);
+                boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),official,appDataManager.getOrgID());
+                if(ifInserted==true)
+                {
+                    String msg="Draft Saved";
+                    showSnackbar(msg);
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                }
+                else
+                {
+                    String msg="Not saved. Please try again!";
+                    showSnackbar(msg);
+                }
             }
         }
     }

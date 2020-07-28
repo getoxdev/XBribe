@@ -7,17 +7,19 @@ public class CheckcaseModel
     private String ministry;
     private String department;
     private String name_organization;
+    private String officialName;
     private String case_desc;
     private String location;
     private String imagesno;
     private String audiono;
     private String videono;
 
-    public CheckcaseModel(String crimeimage, String ministry, String department, String name_organization, String case_desc, String location, String imagesno, String audiono, String videono) {
+    public CheckcaseModel(String crimeimage, String ministry, String department, String name_organization,String officialName, String case_desc, String location, String imagesno, String audiono, String videono) {
         this.crimeimage = crimeimage;
         this.ministry = ministry;
         this.department = department;
         this.name_organization = name_organization;
+        this.officialName=officialName;
         this.case_desc = case_desc;
         this.location = location;
         this.imagesno = imagesno;
@@ -94,5 +96,13 @@ public class CheckcaseModel
 
     public void setVideono(String videono) {
         this.videono = videono;
+    }
+
+    public String getOfficialName() {
+        return officialName;
+    }
+
+    public void setOfficialName(String officialName) {
+        this.officialName = officialName;
     }
 }

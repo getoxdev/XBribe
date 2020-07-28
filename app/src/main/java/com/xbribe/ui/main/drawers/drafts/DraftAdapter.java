@@ -36,14 +36,10 @@ import butterknife.OnClick;
 
 public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
 {
-
     private View.OnClickListener onItemClickListener;
-
     DatabaseSaveDraft databaseSaveDraft;
-
-   List<DraftModel> draftModelList;
-
-   Context context;
+    List<DraftModel> draftModelList;
+    Context context;
 
     public DraftAdapter(List<DraftModel> draftModelList, Context context)
     {
@@ -77,6 +73,7 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
         holder.department.setText(draftModelList.get(position).getDeparment());
         holder.organisationname.setText(draftModelList.get(position).getOrganisation_name());
         holder.casedescription.setText(draftModelList.get(position).getDescription());
+        holder.officialName.setText(draftModelList.get(position).getOfficialName());
         /*holder.deletedraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -119,6 +116,9 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
         @BindView(R.id.tv_case_description)
         TextView casedescription;
 
+        @BindView(R.id.tv_official_name)
+        TextView officialName;
+
         public Viewholder(@NonNull View itemView)
         {
             super(itemView);
@@ -127,5 +127,4 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.Viewholder>
             itemView.setOnClickListener(onItemClickListener);
         }
     }
-
 }

@@ -83,7 +83,7 @@ public class DraftFragment extends Fragment
         if (cursor.moveToFirst())
         {
             do {
-                bundle.putString("MINISTRYID", cursor.getString(1));
+                bundle.putString("MINISTRYID", cursor.getString(12));
                 bundle.putString("DEPARTMENT", cursor.getString(5));
                 bundle.putString("ORGANISATION", cursor.getString(6));
                 bundle.putString("CITY", cursor.getString(4));
@@ -143,11 +143,10 @@ public class DraftFragment extends Fragment
         {
             if(cursor.getString(8).equals(appDataManager.getEmail()))
             {
-                draftModelList.add(new DraftModel(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),"delete_draft",cursor.getString(0)));
+                draftModelList.add(new DraftModel(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(12),cursor.getString(7),"delete_draft",cursor.getString(0),cursor.getString(12)));
                 noDrafts.setVisibility(View.INVISIBLE);
                 flag=1;
             }
-
         }
         if(flag!=1)
         {

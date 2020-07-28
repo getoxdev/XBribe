@@ -49,6 +49,7 @@ public interface ApiService
     Call<CaseData> reportCase(@Header("token") String token,
                               @Field("ministryId") String orgId,
                               @Field("department") String department,
+                              @Field("officialName") String officialName,
                               @Field("name") String name,
                               @Field("place") String place,
                               @Field("address") String address,

@@ -70,7 +70,7 @@ public class Step_two_Fragment  extends Fragment
     private static final int PICK_AUDIO_REQUEST = 2;
     private static final int PICK_VIDEO_REQUEST = 3;
 
-    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude;
+    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude,officialName;
 
     private ArrayList<Uri> imageList = new ArrayList<Uri>();
     private ArrayList<Uri> audioList = new ArrayList<Uri>();
@@ -450,6 +450,7 @@ public class Step_two_Fragment  extends Fragment
         bundle.putString("MINISTRYID",ministryId);
         bundle.putString("DEPARTMENT",department);
         bundle.putString("ORGANISATION",name);
+        bundle.putString("OFFICIAL",officialName);
         bundle.putString("CITY",city);
         bundle.putString("PINCODE",pincode);
         bundle.putString("DESCRIPTION",description);

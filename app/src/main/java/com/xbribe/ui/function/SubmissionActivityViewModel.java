@@ -52,9 +52,9 @@ public class SubmissionActivityViewModel extends AndroidViewModel {
     }
     public MutableLiveData<ResponseBody> getVerifyOtp() {return verifyOtp;}
 
-  public  void reportCaseDetails(String token,String ministryId, String department, String name, String place, String address, String pin, String latitude, String longitude, String description, ArrayList<String> picsArray, ArrayList<String> audiosArray, ArrayList<String> videosArray)
+  public  void reportCaseDetails(String token,String ministryId, String department, String officialName, String name, String place, String address, String pin, String latitude, String longitude, String description, ArrayList<String> picsArray, ArrayList<String> audiosArray, ArrayList<String> videosArray)
   {
-      appDataManager.reportCase(token,ministryId,department,name,place,address,pin,latitude,longitude,description,picsArray,audiosArray,videosArray).enqueue(new Callback<CaseData>() {
+      appDataManager.reportCase(token,ministryId,department,officialName,name,place,address,pin,latitude,longitude,description,picsArray,audiosArray,videosArray).enqueue(new Callback<CaseData>() {
           @Override
           public void onResponse(Call<CaseData> call, Response<CaseData> response)
           {
