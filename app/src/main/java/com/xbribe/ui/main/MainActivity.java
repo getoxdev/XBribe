@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NotificationFragment notificationFragment;
     private NearbyFragment nearbyFragment;
 
-    private static final int UPDATE_INTERVAL = 2000;
+    private static final int UPDATE_INTERVAL = 5000;
     private FusedLocationProviderClient locationProviderClient;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     isGPSon = false;
-                    Log.i(TAG, "Error while getting location!");
+                    Log.e(TAG, "Error while getting location!");
                 }
             });
         }

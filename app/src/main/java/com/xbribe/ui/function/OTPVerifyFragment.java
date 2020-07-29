@@ -115,7 +115,7 @@ public class OTPVerifyFragment extends Fragment{
                     }
                     else
                     {
-                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,ministryId,department,name,imageCount,audioCount,videoCount,res.getStatus(),res.getCaseId(),appDataManager.getID(),appDataManager.getEmail(),officialName);
+                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,appDataManager.getMinistry(),department,name,imageCount,audioCount,videoCount,res.getStatus(),res.getCaseId(),appDataManager.getID(),appDataManager.getEmail(),officialName);
                         if(ifInserted==true)
                         {
                             Log.e("Cases Reported Table","Data inserted");

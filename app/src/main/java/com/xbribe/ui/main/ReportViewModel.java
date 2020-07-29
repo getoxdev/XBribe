@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.xbribe.data.AppDataManager;
+import com.xbribe.data.models.OrganizationResponse;
 import com.xbribe.data.models.TokenResponse;
 import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.main.MainActivity;
@@ -21,17 +22,20 @@ public class ReportViewModel extends AndroidViewModel {
 
     private AppDataManager appDataManager;
     private MutableLiveData<Boolean> emailResponse;
+    private MutableLiveData<OrganizationResponse> organizationResponse;
 
     public ReportViewModel(@NonNull Application application) {
         super(application);
 
         appDataManager = ((MyApplication) application).getDataManager();
         emailResponse = new MutableLiveData<>();
+        organizationResponse = new MutableLiveData<>();
     }
 
     public MutableLiveData<Boolean> getEmailResponse() {
         return emailResponse;
     }
+    public MutableLiveData<OrganizationResponse> getOrganizationsResponse() { return organizationResponse; }
 
     public void getEmailDetails() {
         appDataManager.getDetails(appDataManager.getToken()).enqueue(new Callback<TokenResponse>() {
@@ -46,6 +50,29 @@ public class ReportViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<TokenResponse> call, Throwable t) {
                 emailResponse.postValue(false);
+            }
+        });
+    }
+
+    public void getOrganizationsDetails()
+    {
+        appDataManager.getOrganizations().enqueue(new Callback<OrganizationResponse>()
+        {
+            @Override
+            public void onResponse(Call<OrganizationResponse> call, Response<OrganizationResponse> response) {
+                if(response.code()<300)
+                {
+                    organizationResponse.postValue(response.body());
+                }
+                else
+                {
+                    organizationResponse.postValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrganizationResponse> call, Throwable t) {
+                organizationResponse.postValue(null);
             }
         });
     }

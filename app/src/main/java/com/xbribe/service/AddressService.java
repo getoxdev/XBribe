@@ -53,7 +53,7 @@ public class AddressService extends IntentService
             address=geocoder.getFromLocation(deviceLocation.getLatitude(),deviceLocation.getLongitude(),1);
             if(address == null && address.size() == 0)
             {
-                respondWithResult(Constants.FAILURE_RESULT,"Location unavailable2! Please reopen the screen.");
+                respondWithResult(Constants.FAILURE_RESULT,"Location unavailable! Please reopen the screen.");
             }
             else
             {
@@ -69,7 +69,7 @@ public class AddressService extends IntentService
         }
         catch (Exception e )
         {
-            respondWithResult(Constants.FAILURE_RESULT,e.getMessage());
+            respondWithResult(Constants.FAILURE_RESULT,"Location unavailable! Please reopen the screen.");
         }
     }
 

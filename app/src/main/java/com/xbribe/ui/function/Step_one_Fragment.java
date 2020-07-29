@@ -82,7 +82,7 @@ public class Step_one_Fragment extends Fragment
     private ReportFragment reportFragment;
     private AppDataManager appDataManager;
 
-    public String name_oraganisation,city,pincode,description,department,ministryId,official;
+    public String name_oraganisation,city,pincode,description,department,ministryId,official,ministry;
 
     private Organizations organizations;
 
@@ -97,8 +97,14 @@ public class Step_one_Fragment extends Fragment
     @BindView(R.id.btn_proceed)
     Button proceed;
 
-    @BindView((R.id.tv_address))
+    @BindView(R.id.tv_address)
     TextView tvAddress;
+
+    @BindView(R.id.tv_ministry_loading)
+    TextView tvMinistryLoading;
+
+    @BindView(R.id.tv_department_loading)
+    TextView tvDepartmentLoading;
 
     @BindView(R.id.et_name_organization)
     EditText etName;
@@ -127,6 +133,9 @@ public class Step_one_Fragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_step_one, container, false);
         ButterKnife.bind(this, parent);
+        tvMinistryLoading.setVisibility(View.VISIBLE);
+        tvDepartmentLoading.setVisibility(View.VISIBLE);
+
         databaseSaveDraft=new DatabaseSaveDraft(getActivity());
         databaseSaveDraft.getWritableDatabase();
 
@@ -167,9 +176,12 @@ public class Step_one_Fragment extends Fragment
     public void onStart() {
         super.onStart();
 
+        submissionActivityViewModel.getOrganizationsDetails();
         submissionActivityViewModel.getOrganizationsResponse().observe(this, data -> {
             if (data != null)
             {
+                tvMinistryLoading.setVisibility(View.GONE);
+                tvDepartmentLoading.setVisibility(View.GONE);
                 organizationsData = new ArrayList<>(Arrays.asList(data.getData()));
                 spinnerAdapter1 = new SpinnerAdapter1(getActivity(), organizationsData);
                 spinnerMinistry.setAdapter(spinnerAdapter1);
@@ -177,7 +189,8 @@ public class Step_one_Fragment extends Fragment
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                          organizations = (Organizations)parent.getSelectedItem();
-                         appDataManager.saveMinistry(organizations.getMinistry());
+                         ministry=organizations.getMinistry();
+                         appDataManager.saveMinistry(ministry);
                          ministryId=organizations.getID();
                          appDataManager.saveOrgID(ministryId);
                          departmentData = new ArrayList<>(Arrays.asList(organizations.getDepartments()));
@@ -193,15 +206,7 @@ public class Step_one_Fragment extends Fragment
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         department = (String)parent.getSelectedItem();
-                        if(department!=null)
-                        {
-                            appDataManager.saveDepartment(department);
-                        }
-                        else
-                        {
-                            department="No Department present of the Ministry";
-                            appDataManager.saveDepartment("No Department of the Ministry");
-                        }
+                        appDataManager.saveDepartment(department);
                     }
 
                     @Override
@@ -210,6 +215,8 @@ public class Step_one_Fragment extends Fragment
                     }
                 });
             } else {
+                tvMinistryLoading.setText("Ministry Details not available!");
+                tvMinistryLoading.setText("Department Details not available!");
                 Toast.makeText(getActivity(), "Please check your internet connection!", Toast.LENGTH_LONG).show();
             }
         });
@@ -237,7 +244,7 @@ public class Step_one_Fragment extends Fragment
              bundle.putString("DEPARTMENT",department);
              bundle.putString("ORGANISATION",name_oraganisation);
              if(official.isEmpty())
-                 bundle.putString("OFFICIAL","Not Reported");
+                 bundle.putString("OFFICIAL","Not Specified");
              else
                  bundle.putString("OFFICIAL",official);
              bundle.putString("CITY",city);
@@ -276,7 +283,7 @@ public class Step_one_Fragment extends Fragment
         {
             if(official.isEmpty())
             {
-                boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),"Not Reported",appDataManager.getOrgID());
+                boolean ifInserted= databaseSaveDraft.insertData(ministry,appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),"Not Specified",appDataManager.getOrgID());
                 if(ifInserted==true)
                 {
                     String msg="Draft Saved";
@@ -291,7 +298,7 @@ public class Step_one_Fragment extends Fragment
             }
             else
             {
-                boolean ifInserted= databaseSaveDraft.insertData(appDataManager.getMinistry(),appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),official,appDataManager.getOrgID());
+                boolean ifInserted= databaseSaveDraft.insertData(ministry,appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),official,appDataManager.getOrgID());
                 if(ifInserted==true)
                 {
                     String msg="Draft Saved";

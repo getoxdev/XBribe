@@ -69,51 +69,24 @@ public class SecretFragment extends Fragment {
         ButterKnife.bind(this,parent);
 
         secretCameraFragment = new SecretCamera();
-        stop.setEnabled(false);
         return parent;
     }
 
     @OnClick(R.id.btn_record)
     void startRecord()
     {
-        imgOn.setVisibility(View.VISIBLE);
-        imgOff.setVisibility(View.INVISIBLE);
-        try {
-            String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
-            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audxbribe"+timeStamp+".amr";
-            myAudioRecorder = new MediaRecorder();
-            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-            myAudioRecorder.setOutputFile(outputFile);
-            myAudioRecorder.prepare();
-            myAudioRecorder.start();
-        } catch (IllegalStateException ise) {
-            Log.e("Record Error",ise.getMessage());
-        } catch (IOException ioe) {
-            Log.e("Record Error",ioe.getMessage());
-        }
-        record.setEnabled(false);
-        stop.setEnabled(true);
+        //imgOn.setVisibility(View.VISIBLE);
+        //imgOff.setVisibility(View.INVISIBLE);
+        startRecording();
         Toast.makeText(getActivity(), "Recording started", Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.btn_stop)
     void stopRecord()
     {
-        imgOn.setVisibility(View.INVISIBLE);
-        imgOff.setVisibility(View.VISIBLE);
-        try {
-            myAudioRecorder.stop();
-            myAudioRecorder.reset();
-            myAudioRecorder.release();
-        }
-        catch (Exception e)
-        {
-            Log.e("Error",e.getMessage());
-        }
-        record.setEnabled(true);
-        stop.setEnabled(false);
+        //imgOn.setVisibility(View.INVISIBLE);
+        //imgOff.setVisibility(View.VISIBLE);
+        stopRecording();
         Toast.makeText(getActivity(), "Audio Recorded successfully", Toast.LENGTH_LONG).show();
     }
 
@@ -124,5 +97,31 @@ public class SecretFragment extends Fragment {
                     .replace(R.id.main_frame_two,secretCameraFragment)
                     .addToBackStack("Secret Fragment")
                     .commit();
+    }
+
+    private void startRecording()
+    {
+        myAudioRecorder = new MediaRecorder();
+        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audxbribe"+timeStamp+".amr";
+        myAudioRecorder.setOutputFile(outputFile);
+
+        try {
+            myAudioRecorder.prepare();
+        } catch (IOException e) {
+            Log.e("Audio Recorder",e.getMessage());
+        }
+
+        myAudioRecorder.start();
+    }
+
+    private void stopRecording()
+    {
+        myAudioRecorder.stop();
+        myAudioRecorder.release();
+        myAudioRecorder=null;
     }
 }
