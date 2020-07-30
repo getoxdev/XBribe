@@ -28,6 +28,11 @@
             android:title="Saved drafts"
             />
         <item
+            android:id="@+id/nav_laws"
+            android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+            android:title="Laws"
+            />
+        <item
             android:id="@+id/nav_contact"
             android:icon="@drawable/ic_call_black_24dp"
             android:title="Contact Us" />

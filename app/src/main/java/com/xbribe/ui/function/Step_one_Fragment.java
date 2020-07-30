@@ -240,7 +240,7 @@ public class Step_one_Fragment extends Fragment
          else
          {
              Bundle bundle = new Bundle();
-             bundle.putString("MINISTRYID",ministryId);
+             bundle.putString("MINISTRYID",appDataManager.getMinistry());
              bundle.putString("DEPARTMENT",department);
              bundle.putString("ORGANISATION",name_oraganisation);
              if(official.isEmpty())

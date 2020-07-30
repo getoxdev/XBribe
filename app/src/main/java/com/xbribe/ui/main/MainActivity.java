@@ -1,7 +1,6 @@
 package com.xbribe.ui.main;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +12,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,17 +39,17 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.xbribe.Constants;
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
 import com.xbribe.service.AddressService;
 import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.auth.AuthenticationActivity;
-import com.xbribe.ui.main.drawers.ContactFragment;
+import com.xbribe.ui.main.drawers.contact.ContactFragment;
 import com.xbribe.ui.main.drawers.aboutus.AboutUsFragment;
 import com.xbribe.ui.main.drawers.checkcase.CheckcaseFragment;
 import com.xbribe.ui.main.drawers.drafts.DraftFragment;
+import com.xbribe.ui.main.drawers.laws.LawsFragment;
 import com.xbribe.ui.main.drawers.nearby.NearbyFragment;
 import com.xbribe.ui.main.drawers.notification.NotificationFragment;
 
@@ -58,9 +57,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.ACCESS_MEDIA_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -86,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DraftFragment draftFragment;
     private NotificationFragment notificationFragment;
     private NearbyFragment nearbyFragment;
+    private LawsFragment lawsFragment;
+
+
 
     private static final int UPDATE_INTERVAL = 5000;
     private FusedLocationProviderClient locationProviderClient;
@@ -172,6 +172,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         notificationFragment=new NotificationFragment();
         nearbyFragment = new NearbyFragment();
         draftFragment=new DraftFragment();
+        lawsFragment=new LawsFragment();
+
+
 
         initFrag(reportFragment);
 
@@ -408,6 +411,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             {
                 initFrag(draftFragment);
             }
+            else
+                if(id==R.id.nav_laws)
+                {
+                    initFrag(lawsFragment);
+                }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

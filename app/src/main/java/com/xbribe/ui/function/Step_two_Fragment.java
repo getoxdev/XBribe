@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,11 +26,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.widgets.ConstraintHorizontalLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -57,6 +61,7 @@ import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.main.MainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +84,9 @@ public class Step_two_Fragment  extends Fragment
     private ArrayList<String> imageURL = new ArrayList<String>();
     private ArrayList<String> audioURL = new ArrayList<String>();
     private ArrayList<String> videoURL = new ArrayList<String>();
+
+    List<Uri> imagepreview;
+
 
     private StorageReference mStorageRef;
     private AppDataManager appDataManager;
@@ -113,6 +121,10 @@ public class Step_two_Fragment  extends Fragment
 
     @BindView(R.id.secret_camera)
     FloatingActionButton btnSecretCamera;
+
+    ImagePreviewAdapter imagePreviewAdapter;
+
+
 
     SubmissionActivityViewModel submissionActivityViewModel;
 
@@ -222,9 +234,9 @@ public class Step_two_Fragment  extends Fragment
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
-
         if(requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK)
         {
             ArrayList<MediaFile> imgList = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
@@ -235,8 +247,8 @@ public class Step_two_Fragment  extends Fragment
                 imageList.add(image);
                 i++;
             }
-        }
 
+        }
         if(requestCode==PICK_AUDIO_REQUEST && resultCode==RESULT_OK)
         {
             ArrayList<MediaFile> audList = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
@@ -260,9 +272,20 @@ public class Step_two_Fragment  extends Fragment
                 k++;
             }
         }
+
+        imagepreview=new ArrayList<>();
+        for(int i=0;i<imageList.size();i++)
+        {
+            imagepreview.add(imageList.get(i));
+        }
+        imagePreviewAdapter=new ImagePreviewAdapter(getContext(),imagepreview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setAdapter(imagePreviewAdapter);
+
     }
     private void uploadImage()
     {
+
         for(int i=0;i<imageList.size();i++)
         {
             Uri mImageUri = imageList.get(i);

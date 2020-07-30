@@ -6,18 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
@@ -36,23 +31,13 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.xbribe.Constants;
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
 import com.xbribe.service.AddressService;
 import com.xbribe.ui.MyApplication;
-import com.xbribe.ui.auth.AuthenticationActivityViewModel;
-import com.xbribe.ui.main.MainActivity;
-import com.xbribe.ui.main.ReportFragment;
-import com.xbribe.ui.main.drawers.ContactFragment;
-import com.xbribe.ui.main.drawers.aboutus.AboutUsFragment;
-import com.xbribe.ui.main.drawers.checkcase.CheckcaseFragment;
 import com.xbribe.ui.main.drawers.drafts.DatabaseSaveDraft;
 
-import java.util.ArrayList;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;

@@ -36,7 +36,6 @@ public class AboutUsFragment extends Fragment
 
 
         models=new ArrayList<>();
-
         models.add(new AboutUsModel(R.drawable.rishiraj,"Rishiraj Paul Choudhury","Android Developer"));
         models.add(new AboutUsModel(R.drawable.nandini,"Nandini Agarwal","Android Developer"));
         models.add(new AboutUsModel(R.drawable.utkarsh,"Utkarsh Tiwari","Web developer"));
