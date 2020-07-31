@@ -125,7 +125,7 @@ public class CheckcaseFragment extends  Fragment
             {
              if(cursor.getString(13).equals(appDataManager.getEmail()))
              {
-                 caselist.add(new CheckcaseModel(imag.get(i),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(12),cursor.getString(3),cursor.getString(2),cursor.getString(7),cursor.getString(8),cursor.getString(9)));
+                 caselist.add(new CheckcaseModel(imag.get(i),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(14),cursor.getString(3),cursor.getString(2),cursor.getString(7),cursor.getString(8),cursor.getString(9)));
                  i++;
                  nocases.setVisibility(View.INVISIBLE);
                  flag=1;

@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-    private static final int UPDATE_INTERVAL = 5000;
+    private static final int UPDATE_INTERVAL = 3000;
     private FusedLocationProviderClient locationProviderClient;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
@@ -162,7 +162,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
-        startGettingLocation();
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            startGettingLocation();
+        }
 
         fragmentManager = getSupportFragmentManager();
         checkcaseFragment=new CheckcaseFragment();
@@ -189,20 +192,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     protected void onDestroy() {
         stopLocationRequests();
         super.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        stopLocationRequests();
-        super.onStop();
     }
 
     private boolean checkPermission() {
@@ -294,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (currentLocation != null) {
                         isGPSon = true;
                         isShowSettings = true;
-                        getAddress(currentLocation);
+                        startAddressService(currentLocation);
                         appDataManager.saveLatitude(String.valueOf(currentLocation.getLatitude()));
                         appDataManager.saveLongitude(String.valueOf(currentLocation.getLongitude()));
                     }
@@ -330,14 +322,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void getAddress(Location location) {
-        if (!Geocoder.isPresent())
-        {
-            Toast.makeText(this, "Network connectivity issues!", Toast.LENGTH_SHORT).show();
-        } else {
-            startAddressService(location);
-        }
-    }
 
     private void startAddressService(Location location) {
         Intent intent = new Intent(this, AddressService.class);
@@ -456,7 +440,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @OnClick(R.id.logout)
     void Logout()
     {
-        if(appDataManager.removeToken() && appDataManager.removeEmail() && appDataManager.removeID())
+        if(appDataManager.removeToken() && appDataManager.removeEmail() && appDataManager.removeID()
+                && appDataManager.removeAddress() && appDataManager.removeLatitude() && appDataManager.removeLongitude()
+                && appDataManager.removeOrgID() && appDataManager.removeMinistry() && appDataManager.removeDepartment())
         {
             Toast.makeText(MainActivity.this, "Logged out successfully.", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(MainActivity.this,AuthenticationActivity.class));
@@ -468,12 +454,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initFrag(Fragment fragment) {
-
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(android.R.anim.fade_in,
                 android.R.anim.fade_out);
         ft.replace(R.id.main_frame, fragment);
         ft.commit();
-
     }
 }

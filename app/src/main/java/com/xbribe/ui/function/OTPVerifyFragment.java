@@ -125,6 +125,7 @@ public class OTPVerifyFragment extends Fragment{
                         String msg = "Reported Successfully";
                         showSnackbar(msg);
                         startActivity(new Intent(getActivity(), MainActivity.class));
+                        getActivity().finish();
                     }
                 });
             }

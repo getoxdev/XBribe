@@ -106,7 +106,7 @@ public class ReportFragment extends Fragment {
 
     @OnClick(R.id.report_bribe)
     void reportBribery() {
-        if (appDataManager.getAddress() == "")
+        if (appDataManager.getAddress().isEmpty())
         {
             Toast.makeText(getActivity(),"Please wait while the address is being fetched",Toast.LENGTH_LONG).show();
         }

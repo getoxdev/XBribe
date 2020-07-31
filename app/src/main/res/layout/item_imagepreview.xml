@@ -18,6 +18,5 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imag_preview"
-        />
+        android:id="@+id/imag_preview"/>
 </com.google.android.material.card.MaterialCardView>
