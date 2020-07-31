@@ -54,7 +54,6 @@ public class OTPVerifyFragment extends Fragment{
     private ArrayList<String> videoURL = new ArrayList<String>();
 
     private AppDataManager appDataManager;
-
     private SubmissionActivityViewModel submissionActivityViewModel;
 
     @Nullable

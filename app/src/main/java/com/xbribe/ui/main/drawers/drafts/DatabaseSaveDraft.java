@@ -40,7 +40,7 @@ public class DatabaseSaveDraft extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
     }
-    public boolean insertData(String ministry,String address,String pincode,String city,String department,String organisationname,String  description,String email,String latitude,String longitude,String officialName, String ministryID)
+    public boolean insertData(String ministry,String address,String pincode,String city,String department,String organisationname,String description,String email,String latitude,String longitude,String officialName, String ministryID)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
