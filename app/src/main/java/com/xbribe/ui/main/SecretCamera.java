@@ -1,6 +1,8 @@
-package com.xbribe.ui.function;
+package com.xbribe.ui.main;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +33,9 @@ import com.google.android.material.button.MaterialButton;
 import com.xbribe.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -49,6 +54,9 @@ public class SecretCamera extends HiddenCameraFragment{
     @BindView(R.id.btn_save_pic)
     MaterialButton savePic;
 
+    @BindView(R.id.pb_progress_img)
+    ProgressBar pbImg;
+
     private CameraConfig mCameraConfig;
     private Bitmap imgBitmap;
 
@@ -62,7 +70,7 @@ public class SecretCamera extends HiddenCameraFragment{
                 .getBuilder(getActivity())
                 .setCameraFacing(CameraFacing.REAR_FACING_CAMERA)
                 .setCameraResolution(CameraResolution.HIGH_RESOLUTION)
-                .setImageFormat(CameraImageFormat.FORMAT_PNG)
+                .setImageFormat(CameraImageFormat.FORMAT_JPEG)
                 .setCameraFocus(CameraFocus.AUTO)
                 .setImageRotation(CameraRotation.ROTATION_90)
                 .build();
@@ -75,39 +83,74 @@ public class SecretCamera extends HiddenCameraFragment{
         return parent;
     }
 
+    @Override
+    public void onStart() {
+        mCameraConfig = new CameraConfig()
+                .getBuilder(getActivity())
+                .setCameraFacing(CameraFacing.REAR_FACING_CAMERA)
+                .setCameraResolution(CameraResolution.HIGH_RESOLUTION)
+                .setImageFormat(CameraImageFormat.FORMAT_JPEG)
+                .setCameraFocus(CameraFocus.AUTO)
+                .setImageRotation(CameraRotation.ROTATION_90)
+                .build();
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+            startCamera(mCameraConfig);
+        }
+        super.onStart();
+    }
+
+
     @OnClick(R.id.btn_take_pic)
     void setTakePic()
     {
+        showProgress();
+        imgViewClicked.setVisibility(View.INVISIBLE);
         takePicture();
     }
 
     @OnClick(R.id.btn_save_pic)
     void setSavePic()
     {
+     try{
+         File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator + "XBribe");
+         if (!folder.exists()) {
+             folder.mkdirs();
+         }
         String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
-        String filename = "imgxbribe"+timeStamp+".jpg";
-        File sd = Environment.getExternalStorageDirectory();
-        File dest = new File(sd, filename);
-
-        try {
-            FileOutputStream out = new FileOutputStream(dest);
-            imgBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
-            out.flush();
-            out.close();
-            Log.e("Image","Saved");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String filename = "img"+timeStamp+".jpg";
+        File outFile = new File(folder, filename);
+        FileOutputStream outputStream = new FileOutputStream(outFile);
+        imgBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+         Toast.makeText(getActivity(), "Image Saved", Toast.LENGTH_SHORT).show();
+     }
+     catch (Exception e) {
+        Log.e("Image Save", e.getMessage());
+     }
     }
 
     @Override
     public void onImageCapture(@NonNull File imageFile) {
+        imgViewClicked.setVisibility(View.VISIBLE);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         imgBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
 
+        hideProgress();
         //Display the image to the image view
         imgViewClicked.setImageBitmap(imgBitmap);
+    }
+
+    @Override
+    public void onStop() {g
+        stopCamera();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        stopCamera();
+        super.onDestroy();
     }
 
     @Override
@@ -134,5 +177,13 @@ public class SecretCamera extends HiddenCameraFragment{
                 Toast.makeText(getContext(), "Front camera not present!", Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    public void showProgress() {
+        pbImg.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        pbImg.setVisibility(View.INVISIBLE);
     }
 }

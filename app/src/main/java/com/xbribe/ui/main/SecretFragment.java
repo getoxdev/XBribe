@@ -1,12 +1,5 @@
-package com.xbribe.ui.function;
+package com.xbribe.ui.main;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,23 +12,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.androidhiddencamera.CameraConfig;
-import com.androidhiddencamera.CameraError;
-import com.androidhiddencamera.HiddenCameraFragment;
-import com.androidhiddencamera.HiddenCameraUtils;
-import com.androidhiddencamera.config.CameraFacing;
-import com.androidhiddencamera.config.CameraImageFormat;
-import com.androidhiddencamera.config.CameraResolution;
-import com.androidhiddencamera.config.CameraRotation;
 import com.google.android.material.button.MaterialButton;
 import com.xbribe.R;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -75,8 +57,8 @@ public class SecretFragment extends Fragment {
     @OnClick(R.id.btn_record)
     void startRecord()
     {
-        //imgOn.setVisibility(View.VISIBLE);
-        //imgOff.setVisibility(View.INVISIBLE);
+        imgOn.setVisibility(View.VISIBLE);
+        imgOff.setVisibility(View.INVISIBLE);
         startRecording();
         Toast.makeText(getActivity(), "Recording started", Toast.LENGTH_LONG).show();
     }
@@ -84,8 +66,8 @@ public class SecretFragment extends Fragment {
     @OnClick(R.id.btn_stop)
     void stopRecord()
     {
-        //imgOn.setVisibility(View.INVISIBLE);
-        //imgOff.setVisibility(View.VISIBLE);
+        imgOn.setVisibility(View.INVISIBLE);
+        imgOff.setVisibility(View.VISIBLE);
         stopRecording();
         Toast.makeText(getActivity(), "Audio Recorded successfully", Toast.LENGTH_LONG).show();
     }
@@ -94,7 +76,7 @@ public class SecretFragment extends Fragment {
     void openSecretCamera()
     {
         getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_frame_two,secretCameraFragment)
+                    .replace(R.id.main_frame,secretCameraFragment)
                     .addToBackStack("Secret Fragment")
                     .commit();
     }
@@ -106,7 +88,7 @@ public class SecretFragment extends Fragment {
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audxbribe"+timeStamp+".amr";
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "XBribe" + File.separator + "aud"+timeStamp+".amr";
         myAudioRecorder.setOutputFile(outputFile);
 
         try {

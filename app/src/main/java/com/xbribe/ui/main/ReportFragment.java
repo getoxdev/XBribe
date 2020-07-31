@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -51,10 +52,14 @@ public class ReportFragment extends Fragment {
     @BindView(R.id.check_cases)
     MaterialCardView btnCheckCases;
 
+    @BindView(R.id.secret_fragment)
+    FloatingActionButton fbtnSecretFragment;
+
     private ReportViewModel reportViewModel;
     private AppDataManager appDataManager;
     private CheckcaseFragment checkcaseFragment;
     private NotificationFragment notificationFragment;
+    private SecretFragment secretFragment;
 
     @Nullable
     @Override
@@ -116,6 +121,16 @@ public class ReportFragment extends Fragment {
         checkcaseFragment = new CheckcaseFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_frame,checkcaseFragment)
+                .addToBackStack("Report")
+                .commit();
+    }
+
+    @OnClick(R.id.secret_fragment)
+    void openSecretFragment()
+    {
+        secretFragment = new SecretFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_frame,secretFragment)
                 .addToBackStack("Report")
                 .commit();
     }

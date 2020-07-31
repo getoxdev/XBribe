@@ -1,36 +1,22 @@
 package com.xbribe.ui.function;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.solver.widgets.ConstraintHorizontalLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,8 +30,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -55,10 +39,8 @@ import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
-import com.xbribe.data.models.CaseData;
-import com.xbribe.data.models.LocationDetails;
 import com.xbribe.ui.MyApplication;
-import com.xbribe.ui.main.MainActivity;
+import com.xbribe.ui.main.SecretFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +68,6 @@ public class Step_two_Fragment  extends Fragment
     private ArrayList<String> videoURL = new ArrayList<String>();
 
     List<Uri> imagepreview;
-
 
     private StorageReference mStorageRef;
     private AppDataManager appDataManager;
@@ -119,13 +100,7 @@ public class Step_two_Fragment  extends Fragment
     @BindView(R.id.btn_submit)
     Button submit;
 
-    @BindView(R.id.secret_camera)
-    FloatingActionButton btnSecretCamera;
-
     ImagePreviewAdapter imagePreviewAdapter;
-
-
-
     SubmissionActivityViewModel submissionActivityViewModel;
 
     @Nullable
@@ -281,7 +256,6 @@ public class Step_two_Fragment  extends Fragment
         imagePreviewAdapter=new ImagePreviewAdapter(getContext(),imagepreview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setAdapter(imagePreviewAdapter);
-
     }
     private void uploadImage()
     {
@@ -502,15 +476,6 @@ public class Step_two_Fragment  extends Fragment
         });
     }
 
-    @OnClick(R.id.secret_camera)
-    void openSecretCamera()
-    {
-        secretFragment = new SecretFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_frame_two,secretFragment)
-                .addToBackStack("Step 2")
-                .commit();
-    }
 
     @Override
     public void onDestroy()
@@ -518,7 +483,15 @@ public class Step_two_Fragment  extends Fragment
         imageURL.clear();
         audioURL.clear();
         videoURL.clear();
+        imageList.clear();
+        audioList.clear();
+        videoList.clear();
         super.onDestroy();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     public void showSnackbar(String msg)

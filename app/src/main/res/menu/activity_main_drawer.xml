@@ -30,7 +30,7 @@
         <item
             android:id="@+id/nav_laws"
             android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-            android:title="Laws"
+            android:title="Know your Laws"
             />
         <item
             android:id="@+id/nav_contact"
