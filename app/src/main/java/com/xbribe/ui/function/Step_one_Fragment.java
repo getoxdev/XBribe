@@ -145,6 +145,7 @@ public class Step_one_Fragment extends Fragment
         if(bundleDraft!=null)
         {
             Bundle bundle = new Bundle();
+            bundle.putString("MINISTRY",bundleDraft.getString("MINISTRY"));
             bundle.putString("MINISTRYID",bundleDraft.getString("MINISTRYID"));
             bundle.putString("DEPARTMENT",bundleDraft.getString("DEPARTMENT"));
             bundle.putString("ORGANISATION",bundleDraft.getString("ORGANISATION"));
@@ -240,7 +241,8 @@ public class Step_one_Fragment extends Fragment
          else
          {
              Bundle bundle = new Bundle();
-             bundle.putString("MINISTRYID",appDataManager.getMinistry());
+             bundle.putString("MINISTRY",ministry);
+             bundle.putString("MINISTRYID",ministryId);
              bundle.putString("DEPARTMENT",department);
              bundle.putString("ORGANISATION",name_oraganisation);
              if(official.isEmpty())
@@ -283,7 +285,7 @@ public class Step_one_Fragment extends Fragment
         {
             if(official.isEmpty())
             {
-                boolean ifInserted= databaseSaveDraft.insertData(ministry,appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),"Not Specified",appDataManager.getOrgID());
+                boolean ifInserted= databaseSaveDraft.insertData(ministry,appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),"Not Specified",ministryId);
                 if(ifInserted==true)
                 {
                     String msg="Draft Saved";
@@ -298,7 +300,7 @@ public class Step_one_Fragment extends Fragment
             }
             else
             {
-                boolean ifInserted= databaseSaveDraft.insertData(ministry,appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),official,appDataManager.getOrgID());
+                boolean ifInserted= databaseSaveDraft.insertData(ministry,appDataManager.getAddress(),pincode,city,department,name_oraganisation,description,appDataManager.getEmail(),appDataManager.getLatitude(),appDataManager.getLongitude(),official,ministryId);
                 if(ifInserted==true)
                 {
                     String msg="Draft Saved";

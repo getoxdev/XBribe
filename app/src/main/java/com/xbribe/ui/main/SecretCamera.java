@@ -142,7 +142,7 @@ public class SecretCamera extends HiddenCameraFragment{
     }
 
     @Override
-    public void onStop() {g
+    public void onStop() {
         stopCamera();
         super.onStop();
     }

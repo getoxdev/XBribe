@@ -57,7 +57,7 @@ public class Step_two_Fragment  extends Fragment
     private static final int PICK_AUDIO_REQUEST = 2;
     private static final int PICK_VIDEO_REQUEST = 3;
 
-    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude,officialName;
+    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude,officialName,ministry;
 
     private ArrayList<Uri> imageList = new ArrayList<Uri>();
     private ArrayList<Uri> audioList = new ArrayList<Uri>();
@@ -71,7 +71,6 @@ public class Step_two_Fragment  extends Fragment
 
     private StorageReference mStorageRef;
     private AppDataManager appDataManager;
-    private SecretFragment secretFragment;
     private OTPVerifyFragment otpVerifyFragment;
 
     private DatabaseHelper databaseHelper;
@@ -116,6 +115,7 @@ public class Step_two_Fragment  extends Fragment
         {
             @Override
             public void onClick(View v) {
+                imageList.clear();
                 openImageChoose();
             }
         });
@@ -124,6 +124,7 @@ public class Step_two_Fragment  extends Fragment
         {
             @Override
             public void onClick(View v) {
+                audioList.clear();
                 openAudioChoose();
             }
         });
@@ -131,6 +132,7 @@ public class Step_two_Fragment  extends Fragment
         vidChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                videoList.clear();
                 openVideoChoose();
             }
         });
@@ -145,6 +147,7 @@ public class Step_two_Fragment  extends Fragment
         mStorageRef = FirebaseStorage.getInstance().getReference();
         databaseHelper=new DatabaseHelper(getActivity());
         databaseHelper.getWritableDatabase();
+        ministry = getArguments().getString("MINISTRY");
         ministryId=getArguments().getString("MINISTRYID");
         department=getArguments().getString("DEPARTMENT");
         name=getArguments().getString("ORGANISATION");
@@ -154,6 +157,7 @@ public class Step_two_Fragment  extends Fragment
         address=getArguments().getString("ADDRESS");
         latitude=getArguments().getString("LATITUDE");
         longitude=getArguments().getString("LONGITUDE");
+        officialName=getArguments().getString("OFFICIAL");
     }
 
     private String getFileExtension(Uri uri)
@@ -165,45 +169,28 @@ public class Step_two_Fragment  extends Fragment
 
     private void openImageChoose()
     {
-        Intent intent1 = new Intent(getActivity(), FilePickerActivity.class);
-        intent1.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
-                .setCheckPermission(true)
-                .setShowImages(true)
-                .setShowVideos(false)
-                .setShowAudios(false)
-                .setMaxSelection(10)
-                .setSkipZeroSizeFiles(true)
-                .enableImageCapture(true)
-                .build());
+        Intent intent1 = new Intent();
+        intent1.setType("image/*");
+        intent1.setAction(Intent.ACTION_GET_CONTENT);
+        intent1.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
         startActivityForResult(intent1, PICK_IMAGE_REQUEST);
     }
 
     private void openAudioChoose()
     {
-        Intent intent2 = new Intent(getActivity(), FilePickerActivity.class);
-        intent2.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
-                .setCheckPermission(true)
-                .setShowImages(false)
-                .setShowVideos(false)
-                .setShowAudios(true)
-                .setMaxSelection(10)
-                .setSkipZeroSizeFiles(true)
-                .build());
+        Intent intent2 = new Intent();
+        intent2.setType("audio/*");
+        intent2.setAction(Intent.ACTION_GET_CONTENT);
+        intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
         startActivityForResult(intent2, PICK_AUDIO_REQUEST);
     }
 
     private void openVideoChoose()
     {
-        Intent intent3 = new Intent(getActivity(), FilePickerActivity.class);
-        intent3.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
-                .setCheckPermission(true)
-                .setShowImages(false)
-                .setShowVideos(true)
-                .setShowAudios(false)
-                .setMaxSelection(10)
-                .setSkipZeroSizeFiles(true)
-                .enableVideoCapture(true)
-                .build());
+        Intent intent3 = new Intent();
+        intent3.setType("video/*");
+        intent3.setAction(Intent.ACTION_GET_CONTENT);
+        intent3.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
         startActivityForResult(intent3, PICK_VIDEO_REQUEST);
     }
 
@@ -212,39 +199,65 @@ public class Step_two_Fragment  extends Fragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK)
+        if(requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK && data!=null)
         {
-            ArrayList<MediaFile> imgList = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
-            int i=0;
-            while(i<imgList.size())
+            if(data.getData()!=null)
             {
-                Uri image = imgList.get(i).getUri();
-                imageList.add(image);
+                int i=0;
+                Uri img = data.getData();
+                imageList.add(img);
                 i++;
             }
-
-        }
-        if(requestCode==PICK_AUDIO_REQUEST && resultCode==RESULT_OK)
-        {
-            ArrayList<MediaFile> audList = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
-            int j=0;
-            while(j<audList.size())
+            else if(data.getClipData()!=null)
             {
-                Uri audio = audList.get(j).getUri();
-                audioList.add(audio);
+                int i=0;
+                while(i<data.getClipData().getItemCount())
+                {
+                    Uri img = data.getClipData().getItemAt(i).getUri();
+                    imageList.add(img);
+                    i++;
+                }
+            }
+        }
+        if(requestCode==PICK_AUDIO_REQUEST && resultCode==RESULT_OK && data!=null)
+        {
+            if(data.getData()!=null)
+            {
+                int j=0;
+                Uri aud = data.getData();
+                audioList.add(aud);
                 j++;
+            }
+            else if(data.getClipData()!=null)
+            {
+                int j=0;
+                while(j<data.getClipData().getItemCount())
+                {
+                    Uri aud = data.getClipData().getItemAt(j).getUri();
+                    audioList.add(aud);
+                    j++;
+                }
             }
         }
 
-        if(requestCode==PICK_VIDEO_REQUEST && resultCode==RESULT_OK)
+        if(requestCode==PICK_VIDEO_REQUEST && resultCode==RESULT_OK && data!=null)
         {
-            ArrayList<MediaFile> vidList = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
-            int k=0;
-            while(k<vidList.size())
+            if(data.getData()!=null)
             {
-                Uri video = vidList.get(k).getUri();
-                videoList.add(video);
+                int k=0;
+                Uri vid = data.getData();
+                videoList.add(vid);
                 k++;
+            }
+            else if(data.getClipData()!=null)
+            {
+                int k=0;
+                while(k<data.getClipData().getItemCount())
+                {
+                    Uri vid = data.getClipData().getItemAt(k).getUri();
+                    videoList.add(vid);
+                    k++;
+                }
             }
         }
 
@@ -444,6 +457,7 @@ public class Step_two_Fragment  extends Fragment
     void submit()
     {
         Bundle bundle = new Bundle();
+        bundle.putString("MINISTRY",ministry);
         bundle.putString("MINISTRYID",ministryId);
         bundle.putString("DEPARTMENT",department);
         bundle.putString("ORGANISATION",name);
@@ -491,6 +505,12 @@ public class Step_two_Fragment  extends Fragment
 
     @Override
     public void onStop() {
+        imageURL.clear();
+        audioURL.clear();
+        videoURL.clear();
+        imageList.clear();
+        audioList.clear();
+        videoList.clear();
         super.onStop();
     }
 

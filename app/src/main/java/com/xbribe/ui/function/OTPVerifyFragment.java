@@ -47,7 +47,7 @@ public class OTPVerifyFragment extends Fragment{
     ConstraintLayout otponstraintLayout;
 
     private int imageCount,audioCount,videoCount;
-    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude,officialName;
+    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude,officialName,ministry;
     private DatabaseHelper databaseHelper;
     private ArrayList<String> imageURL = new ArrayList<String>();
     private ArrayList<String> audioURL = new ArrayList<String>();
@@ -74,6 +74,7 @@ public class OTPVerifyFragment extends Fragment{
         Bundle bundle = this.getArguments();
         databaseHelper=new DatabaseHelper(getActivity());
         databaseHelper.getWritableDatabase();
+        ministry = getArguments().getString("MINISTRY");
         ministryId=getArguments().getString("MINISTRYID");
         department=getArguments().getString("DEPARTMENT");
         name=getArguments().getString("ORGANISATION");
@@ -115,7 +116,7 @@ public class OTPVerifyFragment extends Fragment{
                     }
                     else
                     {
-                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,appDataManager.getMinistry(),department,name,imageCount,audioCount,videoCount,res.getStatus(),res.getCaseId(),appDataManager.getID(),appDataManager.getEmail(),officialName);
+                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,ministry,department,name,imageCount,audioCount,videoCount,res.getStatus(),res.getCaseId(),appDataManager.getID(),appDataManager.getEmail(),officialName);
                         if(ifInserted==true)
                         {
                             Log.e("Cases Reported Table","Data inserted");
