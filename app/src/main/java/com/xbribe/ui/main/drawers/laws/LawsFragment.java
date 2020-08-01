@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,8 @@ import butterknife.ButterKnife;
 public class LawsFragment extends Fragment
 
 {
+
+
     @BindView(R.id.recycler_laws)
     RecyclerView recyclerView;
 

@@ -64,10 +64,11 @@ public class SubmissionActivityViewModel extends AndroidViewModel {
               }
               else {
                   Log.e("CASE","Not Reported");
+                  String x =Integer.toString(response.code());
+                  Log.e("VALUE",x);
                   caseResponse.postValue(null);
               }
           }
-
           @Override
           public void onFailure(Call<CaseData> call, Throwable t) {
               Log.e("CASE",t.getMessage());

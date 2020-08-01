@@ -121,7 +121,9 @@ public class CheckcaseFragment extends  Fragment
     {
             caselist = new ArrayList<>();
             int i=0;
-            while (cursor.moveToNext())
+            //cursor.moveToPosition(cursor.getCount());
+            cursor.moveToPosition(cursor.getCount());
+            while (cursor.moveToPrevious())
             {
              if(cursor.getString(13).equals(appDataManager.getEmail()))
              {
@@ -130,6 +132,7 @@ public class CheckcaseFragment extends  Fragment
                  nocases.setVisibility(View.INVISIBLE);
                  flag=1;
              }
+
             }
             if(flag!=1)
             {

@@ -151,13 +151,14 @@ public class Step_two_Fragment  extends Fragment
         ministryId=getArguments().getString("MINISTRYID");
         department=getArguments().getString("DEPARTMENT");
         name=getArguments().getString("ORGANISATION");
+        officialName=getArguments().getString("OFFICIAL");
         city=getArguments().getString("CITY");
         pincode=getArguments().getString("PINCODE");
         description=getArguments().getString("DESCRIPTION");
         address=getArguments().getString("ADDRESS");
         latitude=getArguments().getString("LATITUDE");
         longitude=getArguments().getString("LONGITUDE");
-        officialName=getArguments().getString("OFFICIAL");
+
     }
 
     private String getFileExtension(Uri uri)

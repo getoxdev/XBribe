@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +34,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class NearbyFragment extends Fragment {
+
+    @BindView(R.id.pb_nearbycases)
+    ProgressBar progressBar;
 
     @BindView(R.id.list_nearby_cases)
     RecyclerView rViewNeabryCases;
@@ -86,29 +90,34 @@ public class NearbyFragment extends Fragment {
     @OnClick(R.id.btn_500m)
     void click500()
     {
+        progressBar.setVisibility(View.VISIBLE);
         nearbyViewModel.getNearbyCases(appDataManager.getToken(),22.572645,88.363892,500);
     }
 
     @OnClick(R.id.btn_1000m)
     void click1000()
     {
+        progressBar.setVisibility(View.VISIBLE);
         nearbyViewModel.getNearbyCases(appDataManager.getToken(),22.572645,88.363892,1000);
     }
 
     @OnClick(R.id.btn_10000m)
     void click10000()
     {
+        progressBar.setVisibility(View.VISIBLE);
         nearbyViewModel.getNearbyCases(appDataManager.getToken(),22.572645,88.363892,10000);
     }
 
     @OnClick(R.id.btn_100000m)
     void click100000()
     {
+        progressBar.setVisibility(View.VISIBLE);
         nearbyViewModel.getNearbyCases(appDataManager.getToken(),22.572645,88.363892,100000);
     }
 
     private void initRecyclerView(List<NearbyCaseResponse> mNearbyCases)
     {
+        progressBar.setVisibility(View.GONE);
         if(mNearbyCases!=null)
         {
             nearbyAdapter = new NearbyAdapter(mNearbyCases,getActivity());

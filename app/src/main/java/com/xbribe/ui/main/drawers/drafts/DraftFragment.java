@@ -87,13 +87,14 @@ public class DraftFragment extends Fragment
                 bundle.putString("MINISTRYID", cursor.getString(12));
                 bundle.putString("DEPARTMENT", cursor.getString(5));
                 bundle.putString("ORGANISATION", cursor.getString(6));
+                bundle.putString("OFFICIAL",cursor.getString(11));
                 bundle.putString("CITY", cursor.getString(4));
                 bundle.putString("PINCODE", cursor.getString(3));
                 bundle.putString("DESCRIPTION", cursor.getString(7));
                 bundle.putString("ADDRESS",cursor.getString(2));
                 bundle.putString("LATITUDE",cursor.getString(9));
                 bundle.putString("LONGITUDE",cursor.getString(10));
-                bundle.putString("OFFICIAL",cursor.getString(11));
+
              }
             while (cursor.moveToNext());
         }
@@ -140,8 +141,8 @@ public class DraftFragment extends Fragment
     private  List<DraftModel> uploadlist()
     {
         draftModelList=new ArrayList<>();
-
-        while (cursor.moveToNext())
+       cursor.moveToPosition(cursor.getCount());
+        while (cursor.moveToPrevious())
         {
             if(cursor.getString(8).equals(appDataManager.getEmail()))
             {
