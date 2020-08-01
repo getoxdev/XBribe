@@ -85,10 +85,10 @@ public class SecretFragment extends Fragment {
     {
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "XBribe" + File.separator + "aud"+timeStamp+".amr";
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "XBribe" + File.separator + "aud"+timeStamp+".mp3";
         myAudioRecorder.setOutputFile(outputFile);
 
         try {
