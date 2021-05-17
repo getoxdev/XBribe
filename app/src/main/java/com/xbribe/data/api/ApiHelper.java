@@ -15,9 +15,8 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
-public class ApiHelper implements ApiService {
-
-
+public class ApiHelper implements ApiService
+{
     private static ApiHelper instance;
     private ApiService api;
     public ApiHelper(Context context) {
@@ -55,13 +54,13 @@ public class ApiHelper implements ApiService {
         return api.getOrganizations();
     }
 
+    public Call<List<NearbyCaseResponse>> getNearbyCases(String token, Double latitude, Double longitude, Integer radius) {
+        return api.getNearbyCases(token, latitude, longitude, radius);
+    }
+
     @Override
     public Call<CaseData> reportCase(String token,String orgId, String department, String officialName, String name, String place, String address, String pin, String latitude, String longitude, String description, ArrayList<String> picsArray, ArrayList<String> audiosArray, ArrayList<String> videosArray) {
         return api.reportCase(token, orgId, department, officialName, name, place, address, pin, latitude, longitude, description, picsArray, audiosArray, videosArray);
-    }
-
-    public Call<List<NearbyCaseResponse>> getNearbyCases(String token, Double latitude, Double longitude, Integer radius) {
-        return api.getNearbyCases(token, latitude, longitude, radius);
     }
 
     @Override

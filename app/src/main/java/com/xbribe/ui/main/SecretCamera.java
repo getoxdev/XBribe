@@ -1,8 +1,6 @@
 package com.xbribe.ui.main;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,9 +32,7 @@ import com.google.android.material.button.MaterialButton;
 import com.xbribe.R;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -57,6 +54,9 @@ public class SecretCamera extends HiddenCameraFragment{
     @BindView(R.id.pb_progress_img)
     ProgressBar pbImg;
 
+    @BindView(R.id.tv_img_process)
+    TextView imgProcess;
+
     private CameraConfig mCameraConfig;
     private Bitmap imgBitmap;
 
@@ -70,7 +70,7 @@ public class SecretCamera extends HiddenCameraFragment{
                 .getBuilder(getActivity())
                 .setCameraFacing(CameraFacing.REAR_FACING_CAMERA)
                 .setCameraResolution(CameraResolution.HIGH_RESOLUTION)
-                .setImageFormat(CameraImageFormat.FORMAT_JPEG)
+                .setImageFormat(CameraImageFormat.FORMAT_PNG)
                 .setCameraFocus(CameraFocus.AUTO)
                 .setImageRotation(CameraRotation.ROTATION_90)
                 .build();
@@ -80,6 +80,7 @@ public class SecretCamera extends HiddenCameraFragment{
             startCamera(mCameraConfig);
         }
 
+        savePic.setEnabled(false);
         return parent;
     }
 
@@ -100,37 +101,43 @@ public class SecretCamera extends HiddenCameraFragment{
         super.onStart();
     }
 
-
     @OnClick(R.id.btn_take_pic)
     void setTakePic()
     {
         showProgress();
         imgViewClicked.setVisibility(View.INVISIBLE);
+        imgProcess.setVisibility(View.VISIBLE);
         takePicture();
+        savePic.setEnabled(true);
     }
 
     @OnClick(R.id.btn_save_pic)
     void setSavePic()
     {
-     try{
-         File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator + "XBribe");
-         if (!folder.exists()) {
-             folder.mkdirs();
-         }
-        String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
-        String filename = "img"+timeStamp+".jpg";
-        File outFile = new File(folder, filename);
-        FileOutputStream outputStream = new FileOutputStream(outFile);
-        imgBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-         Toast.makeText(getActivity(), "Image Saved", Toast.LENGTH_SHORT).show();
-     }
-     catch (Exception e) {
-        Log.e("Image Save", e.getMessage());
-     }
+        try{
+             File storageDir = new File(Environment.getExternalStorageDirectory(), "XBribe");
+
+             if (!storageDir.exists()) {
+                 if (!storageDir.mkdirs()) {
+                     Log.d("App", "Failed to create directory");
+                 }
+             }
+            String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
+            String filename = "img"+timeStamp+".jpg";
+            File outFile = new File(storageDir, filename);
+            FileOutputStream outputStream = new FileOutputStream(outFile);
+            imgBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            Toast.makeText(getActivity(), "Image Saved", Toast.LENGTH_SHORT).show();
+            savePic.setEnabled(false);
+        }
+        catch (Exception e) {
+            Log.e("Image Save", e.getMessage());
+        }
     }
 
     @Override
     public void onImageCapture(@NonNull File imageFile) {
+        imgProcess.setVisibility(View.INVISIBLE);
         imgViewClicked.setVisibility(View.VISIBLE);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -157,16 +164,16 @@ public class SecretCamera extends HiddenCameraFragment{
     public void onCameraError(int errorCode) {
         switch (errorCode) {
             case CameraError.ERROR_CAMERA_OPEN_FAILED:
-                Toast.makeText(getActivity(),"Cannot open camera!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Cannot open camera! Please reopen screen.", Toast.LENGTH_LONG).show();
                 break;
             case CameraError.ERROR_IMAGE_WRITE_FAILED:
                 //Image write failed. Please check if you have provided WRITE_EXTERNAL_STORAGE permission
-                Toast.makeText(getActivity(),"Cannot save image!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Cannot save image! Please reopen screen.", Toast.LENGTH_LONG).show();
                 break;
             case CameraError.ERROR_CAMERA_PERMISSION_NOT_AVAILABLE:
                 //camera permission is not available
                 //Ask for the camera permission before initializing it.
-                Toast.makeText(getActivity(),"Cannot get camera permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Cannot get camera permission!", Toast.LENGTH_LONG).show();
                 break;
             case CameraError.ERROR_DOES_NOT_HAVE_OVERDRAW_PERMISSION:
                 //Display information dialog to the user with steps to grant "Draw over other app"

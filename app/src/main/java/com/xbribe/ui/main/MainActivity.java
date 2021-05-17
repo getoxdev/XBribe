@@ -45,9 +45,9 @@ import com.xbribe.data.AppDataManager;
 import com.xbribe.service.AddressService;
 import com.xbribe.ui.MyApplication;
 import com.xbribe.ui.auth.AuthenticationActivity;
-import com.xbribe.ui.main.drawers.contact.ContactFragment;
 import com.xbribe.ui.main.drawers.aboutus.AboutUsFragment;
 import com.xbribe.ui.main.drawers.checkcase.CheckcaseFragment;
+import com.xbribe.ui.main.drawers.contact.ContactFragment;
 import com.xbribe.ui.main.drawers.drafts.DraftFragment;
 import com.xbribe.ui.main.drawers.laws.LawsFragment;
 import com.xbribe.ui.main.drawers.nearby.NearbyFragment;
@@ -76,16 +76,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FragmentManager fragmentManager;
     private AppDataManager appDataManager;
-    private AboutUsFragment aboutUsFragment;
     private ReportFragment reportFragment;
-    private ContactFragment contactFragment;
     private CheckcaseFragment checkcaseFragment;
+    private NearbyFragment nearbyFragment;
+    private ContactFragment contactFragment;
     private DraftFragment draftFragment;
     private NotificationFragment notificationFragment;
-    private NearbyFragment nearbyFragment;
     private LawsFragment lawsFragment;
-
-
+    private AboutUsFragment aboutUsFragment;
 
     private static final int UPDATE_INTERVAL = 3000;
     private FusedLocationProviderClient locationProviderClient;
@@ -170,20 +168,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
         checkcaseFragment=new CheckcaseFragment();
         reportFragment = new ReportFragment();
-        aboutUsFragment = new AboutUsFragment();
+        nearbyFragment=new NearbyFragment();
         contactFragment=new ContactFragment();
         notificationFragment=new NotificationFragment();
-        nearbyFragment = new NearbyFragment();
         draftFragment=new DraftFragment();
         lawsFragment=new LawsFragment();
-
-
+        aboutUsFragment = new AboutUsFragment();
 
         initFrag(reportFragment);
 
         navView.setNavigationItemSelectedListener(this);
     }
-
 
     @Override
     protected void onStart() {
@@ -203,7 +198,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int result3 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
         int result4 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
         int result5 = ContextCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO);
-
 
         return result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED
                 && result3 == PackageManager.PERMISSION_GRANTED && result4 == PackageManager.PERMISSION_GRANTED
@@ -322,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     private void startAddressService(Location location) {
         Intent intent = new Intent(this, AddressService.class);
         addressReceiver = new AddressReceiver(new Handler());
@@ -332,7 +325,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void showSettingsAlert() {
-
         if(!isShowSettings) {
             isShowSettings = true;
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -355,7 +347,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     showSettingsAlert();
                 }
             });
-
             alertDialog.show();
         }
     }
@@ -390,16 +381,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             initFrag(aboutUsFragment);
         }
-        else
-            if(id== R.id.nav_draft)
-            {
-                initFrag(draftFragment);
-            }
-            else
-                if(id==R.id.nav_laws)
-                {
-                    initFrag(lawsFragment);
-                }
+        else if(id== R.id.nav_draft)
+        {
+            initFrag(draftFragment);
+        }
+        else if(id==R.id.nav_laws)
+        {
+            initFrag(lawsFragment);
+        }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

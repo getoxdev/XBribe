@@ -11,6 +11,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,19 +29,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.jaiselrahman.filepicker.activity.FilePickerActivity;
-import com.jaiselrahman.filepicker.config.Configurations;
-import com.jaiselrahman.filepicker.model.MediaFile;
 import com.xbribe.R;
 import com.xbribe.data.AppDataManager;
 import com.xbribe.ui.MyApplication;
-import com.xbribe.ui.main.SecretFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +47,7 @@ import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
 
-public class Step_two_Fragment  extends Fragment
+public class StepTwoFragment extends Fragment
 {
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int PICK_AUDIO_REQUEST = 2;
@@ -99,6 +95,15 @@ public class Step_two_Fragment  extends Fragment
     @BindView(R.id.btn_submit)
     Button submit;
 
+    @BindView(R.id.tv_image_files_no)
+    TextView tvImgNo;
+
+    @BindView(R.id.tv_audio_files_no)
+    TextView tvAudNo;
+
+    @BindView(R.id.tv_video_files_no)
+    TextView tvVidNo;
+
     ImagePreviewAdapter imagePreviewAdapter;
     SubmissionActivityViewModel submissionActivityViewModel;
 
@@ -115,7 +120,6 @@ public class Step_two_Fragment  extends Fragment
         {
             @Override
             public void onClick(View v) {
-                imageList.clear();
                 openImageChoose();
             }
         });
@@ -124,7 +128,6 @@ public class Step_two_Fragment  extends Fragment
         {
             @Override
             public void onClick(View v) {
-                audioList.clear();
                 openAudioChoose();
             }
         });
@@ -132,7 +135,6 @@ public class Step_two_Fragment  extends Fragment
         vidChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                videoList.clear();
                 openVideoChoose();
             }
         });
@@ -262,6 +264,10 @@ public class Step_two_Fragment  extends Fragment
             }
         }
 
+        tvImgNo.setText(String.valueOf(imageList.size()));
+        tvAudNo.setText(String.valueOf(audioList.size()));
+        tvVidNo.setText(String.valueOf(videoList.size()));
+
         imagepreview=new ArrayList<>();
         for(int i=0;i<imageList.size();i++)
         {
@@ -361,7 +367,7 @@ public class Step_two_Fragment  extends Fragment
                                 hideProgress();
                                 if (task.isSuccessful()) {
                                     hideProgress();
-                                    String msg="Uploaded Successfully";
+                                    String msg="Uploaded Audio Successfully";
                                     showSnackbar(msg);
                                     Uri downloadUri = task.getResult();
                                     String audURL = downloadUri.toString();
@@ -373,6 +379,7 @@ public class Step_two_Fragment  extends Fragment
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        hideProgress();
                         String msg="Not Uploaded";
                         showSnackbar(msg);
                     }
@@ -404,9 +411,6 @@ public class Step_two_Fragment  extends Fragment
                 videoTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String msg="Uploaded Successfully";
-                        showSnackbar(msg);
-
                         Task<Uri> urlTask = videoTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                             @Override
                             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -421,6 +425,9 @@ public class Step_two_Fragment  extends Fragment
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
                                 if (task.isSuccessful()) {
+                                    hideProgress();
+                                    String msg="Uploaded Video Successfully";
+                                    showSnackbar(msg);
                                     Uri downloadUri = task.getResult();
                                     String vidURL = downloadUri.toString();
                                     videoURL.add(vidURL);
@@ -432,8 +439,14 @@ public class Step_two_Fragment  extends Fragment
 
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        hideProgress();
                         String msg="Not uploaded";
                         showSnackbar(msg);
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                        showProgress();
                     }
                 });
             }
@@ -492,29 +505,6 @@ public class Step_two_Fragment  extends Fragment
         });
     }
 
-
-    @Override
-    public void onDestroy()
-    {
-        imageURL.clear();
-        audioURL.clear();
-        videoURL.clear();
-        imageList.clear();
-        audioList.clear();
-        videoList.clear();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onStop() {
-        imageURL.clear();
-        audioURL.clear();
-        videoURL.clear();
-        imageList.clear();
-        audioList.clear();
-        videoList.clear();
-        super.onStop();
-    }
 
     public void showSnackbar(String msg)
     {

@@ -18,7 +18,6 @@ import com.google.android.material.button.MaterialButton;
 import com.xbribe.R;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -51,6 +50,7 @@ public class SecretFragment extends Fragment {
         ButterKnife.bind(this,parent);
 
         secretCameraFragment = new SecretCamera();
+        stop.setEnabled(false);
         return parent;
     }
 
@@ -60,7 +60,7 @@ public class SecretFragment extends Fragment {
         imgOn.setVisibility(View.VISIBLE);
         imgOff.setVisibility(View.INVISIBLE);
         startRecording();
-        Toast.makeText(getActivity(), "Recording started", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Recording started", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.btn_stop)
@@ -69,7 +69,7 @@ public class SecretFragment extends Fragment {
         imgOn.setVisibility(View.INVISIBLE);
         imgOff.setVisibility(View.VISIBLE);
         stopRecording();
-        Toast.makeText(getActivity(), "Audio Recorded successfully", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Audio Recorded successfully", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.btn_open_scamera)
@@ -83,27 +83,41 @@ public class SecretFragment extends Fragment {
 
     private void startRecording()
     {
-        myAudioRecorder = new MediaRecorder();
-        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        String timeStamp = new SimpleDateFormat("MMdd_HHmm").format(new Date());
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "XBribe" + File.separator + "aud"+timeStamp+".mp3";
-        myAudioRecorder.setOutputFile(outputFile);
+        File storageDir = new File(Environment.getExternalStorageDirectory(), "XBribe");
 
-        try {
-            myAudioRecorder.prepare();
-        } catch (IOException e) {
-            Log.e("Audio Recorder",e.getMessage());
+        if (!storageDir.exists()) {
+            if (!storageDir.mkdirs()) {
+                Log.d("App", "Failed to create directory");
+            }
         }
-
-        myAudioRecorder.start();
+        try {
+            myAudioRecorder = new MediaRecorder();
+            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
+            myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            String timeStamp = new SimpleDateFormat("MMdd_HHmmss").format(new Date());
+            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "XBribe" + File.separator + "aud"+timeStamp+".amr";
+            myAudioRecorder.setOutputFile(outputFile);
+            myAudioRecorder.prepare();
+            myAudioRecorder.start();
+            record.setEnabled(false);
+            stop.setEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void stopRecording()
     {
-        myAudioRecorder.stop();
-        myAudioRecorder.release();
-        myAudioRecorder=null;
+        try{
+            myAudioRecorder.stop();
+            myAudioRecorder.reset();
+            myAudioRecorder.release();
+            record.setEnabled(true);
+            stop.setEnabled(false);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

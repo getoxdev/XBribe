@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xbribe.R;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import butterknife.BindView;

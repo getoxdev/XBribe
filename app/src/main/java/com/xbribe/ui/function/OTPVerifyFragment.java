@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,9 @@ import com.xbribe.ui.main.MainActivity;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +49,12 @@ public class OTPVerifyFragment extends Fragment{
     @BindView(R.id.otp_constraint_layout)
     ConstraintLayout otponstraintLayout;
 
+    @BindView(R.id.pb_submit)
+    ProgressBar pbSubmit;
+
     private int imageCount,audioCount,videoCount;
-    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude,officialName,ministry;
+    private  String name,city,pincode,ministryId,department,description,address,latitude,longitude,officialName,ministry,date ;
+
     private DatabaseHelper databaseHelper;
     private ArrayList<String> imageURL = new ArrayList<String>();
     private ArrayList<String> audioURL = new ArrayList<String>();
@@ -63,7 +70,6 @@ public class OTPVerifyFragment extends Fragment{
         ButterKnife.bind(this,parent);
         submissionActivityViewModel = ViewModelProviders.of(getActivity()).get(SubmissionActivityViewModel.class);
         appDataManager = ((MyApplication) getActivity().getApplication()).getDataManager();
-
         return parent;
     }
 
@@ -91,11 +97,16 @@ public class OTPVerifyFragment extends Fragment{
         imageCount=Integer.valueOf(imageURL.size());
         audioCount=Integer.valueOf(audioURL.size());
         videoCount=Integer.valueOf(videoURL.size());
+        Calendar calendar=Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEEE , dd-MMM-yyyy hh:mm:ss a");
+        date=simpleDateFormat.format(calendar.getTime());
+
     }
 
     @OnClick(R.id.btn_submit)
     void setBtnSubmit()
     {
+        showProgress();
         Integer otp = Integer.valueOf(otpValue.getValue());
         submissionActivityViewModel.checkOTP(otp);
         submissionActivityViewModel.getVerifyOtp().observe(this, data->{
@@ -110,17 +121,18 @@ public class OTPVerifyFragment extends Fragment{
                 {
                     if(res == null)
                     {
+                        hideProgress();
                         String msg="Error. Please try again!";
                         showSnackbar(msg);
                     }
                     else
                     {
-                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,ministry,department,name,imageCount,audioCount,videoCount,res.getStatus(),res.getCaseId(),appDataManager.getID(),appDataManager.getEmail(),officialName);
+                        hideProgress();
+                        boolean ifInserted= databaseHelper.insertData(appDataManager.getToken(),address,description,ministry,department,name,imageCount,audioCount,videoCount,"STATUS","CASEID",appDataManager.getID(),appDataManager.getEmail(),officialName,date);
                         if(ifInserted==true)
                         {
                             Log.e("Cases Reported Table","Data inserted");
                         }
-
                         String msg = "Reported Successfully";
                         showSnackbar(msg);
                         startActivity(new Intent(getActivity(), MainActivity.class));
@@ -129,9 +141,7 @@ public class OTPVerifyFragment extends Fragment{
                 });
             }
         });
-
     }
-
     @OnClick(R.id.tv_resend)
     void setTvResend()
     {
@@ -153,5 +163,13 @@ public class OTPVerifyFragment extends Fragment{
     {
         Snackbar snackbar= Snackbar.make(otponstraintLayout,msg,Snackbar.LENGTH_LONG);
         snackbar.show();
+    }
+
+    public void showProgress() {
+        pbSubmit.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        pbSubmit.setVisibility(View.GONE);
     }
 }

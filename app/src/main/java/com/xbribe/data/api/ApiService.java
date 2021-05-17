@@ -1,9 +1,6 @@
 package com.xbribe.data.api;
 
-import com.google.android.gms.common.api.Response;
 import com.xbribe.data.models.CaseData;
-import com.xbribe.data.models.CaseResponse;
-import com.xbribe.data.models.LocationDetails;
 import com.xbribe.data.models.NearbyCaseResponse;
 import com.xbribe.data.models.OrganizationResponse;
 import com.xbribe.data.models.TokenResponse;
@@ -11,10 +8,7 @@ import com.xbribe.data.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -23,14 +17,10 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 
 public interface ApiService
 {
-
     @POST("user/login")
     Call<User> executeLogin(@Body User user);
 
@@ -43,6 +33,13 @@ public interface ApiService
 
     @GET("getministries")
     Call<OrganizationResponse> getOrganizations();
+
+    @FormUrlEncoded
+    @POST("user/fetchNearbyCases")
+    Call<List<NearbyCaseResponse>> getNearbyCases(@Header("token") String token,
+                                                  @Field("latitude") Double latitude,
+                                                  @Field("longitude") Double longitude,
+                                                  @Field("radius") Integer radius);
     
     @FormUrlEncoded
     @POST("report")
@@ -60,13 +57,6 @@ public interface ApiService
                               @Field("picsArray") ArrayList<String> picsArray,
                               @Field("audiosArray") ArrayList<String> audiosArray,
                               @Field("videosArray") ArrayList<String> videosArray);
-
-    @FormUrlEncoded
-    @POST("user/fetchNearbyCases")
-    Call<List<NearbyCaseResponse>> getNearbyCases(  @Header("token") String token,
-                                                    @Field("latitude") Double latitude,
-                                                    @Field("longitude") Double longitude,
-                                                    @Field("radius") Integer radius);
 
     @FormUrlEncoded
     @POST("report/sendotp")

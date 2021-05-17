@@ -43,8 +43,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         appDataManager = ((MyApplication)getApplicationContext()).getDataManager();
     }
 
-    public FirebaseMessagingService() {
-    }
+    public FirebaseMessagingService() {}
 
     @Override
     public void onNewToken(@NonNull String s) {

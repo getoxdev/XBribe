@@ -58,7 +58,6 @@ public class ReportFragment extends Fragment {
     private ReportViewModel reportViewModel;
     private AppDataManager appDataManager;
     private CheckcaseFragment checkcaseFragment;
-    private NotificationFragment notificationFragment;
     private SecretFragment secretFragment;
 
     @Nullable
@@ -69,16 +68,6 @@ public class ReportFragment extends Fragment {
 
         reportViewModel = ViewModelProviders.of(getActivity()).get(ReportViewModel.class);
         appDataManager = ((MyApplication) getActivity().getApplicationContext()).getDataManager();
-
-        String fragment = getActivity().getIntent().getStringExtra("Fragment");
-        if(fragment=="Notification")
-        {
-            notificationFragment = new NotificationFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_frame,notificationFragment)
-                    .addToBackStack("Report")
-                    .commit();
-        }
 
         if(appDataManager.getEmail()=="")
         {
@@ -144,7 +133,7 @@ public class ReportFragment extends Fragment {
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
         sliderView.setIndicatorSelectedColor(Color.WHITE);
         sliderView.setIndicatorUnselectedColor(Color.GRAY);
-        sliderView.setScrollTimeInSec(3);
+        sliderView.setScrollTimeInSec(5);
         sliderView.startAutoCycle();
     }
 }
